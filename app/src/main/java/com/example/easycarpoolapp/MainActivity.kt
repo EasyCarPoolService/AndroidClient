@@ -3,6 +3,7 @@ package com.example.easycarpoolapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -23,7 +24,37 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
         setActionBar()
         navigationViewManager = NavigationViewManager(this, binding)
         navigationViewManager.setNavView()
+        setBottomNav()
 
+
+
+    }
+
+
+    private fun setBottomNav(){
+        binding.appBarMain.mainContentLayout.bottomNavigationView.setOnItemSelectedListener{
+
+            when(it.itemId){
+                R.id.activity_main_bottom_nav_item1->{
+                    Toast.makeText(this, "prototype fragment1", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.activity_main_bottom_nav_item2->{
+                    Toast.makeText(this, "prototype fragment2", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.activity_main_bottom_nav_item3->{
+                    Toast.makeText(this, "prototype fragment3", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.activity_main_bottom_nav_item4->{
+                    Toast.makeText(this, "prototype fragment4", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+            }
+            true
+        }
     }
     private fun setActionBar(){
         setSupportActionBar(binding.appBarMain.toolbar)

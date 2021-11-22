@@ -2,19 +2,44 @@
 <layout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="activity"
+            type="com.example.easycarpoolapp.MainActivity" />
+    </data>
+
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
         tools:showIn="@layout/app_bar_main">
 
 
 
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/fragment_container"
+            />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bottomNavigationView"
+            app:menu="@menu/activity_main_bottom_nav"
+            android:background="@color/main_color"
+
+            />
+
+
+
+
+    </LinearLayout>
 
 </layout>
