@@ -2,25 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/activity_main_bottom_nav_item1"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/activity_main_bottom_nav_home"
+        android:icon="@drawable/icon_home"
         />
 
     <item
-        android:id="@+id/activity_main_bottom_nav_item2"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/activity_main_bottom_nav_map"
+        android:icon="@drawable/icon_location"
         />
 
     <item
-        android:id="@+id/activity_main_bottom_nav_item3"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/activity_main_bottom_nav_posts"
+        android:icon="@drawable/icon_posts"
 
         />
 
     <item
-        android:id="@+id/activity_main_bottom_nav_item4"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/activity_main_bottom_nav_chat"
+        android:icon="@drawable/icon_chat"
         />
-
 
 </menu>

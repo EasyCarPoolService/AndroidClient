@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
+import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
@@ -26,29 +28,39 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
         navigationViewManager.setNavView()
         setBottomNav()
 
-
-
+        if(supportFragmentManager.findFragmentById(R.id.fragment_container)==null){
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.getInstance()).commit()
+        }
     }
 
 
+
+
+
     private fun setBottomNav(){
+
+
         binding.appBarMain.mainContentLayout.bottomNavigationView.setOnItemSelectedListener{
 
             when(it.itemId){
-                R.id.activity_main_bottom_nav_item1->{
-                    Toast.makeText(this, "prototype fragment1", Toast.LENGTH_SHORT).show()
+                R.id.activity_main_bottom_nav_home->{
+                    val fragment = HomeFragment.getInstance()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
-                R.id.activity_main_bottom_nav_item2->{
-                    Toast.makeText(this, "prototype fragment2", Toast.LENGTH_SHORT).show()
+                R.id.activity_main_bottom_nav_map->{
+                    val fragment = HomeFragment.getInstance()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
-                R.id.activity_main_bottom_nav_item3->{
-                    Toast.makeText(this, "prototype fragment3", Toast.LENGTH_SHORT).show()
+                R.id.activity_main_bottom_nav_posts->{
+                    val fragment = HomeFragment.getInstance()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
-                R.id.activity_main_bottom_nav_item4->{
-                    Toast.makeText(this, "prototype fragment4", Toast.LENGTH_SHORT).show()
+                R.id.activity_main_bottom_nav_chat->{
+                    val fragment = HomeFragment.getInstance()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
 
