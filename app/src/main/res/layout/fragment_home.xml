@@ -8,6 +8,14 @@
         android:orientation="vertical"
         tools:context=".fragment.home.HomeFragment">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="show dialog"
+            android:textSize="32sp"
+            android:id="@+id/btn_dialog"
+            />
+
 
 
 

@@ -7,23 +7,28 @@
         android:orientation="vertical"
         android:background="@drawable/btn_radius"
         >
+
+
         <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:text="로그인이 필요한 서비스 입니다. \n 로그인 페이지로 이동하시겠습니까?"
             />
 
         <LinearLayout
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
             <Button
+                android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -33,10 +38,11 @@
                 android:text="취소"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 />
 
             <Button
+                android:id="@+id/btn_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,15 +51,11 @@
                 android:backgroundTint="@color/main_color"
                 android:textStyle="bold"
                 android:text="확인"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 android:textColor="@color/white"
                 />
 
-
-
         </LinearLayout>
-
-
 
     </LinearLayout>
 </layout>

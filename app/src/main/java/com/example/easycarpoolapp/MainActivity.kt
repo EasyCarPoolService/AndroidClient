@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
+import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
             when(it.itemId){
                 R.id.activity_main_bottom_nav_home->{
                     val fragment = HomeFragment.getInstance()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
                     true
                 }
                 R.id.activity_main_bottom_nav_map->{

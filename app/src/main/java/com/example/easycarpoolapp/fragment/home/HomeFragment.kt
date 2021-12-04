@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentHomeBinding
+import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
 
 class HomeFragment : Fragment() {
@@ -26,9 +27,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
-
-
 
 
 
