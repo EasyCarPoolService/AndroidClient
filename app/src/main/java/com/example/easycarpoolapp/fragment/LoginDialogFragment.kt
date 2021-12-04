@@ -18,17 +18,14 @@ class LoginDialogFragment: DialogFragment(){
         fun onConfirmSelected() //login activity로 이동
     }
 
-    private var callback : Callbacks? = null
-
-
-
+    private var callbacks : Callbacks? = null
 
     private lateinit var binding : FragmentLoginDialogBinding
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callback = context as Callbacks?
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -51,7 +48,7 @@ class LoginDialogFragment: DialogFragment(){
         }
 
         binding.btnConfirm.setOnClickListener {
-            callback!!.onConfirmSelected()
+            callbacks!!.onConfirmSelected()
             this.dismiss()
         }
 
@@ -59,11 +56,8 @@ class LoginDialogFragment: DialogFragment(){
         return binding.root
     }
 
-
-
-    companion object {
-
-
-
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 }

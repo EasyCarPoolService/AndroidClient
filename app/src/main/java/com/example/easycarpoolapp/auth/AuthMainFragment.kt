@@ -1,5 +1,6 @@
 package com.example.easycarpoolapp.auth
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,13 +19,20 @@ class AuthMainFragment private constructor() : Fragment() {
         }
     }
 
+    interface Callbacks{
+        fun onJoinSelected() //login activity로 이동
+    }
+
+    private var callbacks : Callbacks? = null
+
+
+
     private lateinit var binding : FragmentAuthMainBinding
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -33,8 +41,20 @@ class AuthMainFragment private constructor() : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth_main, container, false)
 
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnJoin.setOnClickListener {
+            callbacks!!.onJoinSelected()
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
 

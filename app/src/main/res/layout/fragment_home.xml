@@ -8,13 +8,19 @@
         android:orientation="vertical"
         tools:context=".fragment.home.HomeFragment">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_test"
+            />
+
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="show dialog"
-            android:textSize="32sp"
-            android:id="@+id/btn_dialog"
-            />
+            android:text="test"
+            android:id="@+id/btn_test"
+            />.
 
 
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_color"
+            android:gravity="center"
+            android:text="회원가입"
+            android:background="@color/white"
+            android:elevation="8dp"
+            />
+
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/shape_radius"
+            android:backgroundTint="@color/white"
+            android:elevation="16dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="휴대폰 번호"
+                android:textColor="@color/gray_color"
+                android:textStyle="bold"
+                android:layout_marginRight="16dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="휴대폰번호를 입력하세요."
+                android:backgroundTint="@color/main_color"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/shape_radius"
+            android:backgroundTint="@color/gray_color"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="다음"
+            android:id="@+id/btn_next"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
+
+</layout>
