@@ -22,6 +22,9 @@
         android:theme="@style/Theme.EasyCarPoolApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".auth.AuthActivity"
+            android:exported="true" />
+        <activity
             android:name=".intro.InfoActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package com.example.easycarpoolapp
 
+import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,13 +10,14 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
+import com.example.easycarpoolapp.auth.AuthActivity
 import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
-class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
+class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -91,6 +94,10 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback {
 
     override fun onLogoutSelected() {
         TODO("Not yet implemented")
+    }
+
+    override fun onConfirmSelected() {
+        startActivity(Intent(this, AuthActivity::class.java))
     }
 }
 

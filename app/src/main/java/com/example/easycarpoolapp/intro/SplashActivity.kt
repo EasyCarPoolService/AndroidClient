@@ -20,7 +20,6 @@ class SplashActivity : AppCompatActivity() {
 
     private val timeout : Long = 2000 // 2 second
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
