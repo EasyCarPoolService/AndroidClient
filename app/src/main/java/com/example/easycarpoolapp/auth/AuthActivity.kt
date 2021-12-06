@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
-import com.example.easycarpoolapp.auth.join.JoinFragment
+import com.example.easycarpoolapp.auth.join.JoinPhoneFragment
 import com.example.easycarpoolapp.databinding.ActivityAuthBinding
-import com.example.easycarpoolapp.fragment.home.HomeFragment
 
 class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks {
 
@@ -35,7 +34,7 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks {
     }
 
     override fun onJoinSelected() {
-        val fragment = JoinFragment.getInstance()
+        val fragment = JoinPhoneFragment.getInstance()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit()
     }
 

@@ -50,6 +50,11 @@ class AuthMainFragment private constructor() : Fragment() {
         binding.btnJoin.setOnClickListener {
             callbacks!!.onJoinSelected()
         }
+
+
+
+
+
     }
 
     override fun onDetach() {

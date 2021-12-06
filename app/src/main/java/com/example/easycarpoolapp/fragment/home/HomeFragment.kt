@@ -46,9 +46,10 @@ class HomeFragment private constructor(): Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if(p3 ==0){
-                    binding.btnTest.setBackgroundColor(resources.getColor(R.color.main_color))
+                    binding.btnTest.setBackgroundResource(R.drawable.btn_radius_gray )
                 }else{
-                    binding.btnTest.setBackgroundColor(Color.BLUE)
+                    binding.btnTest.setBackgroundResource(R.drawable.btn_radius_main )
+                    //binding.btnTest.setBackgroundColor(Color.BLUE)
                 }
             }
 
