@@ -39,43 +39,6 @@ class HomeFragment private constructor(): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.editTest.addTextChangedListener(object: TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p3 ==0){
-                    binding.btnTest.setBackgroundResource(R.drawable.btn_radius_gray )
-                }else{
-                    binding.btnTest.setBackgroundResource(R.drawable.btn_radius_main )
-                    //binding.btnTest.setBackgroundColor(Color.BLUE)
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-        })
-
-
-
-
-        var count=0
-        binding.btnTest.setOnClickListener {
-            Toast.makeText(requireContext(), "test", Toast.LENGTH_SHORT).show()
-            count++
-            if(count%2==1){
-                binding.btnTest.setBackgroundColor(resources.getColor(R.color.main_color))
-            }else{
-                binding.btnTest.setBackgroundColor(Color.BLUE)
-            }
-
-
-
-
-        }
     }
 
 

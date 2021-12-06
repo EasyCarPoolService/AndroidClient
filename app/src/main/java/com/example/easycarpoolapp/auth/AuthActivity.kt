@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
+import com.example.easycarpoolapp.auth.join.JoinFormFragment
 import com.example.easycarpoolapp.auth.join.JoinPhoneFragment
+import com.example.easycarpoolapp.auth.join.JoinPhoneVerifyFragment
 import com.example.easycarpoolapp.databinding.ActivityAuthBinding
 
-class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks {
+class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneFragment.Callbacks, JoinPhoneVerifyFragment.CallBacks{
 
     private lateinit var binding : ActivityAuthBinding
 
@@ -20,12 +22,7 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks {
             supportFragmentManager.beginTransaction().add(binding.fragmentContainer.id, AuthMainFragment.getInstance()).commit()
         }
 
-
-
-
     }
-
-
 
 
     override fun onDestroy() {
@@ -35,7 +32,17 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks {
 
     override fun onJoinSelected() {
         val fragment = JoinPhoneFragment.getInstance()
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit()
+        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+    }
+
+    override fun onNextSelected() {
+        val fragment = JoinPhoneVerifyFragment.getInstance()
+        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+    }
+
+    override fun afterVerified() {
+        val fragment = JoinFormFragment.getInstance()
+        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
 

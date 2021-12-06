@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".auth.join.JoinPhoneFragment">
+        tools:context=".auth.join.JoinPhoneVerifyFragment">
 
         <TextView
             android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:textStyle="bold"
             android:textColor="@color/main_color"
             android:gravity="center"
-            android:text="회원가입"
+            android:text="휴대폰 인증"
             android:background="@color/white"
             android:elevation="8dp"
             />
@@ -30,6 +30,18 @@
             android:backgroundTint="@color/white"
             android:elevation="16dp"
             >
+            <TextView
+                android:id="@+id/text_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_color"
+                android:text="01055715141로 전송\n인증코드 6자리를 입력해주세요."
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -37,17 +49,17 @@
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="휴대폰 번호"
+                android:text="인증코드 6자리"
                 android:textColor="@color/gray_color"
                 android:textStyle="bold"
                 android:layout_marginRight="16dp"
                 />
 
             <EditText
-                android:id="@+id/edit_phone"
+                android:id="@+id/edit_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="휴대폰번호를 입력하세요."
+                android:hint="인증번호를 입력하세요."
                 android:backgroundTint="@color/main_color"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -82,14 +94,6 @@
             android:layout_marginBottom="10dp"
 
             >
-            <ImageView
-                android:id="@+id/page_indicator01"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                app:srcCompat = "@drawable/shape_circle_maincolor"
-                android:layout_gravity="bottom"
-                android:backgroundTint="@color/main_color"
-                />
 
             <ImageView
                 android:id="@+id/page_indicator02"
@@ -100,6 +104,14 @@
                 android:layout_marginRight="8dp"
                 app:srcCompat = "@drawable/shape_circle_gray"/>
             <ImageView
+                android:id="@+id/page_indicator01"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                app:srcCompat = "@drawable/shape_circle_maincolor"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/main_color"
+                />
+            <ImageView
                 android:id="@+id/page_indicator03"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
@@ -107,6 +119,7 @@
                 app:srcCompat = "@drawable/shape_circle_gray"/>
         </LinearLayout>
 
-    </LinearLayout>
 
+
+    </LinearLayout>
 </layout>

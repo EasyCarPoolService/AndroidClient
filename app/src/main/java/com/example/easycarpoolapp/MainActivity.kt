@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
     }
 
 
-
-
-
     private fun setBottomNav(){
 
 
@@ -92,9 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onLogoutSelected() {
-        TODO("Not yet implemented")
-    }
+    override fun onLogoutSelected() {}
 
     override fun onConfirmSelected() {
         startActivity(Intent(this, AuthActivity::class.java))
