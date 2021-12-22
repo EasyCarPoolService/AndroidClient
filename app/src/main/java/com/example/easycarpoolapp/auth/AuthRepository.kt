@@ -66,13 +66,18 @@ class AuthRepository private constructor(val context : Context){
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    public fun verify(code : String, verificationResult : MutableLiveData<Boolean>){
+    public fun verify(
+        code: String,
+        phoneNumber: String?,
+        verificationResult: MutableLiveData<Boolean>
+    ){
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
         credential.smsCode
         credential.provider
 
         val firebaseAuthSettings = Firebase.auth.firebaseAuthSettings
-        firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber("+821055711234", code)
+        val number = "+82"+phoneNumber?.substring(1)
+        firebaseAuthSettings.setAutoRetrievedSmsCodeForPhoneNumber(number, code)
 
         Firebase.auth.signInWithCredential(credential!!)
             .addOnSuccessListener {
@@ -81,7 +86,6 @@ class AuthRepository private constructor(val context : Context){
             .addOnFailureListener {
                 verificationResult.value = false
             }
-
     }
 
 

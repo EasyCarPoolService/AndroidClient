@@ -15,10 +15,10 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentJoinPhoneBinding
 
 
-class JoinPhoneFragment private constructor() : Fragment() {
+class JoinPhoneFragment() : Fragment() {
 
     interface Callbacks{
-        public fun onNextSelected()
+        public fun onNextSelected(phoneNumber : String)
     }
 
 
@@ -62,7 +62,7 @@ class JoinPhoneFragment private constructor() : Fragment() {
         binding.btnNext.setOnClickListener {
             var phoneNumber = binding.editPhone.text.toString()
             viewModel.sendCode()
-            callbacks!!.onNextSelected()
+            callbacks!!.onNextSelected(phoneNumber)
         }
     }
 

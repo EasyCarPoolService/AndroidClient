@@ -17,20 +17,26 @@ import com.example.easycarpoolapp.databinding.FragmentJoinPhoneVerifyBinding
 import com.google.firebase.auth.PhoneAuthProvider
 
 
-class JoinPhoneVerifyFragment private constructor(): Fragment() {
+class JoinPhoneVerifyFragment(): Fragment() {
 
     interface CallBacks{
-        public fun afterVerified()
+        public fun afterVerified(phoneNumber: String)
     }
 
     companion object{
-        public fun getInstance() : JoinPhoneVerifyFragment{
-            return JoinPhoneVerifyFragment()
+        public fun getInstance(phoneNumber : String) : JoinPhoneVerifyFragment{
+            val args = Bundle().apply{
+                putSerializable("phoneNumber", phoneNumber)
+            }
+            return JoinPhoneVerifyFragment().apply {
+                arguments = args
+            }
         }
     }
 
-    private var callbacks : CallBacks? = null
+    private var callbacks : JoinPhoneVerifyFragment.CallBacks? = null
     private lateinit var binding : FragmentJoinPhoneVerifyBinding
+    private lateinit var phoneNumber : String
     private val viewModel : JoinPhoneVerifyViewModel by lazy {
         ViewModelProvider(this).get(JoinPhoneVerifyViewModel::class.java)
     }
@@ -38,7 +44,13 @@ class JoinPhoneVerifyFragment private constructor(): Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        callbacks = context as CallBacks?
+        callbacks = context as JoinPhoneVerifyFragment.CallBacks?
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        phoneNumber = arguments?.getString("phoneNumber").toString()
+        viewModel.phoneNumber = phoneNumber
     }
 
     override fun onCreateView(
@@ -57,9 +69,9 @@ class JoinPhoneVerifyFragment private constructor(): Fragment() {
         binding.btnNext.setOnClickListener { viewModel.verify() }
         viewModel.verificationResult.observe(viewLifecycleOwner, Observer {
             if(it==true){   //인증 성공
-                callbacks?.afterVerified()
+                callbacks?.afterVerified(viewModel.phoneNumber.toString())
             }else{  //인증 실패
-                Toast.makeText(requireContext(),"인증번호를 다시 확인하세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"잘못된 인증번호입니다.", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -80,19 +92,11 @@ class JoinPhoneVerifyFragment private constructor(): Fragment() {
                     binding.btnNext.setBackgroundResource(R.drawable.btn_radius_main)
                 }
             }
-
-
         })
     }
-
-
     override fun onDetach() {
         super.onDetach()
         callbacks = null
     }
-
-
-
-
 
 }

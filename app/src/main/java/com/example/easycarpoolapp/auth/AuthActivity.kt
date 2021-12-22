@@ -35,13 +35,13 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
         supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
-    override fun onNextSelected() {
-        val fragment = JoinPhoneVerifyFragment.getInstance()
+    override fun onNextSelected(phoneNumber : String) {
+        val fragment = JoinPhoneVerifyFragment.getInstance(phoneNumber)
         supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
-    override fun afterVerified() {
-        val fragment = JoinFormFragment.getInstance()
+    override fun afterVerified(phoneNumber: String) {
+        val fragment = JoinFormFragment.getInstance(phoneNumber)
         supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
