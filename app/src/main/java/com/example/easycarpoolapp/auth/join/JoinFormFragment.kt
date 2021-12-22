@@ -6,20 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentJoinFormBinding
 
 
-class JoinFormFragment(): Fragment() {
+class JoinFormFragment private constructor(): Fragment() {
 
     companion object{
-        public fun getInstance() : JoinFormFragment{
-            return JoinFormFragment()
+        public fun getInstance(phoneNumber : String) : JoinFormFragment{
+            val args = Bundle().apply{
+                putSerializable("phoneNumber", phoneNumber)
+            }
+            return JoinFormFragment().apply {
+                arguments = args
+            }
         }
     }
 
     private lateinit var binding : FragmentJoinFormBinding
+    private val viewModel : JoinFormViewModel by lazy {
+        ViewModelProvider(this).get(JoinFormViewModel::class.java)
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.phoneNumber = arguments?.getString("phoneNumber")
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

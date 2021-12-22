@@ -8,10 +8,11 @@ class JoinPhoneVerifyViewModel : ViewModel(){
     private val repository = AuthRepository.getInstance()
     public val code : MutableLiveData<String> = MutableLiveData()
     public val verificationResult : MutableLiveData<Boolean> = MutableLiveData()
+    public var phoneNumber : String? = null
 
 
     public fun verify(){
-        repository?.verify(code.value!!, verificationResult)
+        repository?.verify(code.value!!, phoneNumber, verificationResult)
     }
 
 }
