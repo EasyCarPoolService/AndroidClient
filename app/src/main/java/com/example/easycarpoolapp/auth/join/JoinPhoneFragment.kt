@@ -15,7 +15,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentJoinPhoneBinding
 
 
-class JoinPhoneFragment private constructor() : Fragment() {
+class JoinPhoneFragment() : Fragment() {
 
     interface Callbacks{
         public fun onNextSelected()

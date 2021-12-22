@@ -11,7 +11,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentAuthMainBinding
 
 
-class AuthMainFragment private constructor() : Fragment() {
+class AuthMainFragment() : Fragment() {
 
     companion object{
         public fun getInstance() : AuthMainFragment{

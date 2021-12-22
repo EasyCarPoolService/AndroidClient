@@ -10,7 +10,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentJoinFormBinding
 
 
-class JoinFormFragment private constructor(): Fragment() {
+class JoinFormFragment(): Fragment() {
 
     companion object{
         public fun getInstance() : JoinFormFragment{

@@ -17,7 +17,7 @@ import com.example.easycarpoolapp.databinding.FragmentJoinPhoneVerifyBinding
 import com.google.firebase.auth.PhoneAuthProvider
 
 
-class JoinPhoneVerifyFragment private constructor(): Fragment() {
+class JoinPhoneVerifyFragment(): Fragment() {
 
     interface CallBacks{
         public fun afterVerified()

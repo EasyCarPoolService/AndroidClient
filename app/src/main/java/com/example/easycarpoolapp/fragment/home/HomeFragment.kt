@@ -16,7 +16,7 @@ import com.example.easycarpoolapp.databinding.FragmentHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
 
-class HomeFragment private constructor(): Fragment() {
+class HomeFragment(): Fragment() {
 
 
     companion object{

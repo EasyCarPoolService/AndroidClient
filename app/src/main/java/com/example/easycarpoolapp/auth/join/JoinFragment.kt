@@ -15,7 +15,7 @@ import com.example.easycarpoolapp.databinding.FragmentJoinBinding
 import com.example.easycarpoolapp.databinding.JoinAthenticatePhoneBinding
 
 
-class JoinFragment private constructor() : Fragment() {
+class JoinFragment() : Fragment() {
 
     companion object{
         public fun getInstance() : JoinFragment{
