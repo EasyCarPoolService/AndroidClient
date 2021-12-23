@@ -17,7 +17,7 @@
         <entry key="app/src/main/res/layout/fragment_auth_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_join.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/fragment_join_form.xml" value="0.11367753623188406" />
+        <entry key="app/src/main/res/layout/fragment_join_form.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_join_phone.xml" value="0.2864583333333333" />
         <entry key="app/src/main/res/layout/fragment_join_phone_verify.xml" value="0.11367753623188406" />
         <entry key="app/src/main/res/layout/fragment_login_dialog.xml" value="0.11778115501519756" />
