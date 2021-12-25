@@ -15,6 +15,7 @@ import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
+import com.example.easycarpoolapp.fragment.post.PostHomeFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks{
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
                     true
                 }
                 R.id.activity_main_bottom_nav_posts->{
-                    val fragment = HomeFragment.getInstance()
+                    val fragment = PostHomeFragment.getInstance()
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
