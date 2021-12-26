@@ -13,7 +13,7 @@ class JoinFormViewModel : ViewModel(){
     public var phoneNumber : String? = null
 
     public fun join(joinDto : JoinDto){
-        authRepository?.signUp(joinDto.toUserEntity())
+        authRepository?.signUp(joinDto)
     }
 
 

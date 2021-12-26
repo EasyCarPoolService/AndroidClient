@@ -5,6 +5,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.auth.domain.User
+import com.example.easycarpoolapp.auth.dto.JoinDto
+import com.example.easycarpoolapp.auth.dto.LoginDto
+import com.example.easycarpoolapp.auth.dto.TokenDto
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
@@ -19,6 +22,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.reflect.KParameter
 
 class AuthRepository private constructor(val context : Context){
+
 
     companion object{
         private var INSTANCE: AuthRepository?=null   //Singleton패턴을 위한 INSTANCE변수
@@ -55,7 +59,7 @@ class AuthRepository private constructor(val context : Context){
 
     //=============================================================================================
     private lateinit var verificationId : String
-    private val BASEURL :String = "http://172.30.1.43:80"
+    private val BASEURL :String = "http://192.168.45.182:8080"
 
 
     //=============================================================================================
@@ -102,13 +106,13 @@ class AuthRepository private constructor(val context : Context){
 
     //=============================================================================================
 
-    public fun signUp(user : User){
+    public fun signUp(joinDto : JoinDto){
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val api = retrofit.create(AuthAPI::class.java)
-        val call = api.getSignUpCall(user = user)
+        val call = api.getSignUpCall(joinDto = joinDto)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.e("RESPONSE", response.body().toString())
@@ -117,9 +121,24 @@ class AuthRepository private constructor(val context : Context){
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("RESPONSE FAIL", t.message.toString())
             }
+        })
+    }
+    //=============================================================================================
+    public fun login(loginDto :LoginDto){
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(AuthAPI::class.java)
+        val call = api.getLoginCall(loginDto = loginDto)
+        call.enqueue(object : Callback<TokenDto>{
+            override fun onResponse(call: Call<TokenDto>, response: Response<TokenDto>) {
+                   Log.e("RESPONSE", response.body()?.token.toString())
+            }
+            override fun onFailure(call: Call<TokenDto>, t: Throwable) {
+                Log.e("ERROR", t.message.toString())
+            }
 
         })
-
     }
 
 }
