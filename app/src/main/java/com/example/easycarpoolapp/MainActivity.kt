@@ -15,10 +15,12 @@ import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
+import com.example.easycarpoolapp.fragment.post.PostDriverFormFragment
 import com.example.easycarpoolapp.fragment.post.PostHomeFragment
+import com.example.easycarpoolapp.fragment.post.PostPassengerFormFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
-class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks{
+class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -94,6 +96,16 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
 
     override fun onConfirmSelected() {
         startActivity(Intent(this, AuthActivity::class.java))
+    }
+
+    override fun onAddPassengerSelected() {
+        val fragment = PostPassengerFormFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onAddDriverSelected() {
+        val fragment = PostDriverFormFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 }
 
