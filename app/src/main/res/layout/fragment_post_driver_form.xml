@@ -8,12 +8,273 @@
         tools:context=".fragment.post.PostDriverFormFragment">
 
 
-        <TextView
-
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="30sp"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+            <LinearLayout
+                android:elevation="16dp"
+                android:background="@drawable/shape_radius"
+                android:layout_marginTop="56dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="100dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+
+                >
+                <ImageButton
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/image_profile"
+                    android:background="@color/white"
+                    />
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textStyle="bold"
+                    android:text="프로필사진"
+                    android:textColor="@color/gray_color"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="이름 (실명)"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="실명 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="닉네임 (한글, 영문, 숫자)"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_nickname"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="닉네임 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="아이디 (이메일)"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_email"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="이메일 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="비밀번호 (6자 이상 영문, 숫자 조합)"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_password1"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="비밀번호 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="비밀번호 확인"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_password2"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="비밀번호 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="생년월일 (예 : 19950101)"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+                <EditText
+                    android:id="@+id/edit_birth"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:backgroundTint="@color/main_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:hint="생년월일 입력"
+                    />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="성별"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_color"
+                    android:textSize="16sp"
+                    />
+
+                <RadioGroup
+                    android:id="@+id/radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/radio_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/main_color"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="남자"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_color"
+                        android:textSize="16sp"
+                        />
+                    <RadioButton
+                        android:id="@+id/radio_female"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/main_color"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="여자"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_color"
+                        android:textSize="16sp"
+                        />
+
+                </RadioGroup>
+
+            </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_color"
+            android:gravity="center"
+            android:text="회원정보"
+            android:background="@color/white"
+            android:elevation="16dp"
+            />
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_radius_gray"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="회원가입"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom"
+            android:elevation="16dp"
+            />
 
     </FrameLayout>
 </layout>
+
+

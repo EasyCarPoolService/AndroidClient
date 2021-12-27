@@ -18,6 +18,7 @@
     <style name="Theme.NavigationDrawerExample.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.NavigationDrawerExample.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
+    <style parent="android:Widget.Spinner" name="removeSpinnerSelector">
+        <item name="android:background">#ffffff</item>
+    </style>
 </resources>
