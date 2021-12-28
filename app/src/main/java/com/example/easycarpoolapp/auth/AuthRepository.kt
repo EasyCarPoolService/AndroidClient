@@ -38,6 +38,7 @@ class AuthRepository private constructor(val context : Context){
             throw Exception("Repository sould be initialized")
         }
 
+        //해당 repository를 참조하는 클래스가 소멸될 경우 반드시 onDestroy를 호출
         fun onDestroy(){
             INSTANCE = null
         }

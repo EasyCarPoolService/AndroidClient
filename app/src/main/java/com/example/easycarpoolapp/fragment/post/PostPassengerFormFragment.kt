@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostPassengerFormBinding
 import com.example.easycarpoolapp.fragment.post.utils.DatePickerManager
@@ -35,6 +37,10 @@ class PostPassengerFormFragment : Fragment() {
     private var destination_si:String? = null
     private var destination_gu:String? = null
     private var destination_dong:String? = null
+
+    private val viewModel : PostPassengerFormViewModel by lazy {
+        ViewModelProvider(this).get(PostPassengerFormViewModel::class.java)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,9 +79,6 @@ class PostPassengerFormFragment : Fragment() {
         return binding.root
     }//onCreateView
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -89,10 +92,27 @@ class PostPassengerFormFragment : Fragment() {
             timePicker!!.show(parentFragmentManager, timePickerManager.getTimePickerListener())
         }
 
-    }
+
+        setToggleButton()
+
+    }//onViewCreated
+
+    //======================================================================================================
+
+    //check
+    private fun setToggleButton(){
+        binding.toggleGroup.setOnSelectListener {
+            if (it.isSelected){ // 선택 되었다면 다음 동작
+                Toast.makeText(requireContext(), it.text.toString(), Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+    }//setToggleButton
 
 
-    //FragmentPostPassengerFormBinding
+
+
 //======================================================================================================
 private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:String, isDeparture : Boolean){
     val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, items)

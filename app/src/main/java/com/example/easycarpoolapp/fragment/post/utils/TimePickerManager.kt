@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Button
 import com.datepicker.rell.datapickerlib.RellDatePicker
+import com.example.easycarpoolapp.fragment.post.PostPassengerFormViewModel
 import com.karrel.timepicker.RellTimePicker
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,6 +20,7 @@ class TimePickerManager(val context : Context, val button : Button) {
 
         override fun onTimePick(hourOfDay: Int, minute: Int) {
             button.setText(hourOfDay.toString()+"시 "+minute.toString()+"분")
+
         }
     }//timePickerListener
 

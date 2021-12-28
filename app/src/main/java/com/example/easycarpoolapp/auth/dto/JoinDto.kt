@@ -24,8 +24,5 @@ class JoinDto(name : String, email : String, nickname : String, password :String
     @SerializedName("gender")
     val gender : String = gender
 
-    public fun toUserEntity() : User {
-           return User(name, email, nickname, password, birth, gender)
-    }
 
 }
