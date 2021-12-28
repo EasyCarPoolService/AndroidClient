@@ -241,6 +241,7 @@
                             android:src="@drawable/icon_clock_maincolor" />
 
                         <Button
+                            android:id="@+id/btn_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"

@@ -14,6 +14,8 @@ class DatePickerManager(val context : Context, val button : Button) {
         createDatePicker()
     }
 
+
+
     private var datePickerListener = object : RellDatePicker.OnDatePickListener{
         override fun onDatePick(calendar: Calendar?) {
             val format = SimpleDateFormat("yyyy-MM-dd")
@@ -22,17 +24,23 @@ class DatePickerManager(val context : Context, val button : Button) {
     }
 
     private fun createDatePicker() {
+
+        val calendar = Calendar.getInstance()
+
         datePicker = RellDatePicker.Builder(context)
-            .setDate(Calendar.getInstance())
-            .setMinDate(Calendar.getInstance().timeInMillis)
+            .setDate(calendar)
+            .setMinDate(calendar.timeInMillis)
             .create()
+
+        val format = SimpleDateFormat("yyyy.MM.dd")
+        button.setText(format.format(calendar.timeInMillis))
     }
 
     public fun getDatePicker(): RellDatePicker{
         return datePicker
     }
 
-    public fun getListener(): RellDatePicker.OnDatePickListener {
+    public fun getDatePickerListener(): RellDatePicker.OnDatePickListener {
         return datePickerListener
     }
 

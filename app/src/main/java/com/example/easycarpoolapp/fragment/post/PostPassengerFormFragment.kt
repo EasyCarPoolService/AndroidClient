@@ -13,6 +13,8 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostPassengerFormBinding
 import com.example.easycarpoolapp.fragment.post.utils.DatePickerManager
 import com.example.easycarpoolapp.fragment.post.utils.SpinnerDataManager
+import com.example.easycarpoolapp.fragment.post.utils.TimePickerManager
+import com.karrel.timepicker.RellTimePicker
 
 class PostPassengerFormFragment : Fragment() {
 
@@ -25,6 +27,7 @@ class PostPassengerFormFragment : Fragment() {
     private lateinit var binding :FragmentPostPassengerFormBinding
     private lateinit var spinnerDataManager: SpinnerDataManager
     private lateinit var datePickerManager: DatePickerManager
+    private lateinit var timePickerManager : TimePickerManager
 
     private var departure_si:String? = null
     private var departure_gu:String? = null
@@ -51,7 +54,8 @@ class PostPassengerFormFragment : Fragment() {
         )
         //datePickerManager의 리스너는 특정 버튼의 text를 변경하므로 binding객체를 생성한 이후에 객체 생성
         datePickerManager = DatePickerManager(requireContext(), binding.btnCalendar)
-
+        //timePickerManager의 리스너는 특정 버튼의 text를 변경하므로 binding객체를 생성한 이후에 객체 생성
+        timePickerManager = TimePickerManager(requireContext(), binding.btnTime)
 
         createAdapter(
             binding.departureSi,
@@ -70,19 +74,25 @@ class PostPassengerFormFragment : Fragment() {
     }//onCreateView
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCalendar.setOnClickListener {
             val datePicker = datePickerManager.getDatePicker()
-            datePicker!!.show(parentFragmentManager, datePickerManager.getListener())
+            datePicker!!.show(parentFragmentManager, datePickerManager.getDatePickerListener())
+        }
+
+        binding.btnTime.setOnClickListener {
+            val timePicker = timePickerManager.getTimePicker()
+            timePicker!!.show(parentFragmentManager, timePickerManager.getTimePickerListener())
         }
 
     }
 
 
     //FragmentPostPassengerFormBinding
-//======================================================================================================
 //======================================================================================================
 private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:String, isDeparture : Boolean){
     val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -128,6 +138,8 @@ private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:S
         }
     }//listener
 }//createGuAdatper
+
+
 //======================================================================================================
 
 
