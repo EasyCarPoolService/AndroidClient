@@ -21,4 +21,8 @@
     <style parent="android:Widget.Spinner" name="removeSpinnerSelector">
         <item name="android:background">#ffffff</item>
     </style>
+
+    <style name="DatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/main_color</item>
+    </style>
 </resources>

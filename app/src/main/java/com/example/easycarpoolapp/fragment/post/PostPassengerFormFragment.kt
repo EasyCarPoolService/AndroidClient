@@ -1,7 +1,6 @@
 package com.example.easycarpoolapp.fragment.post
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,8 @@ import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostPassengerFormBinding
+import com.example.easycarpoolapp.fragment.post.utils.DatePickerManager
+import com.example.easycarpoolapp.fragment.post.utils.SpinnerDataManager
 
 class PostPassengerFormFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class PostPassengerFormFragment : Fragment() {
 
     private lateinit var binding :FragmentPostPassengerFormBinding
     private lateinit var spinnerDataManager: SpinnerDataManager
+    private lateinit var datePickerManager: DatePickerManager
 
     private var departure_si:String? = null
     private var departure_gu:String? = null
@@ -41,60 +43,46 @@ class PostPassengerFormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_passenger_form, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_post_passenger_form,
+            container,
+            false
+        )
+        //datePickerManager의 리스너는 특정 버튼의 text를 변경하므로 binding객체를 생성한 이후에 객체 생성
+        datePickerManager = DatePickerManager(requireContext(), binding.btnCalendar)
 
-        createAdapter(binding.departureSi, spinnerDataManager.findSiDatas(), districtType = "si", isDeparture = true)
-        createAdapter(binding.destinationSi, spinnerDataManager.findSiDatas(), districtType = "si", isDeparture = false)
+
+        createAdapter(
+            binding.departureSi,
+            spinnerDataManager.findSiDatas(),
+            districtType = "si",
+            isDeparture = true
+        )
+        createAdapter(
+            binding.destinationSi,
+            spinnerDataManager.findSiDatas(),
+            districtType = "si",
+            isDeparture = false
+        )
         //createSiAdapter(spinnerDataManager.findSiDatas())
         return binding.root
+    }//onCreateView
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnCalendar.setOnClickListener {
+            val datePicker = datePickerManager.getDatePicker()
+            datePicker!!.show(parentFragmentManager, datePickerManager.getListener())
+        }
+
     }
+
+
+    //FragmentPostPassengerFormBinding
 //======================================================================================================
-    /*private fun createSiAdapter(siDatas : List<String>){
-
-        for(row in siDatas){
-            Log.e("siData", row)
-        }
-
-        val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, siDatas)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.departureSi.adapter = adapter
-        binding.departureSi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                departure_si = siDatas.get(p2)
-                createGuAdapter(spinnerDataManager.findGuDatas(departure_si!!))
-            }
-        }
-
-    }// createCityAdapter
-
-//======================================================================================================
-    private fun createGuAdapter(guDatas: List<String>) {
-        val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, guDatas)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.departureGu.adapter = adapter
-        binding.departureGu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                departure_gu = guDatas.get(p2)
-                createDongAdapter(spinnerDataManager.findDong(departure_si!!, departure_gu!!))
-            }
-        }
-    }//createGuAdatper
-//======================================================================================================
-    private fun createDongAdapter(dongDatas: List<String>) {
-        val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, dongDatas)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.departureDong.adapter = adapter
-        binding.departureDong.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                departure_dong = dongDatas.get(p2)
-                binding.textDeparture.text = departure_si+departure_gu+departure_dong
-            }
-        }
-    }//createGuAdatper
-*/
 //======================================================================================================
 private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:String, isDeparture : Boolean){
     val adapter : ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -137,10 +125,8 @@ private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:S
 
                 }
             }
-
-
         }
-    }
+    }//listener
 }//createGuAdatper
 //======================================================================================================
 

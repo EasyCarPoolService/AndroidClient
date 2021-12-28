@@ -1,4 +1,4 @@
-package com.example.easycarpoolapp.fragment.post
+package com.example.easycarpoolapp.fragment.post.utils
 
 import android.content.Context
 import android.util.Log
@@ -8,6 +8,9 @@ import java.io.InputStreamReader
 
 class SpinnerDataManager (val context : Context){
     private lateinit var districtArr : ArrayList<Array<String>>
+
+
+
     init {
         readTXT()   // 최초 csv파일 로드
     }
