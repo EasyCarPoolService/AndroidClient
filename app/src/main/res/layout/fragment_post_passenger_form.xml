@@ -360,7 +360,9 @@
                         android:textColor="@color/gray_color"
                         android:textSize="16sp"
                         />
+
                     <EditText
+                        android:id="@+id/edit_memo"
                         android:background="@drawable/edit_memo"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
@@ -414,6 +416,7 @@
 
 
         <Button
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_radius_gray"

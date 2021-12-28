@@ -23,10 +23,10 @@ data class PostPassengerDto(
     val departureTime : String,
 
     @SerializedName("gift")
-    val gift : String,
+    val gift : ArrayList<String>,
 
-    @SerializedName("hashTag")
-    val hashTag : String,
+    //@SerializedName("hashTag")
+    //val hashTag : String,
 
     @SerializedName("memo")
     val memo : String

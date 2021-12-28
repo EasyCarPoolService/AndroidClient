@@ -1,14 +1,13 @@
 package com.example.easycarpoolapp.fragment.post
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
@@ -16,9 +15,8 @@ import com.example.easycarpoolapp.databinding.FragmentPostPassengerFormBinding
 import com.example.easycarpoolapp.fragment.post.utils.DatePickerManager
 import com.example.easycarpoolapp.fragment.post.utils.SpinnerDataManager
 import com.example.easycarpoolapp.fragment.post.utils.TimePickerManager
-import com.karrel.timepicker.RellTimePicker
 
-class PostPassengerFormFragment : Fragment() {
+class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DatePickerManager.Callbacks {
 
     companion object{
         public fun getInstance() : PostPassengerFormFragment{
@@ -42,10 +40,19 @@ class PostPassengerFormFragment : Fragment() {
         ViewModelProvider(this).get(PostPassengerFormViewModel::class.java)
     }
 
+    private val memoTextWatcher : TextWatcher = object : TextWatcher{
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            viewModel.memo = s.toString()
+        }
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        spinnerDataManager = SpinnerDataManager(requireContext())
+        spinnerDataManager = SpinnerDataManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -59,9 +66,9 @@ class PostPassengerFormFragment : Fragment() {
             false
         )
         //datePickerManager의 리스너는 특정 버튼의 text를 변경하므로 binding객체를 생성한 이후에 객체 생성
-        datePickerManager = DatePickerManager(requireContext(), binding.btnCalendar)
+        datePickerManager = DatePickerManager.getInstance(requireContext(), binding.btnCalendar, this)
         //timePickerManager의 리스너는 특정 버튼의 text를 변경하므로 binding객체를 생성한 이후에 객체 생성
-        timePickerManager = TimePickerManager(requireContext(), binding.btnTime)
+        timePickerManager = TimePickerManager.getInstance(requireContext(), binding.btnTime, this)
 
         createAdapter(
             binding.departureSi,
@@ -92,8 +99,17 @@ class PostPassengerFormFragment : Fragment() {
             timePicker!!.show(parentFragmentManager, timePickerManager.getTimePickerListener())
         }
 
-
+        binding.editMemo.addTextChangedListener(memoTextWatcher)
         setToggleButton()
+
+        binding.btnRegister.setOnClickListener {
+            if(isRegisterAvailable()){  //게시글이 등록 가능한 상태일 경우 viewModel에 등록 요청
+                viewModel.register()
+            }
+
+        }
+
+
 
     }//onViewCreated
 
@@ -101,15 +117,39 @@ class PostPassengerFormFragment : Fragment() {
 
     //check
     private fun setToggleButton(){
-        binding.toggleGroup.setOnSelectListener {
-            if (it.isSelected){ // 선택 되었다면 다음 동작
-                Toast.makeText(requireContext(), it.text.toString(), Toast.LENGTH_SHORT).show()
 
+        binding.toggleGroup.setOnSelectListener {
+
+            if (it.isSelected){ // 선택 되었다면 다음 동작
+                viewModel.gift.add(it.text.toString())
+            }else{
+                viewModel.gift.remove(it.text.toString())
             }
 
         }
     }//setToggleButton
+//======================================================================================================
+    private fun isRegisterAvailable() : Boolean{
+        if(viewModel.departure == null){
+            Toast.makeText(requireContext(), "출발지를 설정해 주세요.", Toast.LENGTH_SHORT).show()
+            return false
 
+        }else if(viewModel.destination ==null){
+            Toast.makeText(requireContext(), "도착지를 설정해 주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        }else if(viewModel.departureDate == null){
+            Toast.makeText(requireContext(), "출발 날짜를 설정해 주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        }else if (viewModel.departuretime == null) {
+            Toast.makeText(requireContext(), "출발 시간을 설정해 주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        }else if (viewModel.gift.size==0) {
+            Toast.makeText(requireContext(), "운전자에게 줄 선물을 설정해 주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        }else{
+            return true
+        }
+    }
 
 
 
@@ -135,6 +175,7 @@ private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:S
                     "dong"->{
                         departure_dong = items.get(p2)
                         binding.textDeparture.text = departure_si+" "+departure_gu+" "+departure_dong
+                        viewModel.departure = departure_si+" "+departure_gu+" "+departure_dong
                     }
 
                 }
@@ -151,6 +192,7 @@ private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:S
                     "dong"->{
                         destination_dong = items.get(p2)
                         binding.textDestination.text = destination_si+" "+destination_gu+" "+destination_dong
+                        viewModel.destination = destination_si+" "+destination_gu+" "+destination_dong
                     }
 
                 }
@@ -159,6 +201,13 @@ private fun createAdapter(spinner : Spinner ,items: List<String>, districtType:S
     }//listener
 }//createGuAdatper
 
+    override fun onDateSelected(date: String) {
+        viewModel.departureDate = date
+    }
+
+    override fun onTimeSelected(hourOfDay: Int, minute: Int) {
+        viewModel.departuretime = hourOfDay.toString()+":"+minute.toString()
+    }
 
 //======================================================================================================
 

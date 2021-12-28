@@ -2,8 +2,8 @@ package com.example.easycarpoolapp.fragment.post.utils
 
 import android.content.Context
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.datepicker.rell.datapickerlib.RellDatePicker
-import com.example.easycarpoolapp.fragment.post.PostPassengerFormViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,20 +13,31 @@ import java.util.*
 
  */
 
-class DatePickerManager(val context : Context, val button : Button) {
+class DatePickerManager private constructor(val context : Context, val button : Button, fragment : Fragment) {
 
+    companion object{
+        public fun getInstance(context : Context, button : Button, fragment : Fragment) : DatePickerManager {
+            return DatePickerManager(context, button, fragment)
+        }
+    }
+
+    private var callbacks : Callbacks? = null
     private lateinit var datePicker : RellDatePicker
 
     init{
         createDatePicker()
+        callbacks = fragment as Callbacks?
     }
 
-
+    interface Callbacks{
+        fun onDateSelected(date : String)
+    }
 
     private var datePickerListener = object : RellDatePicker.OnDatePickListener{
         override fun onDatePick(calendar: Calendar?) {
-            val format = SimpleDateFormat("yyyy-MM-dd")
+            val format = SimpleDateFormat("yyyy.MM.dd")
             button.setText(format.format(calendar!!.getTime()))
+            callbacks!!.onDateSelected(format.format(calendar!!.getTime()))
         }
     }
 
@@ -50,6 +61,8 @@ class DatePickerManager(val context : Context, val button : Button) {
     public fun getDatePickerListener(): RellDatePicker.OnDatePickListener {
         return datePickerListener
     }
+
+
 
 
 }

@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.R
-import com.example.easycarpoolapp.databinding.FragmentHomeBinding
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
+
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 
@@ -45,9 +45,10 @@ class PostHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        PostRepository.init(requireContext())
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_home, container, false)
-
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = PostAdapter(createTestItems())
 
@@ -87,7 +88,10 @@ class PostHomeFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         callbacks = null
+        PostRepository.onDestroy()
     }
+
+
 
     private fun createTestItems(): ArrayList<String> {
         val arr = ArrayList<String>()

@@ -2,19 +2,21 @@ package com.example.easycarpoolapp.fragment.post.utils
 
 import android.content.Context
 import android.util.Log
+import android.widget.Button
 import com.example.easycarpoolapp.fragment.post.PostPassengerFormViewModel
+import com.karrel.timepicker.RellTimePicker
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class SpinnerDataManager (val context : Context){
+class SpinnerDataManager private constructor(val context : Context){
+
     private lateinit var districtArr : ArrayList<Array<String>>
-
-
 
     init {
         readTXT()   // 최초 csv파일 로드
     }
+
 
     private fun readTXT(){
 
@@ -30,9 +32,7 @@ class SpinnerDataManager (val context : Context){
             val row: Array<String> = line!!.split(splitToken).toTypedArray()
             districtArr.add(row)
         }
-        for(row in districtArr){
-            Log.e("row", row[0].toString())
-        }
+
 
 
     }//readTXT
@@ -68,5 +68,12 @@ class SpinnerDataManager (val context : Context){
         }
         return dongDatas.distinct()
     }//findDong
+
+
+    companion object{
+        public fun getInstance(context : Context) : SpinnerDataManager {
+            return SpinnerDataManager(context)
+        }
+    }
 
 }
