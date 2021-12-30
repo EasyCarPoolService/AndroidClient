@@ -2,6 +2,8 @@ package com.example.easycarpoolapp.auth
 
 import android.app.Activity
 import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.auth.domain.User
@@ -59,6 +61,8 @@ class AuthRepository private constructor(val context : Context){
     }
 
     //=============================================================================================
+    //variable
+
     private lateinit var verificationId : String
     private val BASEURL :String = "http://192.168.45.182:8080"
 
@@ -133,13 +137,49 @@ class AuthRepository private constructor(val context : Context){
         val call = api.getLoginCall(loginDto = loginDto)
         call.enqueue(object : Callback<TokenDto>{
             override fun onResponse(call: Call<TokenDto>, response: Response<TokenDto>) {
-                   Log.e("RESPONSE", response.body()?.token.toString())
+                //내부 데이터베이스에 토큰정보 저장 -> 만약 서버로부터 받은 값이 토큰이 맞다면 수행하도록 로직 변경!
+                saveTokenInternalDatabase(response.body()?.token.toString())
             }
             override fun onFailure(call: Call<TokenDto>, t: Throwable) {
                 Log.e("ERROR", t.message.toString())
             }
-
         })
     }
+
+    //=============================================================================================
+    //내부 데이터베이스에 인증을 수행할 토큰만 저장
+    private fun saveTokenInternalDatabase(token:String?){
+
+        val parkingAppDBHelper = AuthDBHelper(context)
+        val sqlWrite = parkingAppDBHelper.writableDatabase
+        val sqlRead = parkingAppDBHelper.readableDatabase
+        var cursor: Cursor?=null
+
+
+        sqlWrite!!.execSQL("CREATE TABLE IF NOT EXISTS userTBL(item varchar(10), token text);")
+        cursor=sqlRead!!.rawQuery("SELECT COUNT(*) FROM userTBL", null)
+        cursor!!.moveToNext()
+        var numberOfData = cursor!!.getString(0).toString()
+        if(numberOfData.equals("0")){
+            sqlWrite!!.execSQL("INSERT INTO userTBL VALUES('${token}', '${token}');")
+            Log.e("INSERT INTO OPERATE", token.toString())
+        }else{
+            Log.e("UPDATE CALLED", token.toString())
+            sqlWrite!!.execSQL("UPDATE userTBL SET uuid='${token}';")    //내부 데이터베이스에 서버로 부터 받은 uuid저장 -> splash에서 서버로 유효성 검사 수행
+            sqlWrite!!.execSQL("UPDATE userTBL SET token='${token}';")
+            //내부 데이터베이스에 서버로 부터 받은 uuid저장 -> splash에서 서버로 유효성 검사 수행
+        }
+
+
+        //이하 database access 객체 모두 close
+        parkingAppDBHelper.close()
+        sqlWrite.close()
+        sqlRead.close()
+        cursor.close()
+
+    }// saveTokenInternalDatabase
+
+
+    //=============================================================================================
 
 }

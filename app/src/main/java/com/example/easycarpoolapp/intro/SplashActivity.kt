@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.MainActivity
 import com.example.easycarpoolapp.R
 
@@ -31,9 +32,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         requestPermission()
+        setUserData()
         moveToInfo()
+        //싱글턴으로 유지할 유저 데이터
+
 
         //MainActivity로 이동
+    }
+    private fun setUserData(){
+        LocalUserData.createInstance()
+        //이하 repository -> database -> server token인증 수행
+
     }
 
     private fun moveToMain(){
