@@ -38,7 +38,16 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
         if(supportFragmentManager.findFragmentById(R.id.fragment_container)==null){
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.getInstance()).commit()
         }
-    }
+    }//onCreate
+
+    override fun onResume() {
+        super.onResume()
+
+        if (LocalUserData.getNickname()!=null){
+            Toast.makeText(applicationContext, "안녕하세요. "+LocalUserData.getNickname()+"님", Toast.LENGTH_SHORT).show()
+        }
+
+    }//onResume
 
 
     private fun setBottomNav(){

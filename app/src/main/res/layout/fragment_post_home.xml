@@ -55,14 +55,33 @@
                     android:background="@drawable/shape_radius"
                     >
 
-                    <ImageButton
-                        android:layout_margin="8dp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/image_profile"
-                        android:background="@drawable/shape_radius"
+                        android:orientation="vertical">
 
-                        />
+                        <ImageButton
+                            android:layout_margin="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/image_profile"
+                            android:background="@drawable/shape_radius"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/main_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"
+                            />
+
+                    </LinearLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"

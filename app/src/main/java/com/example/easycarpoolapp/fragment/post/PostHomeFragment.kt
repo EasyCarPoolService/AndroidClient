@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
 
@@ -58,6 +59,7 @@ class PostHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.textNickname.text = LocalUserData.getNickname().toString()
 
 
         binding.btnAdd.setOnClickListener {

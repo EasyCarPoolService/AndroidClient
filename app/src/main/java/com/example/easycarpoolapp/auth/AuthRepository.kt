@@ -69,7 +69,7 @@ class AuthRepository private constructor(val context : Context){
     //variable
 
     private lateinit var verificationId : String
-    private val BASEURL :String = "http://172.30.1.27:8080"
+    private val BASEURL :String = "http://192.168.45.138:8080"
 
 
     //=============================================================================================
@@ -134,7 +134,7 @@ class AuthRepository private constructor(val context : Context){
         })
     }
     //=============================================================================================
-    public fun login(loginDto :LoginDto){
+    public fun login(loginDto :LoginDto, loginFlag : MutableLiveData<Boolean>){
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -150,12 +150,14 @@ class AuthRepository private constructor(val context : Context){
                 if(body != null) {
                     saveTokenSharedPreference(body.token!!)
                     setLocalUserData(body!!)
+                    loginFlag.value = true
                 }else{
-                    return throw RuntimeException("로그인 정보를 다시 확인해주세요.")
+                    loginFlag.value = false
                 }
             }
             override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
                 Log.e("ERROR", t.message.toString())
+                loginFlag.value = false
             }
 
         })

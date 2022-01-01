@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentAuthMainBinding
 import java.lang.Exception
@@ -27,6 +29,7 @@ class AuthMainFragment() : Fragment() {
 
     interface Callbacks{
         fun onJoinSelected() //login activity로 이동
+        fun onLoginSuccessed()
     }
 
     private var callbacks : Callbacks? = null
@@ -68,6 +71,16 @@ class AuthMainFragment() : Fragment() {
         binding.btnJoin.setOnClickListener {
             callbacks!!.onJoinSelected()
         }
+
+        viewModel.loginFlag.observe(viewLifecycleOwner, Observer {
+            if(it){ //로그인 성공
+                    //finish AuthActivity
+                    callbacks?.onLoginSuccessed()
+            }else{  //로그인 실패
+                    Toast.makeText(requireContext(), "로그인 정보를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     override fun onDetach() {
