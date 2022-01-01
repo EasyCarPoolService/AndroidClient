@@ -98,8 +98,7 @@ class JoinFormFragment private constructor(): Fragment() {
                     nickname = binding.editNickname.text.toString(),
                     password = binding.editPassword1.text.toString(),
                     birth = binding.editBirth.text.toString(),
-                    gender = gender,
-                    role = "USER"
+                    gender = gender
                 ))
 
             }

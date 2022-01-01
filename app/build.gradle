@@ -53,9 +53,16 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.github.karrel84:RellDatePicker:0.0.1'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.github.karrel84:RellTimePicker:0.0.1'
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.0'
+
+
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
 
 
     testImplementation 'junit:junit:4.+'

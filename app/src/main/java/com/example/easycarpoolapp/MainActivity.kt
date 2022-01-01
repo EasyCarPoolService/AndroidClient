@@ -15,10 +15,12 @@ import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
+import com.example.easycarpoolapp.fragment.post.PostDriverFormFragment
 import com.example.easycarpoolapp.fragment.post.PostHomeFragment
+import com.example.easycarpoolapp.fragment.post.PostPassengerFormFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 
-class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks{
+class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -36,7 +38,16 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
         if(supportFragmentManager.findFragmentById(R.id.fragment_container)==null){
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.getInstance()).commit()
         }
-    }
+    }//onCreate
+
+    override fun onResume() {
+        super.onResume()
+
+        if (LocalUserData.getNickname()!=null){
+            Toast.makeText(applicationContext, "안녕하세요. "+LocalUserData.getNickname()+"님", Toast.LENGTH_SHORT).show()
+        }
+
+    }//onResume
 
 
     private fun setBottomNav(){
@@ -94,6 +105,16 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
 
     override fun onConfirmSelected() {
         startActivity(Intent(this, AuthActivity::class.java))
+    }
+
+    override fun onAddPassengerSelected() {
+        val fragment = PostPassengerFormFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onAddDriverSelected() {
+        val fragment = PostDriverFormFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 }
 

@@ -2,7 +2,9 @@ package com.example.easycarpoolapp.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.auth.join.JoinFormFragment
 import com.example.easycarpoolapp.auth.join.JoinPhoneFragment
@@ -25,6 +27,8 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
     }
 
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         AuthRepository.onDestroy()
@@ -33,6 +37,11 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
     override fun onJoinSelected() {
         val fragment = JoinPhoneFragment.getInstance()
         supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+    }
+
+    override fun onLoginSuccessed() {
+        //check
+        finish()
     }
 
     override fun onNextSelected(phoneNumber : String) {
