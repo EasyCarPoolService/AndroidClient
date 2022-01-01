@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.domain.User
 import com.example.easycarpoolapp.auth.dto.JoinDto
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
@@ -148,9 +149,9 @@ class AuthRepository private constructor(val context : Context){
                 //Single패턴으로 유지될 UserLocalData 객체에 userData set 수행
                 if(body != null) {
                     saveTokenSharedPreference(body.token!!)
-                    setLocalUserData(response.body()!!)
+                    setLocalUserData(body!!)
                 }else{
-                    throw RuntimeException("응답 정보가 없습니다.")
+                    return throw RuntimeException("로그인 정보를 다시 확인해주세요.")
                 }
             }
             override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
@@ -164,15 +165,45 @@ class AuthRepository private constructor(val context : Context){
     //=============================================================================================
 
     // SplashActivity에서 수행 -> 토큰을 검증하고 서버로부터 사용자 정보를 응답 받아 싱글턴 객체 구성
-    public fun getUserData(){
-        val token = getTokenSharedPreference()
+    public fun getUserData(tokenVerifyed : MutableLiveData<Boolean>){
+
+        Log.e("AuthRepository", "getUserData Called")
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create(OKHttpHelper.createGson()))
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+        val api = retrofit.create(AuthAPI::class.java)
+
+        val call = api.getUserDataCall()
+        call.enqueue(object : Callback<LocalUserDto>{
+            override fun onResponse(call: Call<LocalUserDto>, response: Response<LocalUserDto>) {
+                val body = response.body()
+                //Single패턴으로 유지될 UserLocalData 객체에 userData set 수행
+
+
+                if(body != null) {
+                    setLocalUserData(body!!)
+                    tokenVerifyed.value = true
+                }else{
+                    tokenVerifyed.value = false
+                }
+            }
+
+            override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
+                Log.e("ERROR", t.message.toString())
+            }
+
+        })
+
+
 
     }
 
 
     private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(_token = body.token, _email = body.email, _nickname = body.nickname)
 
-    
+
     //=============================================================================================
     private fun saveTokenSharedPreference(token : String){
         val sharedPreference = context.getSharedPreferences("UserInfo", MODE_PRIVATE)
@@ -181,10 +212,6 @@ class AuthRepository private constructor(val context : Context){
         //commit 의 경우 동기적으로 수행 되기에 write를 수행하는 크기가 크다면 UI coroutine 등을 통해 비 동기적으로 수행할것을 권장
         editor.commit()
     }
-    private fun getTokenSharedPreference() : String{
-        val sharedPreference = context.getSharedPreferences("UserInfo", MODE_PRIVATE)
-        val token = sharedPreference.getString("token", "default")
-        return token!!
-    }
+
 
 }

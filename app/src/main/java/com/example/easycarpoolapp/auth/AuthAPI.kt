@@ -8,6 +8,7 @@ import com.example.easycarpoolapp.auth.dto.TokenDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthAPI {
@@ -17,7 +18,7 @@ interface AuthAPI {
     @POST("/api/auth/authenticate")
     public fun getLoginCall(@Body loginDto: LoginDto) : Call<LocalUserDto>
 
-    @POST("/api/auth/getUserData")
-    public fun getUserDataCall(@Body token: TokenDto) : Call<LocalUserDto>
+    @POST("/api/user/getUserData")
+    public fun getUserDataCall() : Call<LocalUserDto>
 
 }

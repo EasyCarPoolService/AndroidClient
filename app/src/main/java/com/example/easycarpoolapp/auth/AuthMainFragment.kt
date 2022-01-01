@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentAuthMainBinding
+import java.lang.Exception
 
 
 class AuthMainFragment() : Fragment() {
@@ -56,7 +58,11 @@ class AuthMainFragment() : Fragment() {
         setPasswordTextWathcer()
 
         binding.btnLogin.setOnClickListener {
-            viewModel.login()
+            try {
+                viewModel.login()
+            } catch (e : Exception) {
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnJoin.setOnClickListener {
