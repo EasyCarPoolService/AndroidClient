@@ -12,7 +12,7 @@ class JoinPhoneVerifyViewModel : ViewModel(){
 
 
     public fun verify(){
-        repository?.verify(code.value!!, phoneNumber, verificationResult)
+        repository?.verifyPhone(code.value!!, phoneNumber, verificationResult)
     }
 
 }

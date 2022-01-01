@@ -2,12 +2,15 @@ package com.example.easycarpoolapp.auth
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.auth.domain.User
 import com.example.easycarpoolapp.auth.dto.JoinDto
+import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.auth.dto.LoginDto
 import com.example.easycarpoolapp.auth.dto.TokenDto
 import com.google.firebase.FirebaseException
@@ -20,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KParameter
 
@@ -64,7 +68,7 @@ class AuthRepository private constructor(val context : Context){
     //variable
 
     private lateinit var verificationId : String
-    private val BASEURL :String = "http://192.168.45.182:8080"
+    private val BASEURL :String = "http://172.30.1.27:8080"
 
 
     //=============================================================================================
@@ -87,7 +91,7 @@ class AuthRepository private constructor(val context : Context){
     }
     //=============================================================================================
 
-    public fun verify(
+    public fun verifyPhone(
         code: String,
         phoneNumber: String?,
         verificationResult: MutableLiveData<Boolean>
@@ -135,51 +139,52 @@ class AuthRepository private constructor(val context : Context){
             .build()
         val api = retrofit.create(AuthAPI::class.java)
         val call = api.getLoginCall(loginDto = loginDto)
-        call.enqueue(object : Callback<TokenDto>{
-            override fun onResponse(call: Call<TokenDto>, response: Response<TokenDto>) {
-                //내부 데이터베이스에 토큰정보 저장 -> 만약 서버로부터 받은 값이 토큰이 맞다면 수행하도록 로직 변경!
-                saveTokenInternalDatabase(response.body()?.token.toString())
+
+        call.enqueue(object : Callback<LocalUserDto>{
+            override fun onResponse(call: Call<LocalUserDto>, response: Response<LocalUserDto>) {
+                // android sharedpreference에 토큰 저장 -> 서버로 부터 받은 값이 토큰이 맞다면 저장하도록 유도
+                saveTokenSharedPreference(response.body()?.token.toString())
+                val body = response.body()
+                //Single패턴으로 유지될 UserLocalData 객체에 userData set 수행
+                if(body != null) {
+                    saveTokenSharedPreference(body.token!!)
+                    setLocalUserData(response.body()!!)
+                }else{
+                    throw RuntimeException("응답 정보가 없습니다.")
+                }
             }
-            override fun onFailure(call: Call<TokenDto>, t: Throwable) {
+            override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
                 Log.e("ERROR", t.message.toString())
             }
+
         })
+
     }
 
     //=============================================================================================
-    //내부 데이터베이스에 인증을 수행할 토큰만 저장
-    private fun saveTokenInternalDatabase(token:String?){
 
-        val parkingAppDBHelper = AuthDBHelper(context)
-        val sqlWrite = parkingAppDBHelper.writableDatabase
-        val sqlRead = parkingAppDBHelper.readableDatabase
-        var cursor: Cursor?=null
+    // SplashActivity에서 수행 -> 토큰을 검증하고 서버로부터 사용자 정보를 응답 받아 싱글턴 객체 구성
+    public fun getUserData(){
+        val token = getTokenSharedPreference()
 
-
-        sqlWrite!!.execSQL("CREATE TABLE IF NOT EXISTS userTBL(item varchar(10), token text);")
-        cursor=sqlRead!!.rawQuery("SELECT COUNT(*) FROM userTBL", null)
-        cursor!!.moveToNext()
-        var numberOfData = cursor!!.getString(0).toString()
-        if(numberOfData.equals("0")){
-            sqlWrite!!.execSQL("INSERT INTO userTBL VALUES('${token}', '${token}');")
-            Log.e("INSERT INTO OPERATE", token.toString())
-        }else{
-            Log.e("UPDATE CALLED", token.toString())
-            sqlWrite!!.execSQL("UPDATE userTBL SET uuid='${token}';")    //내부 데이터베이스에 서버로 부터 받은 uuid저장 -> splash에서 서버로 유효성 검사 수행
-            sqlWrite!!.execSQL("UPDATE userTBL SET token='${token}';")
-            //내부 데이터베이스에 서버로 부터 받은 uuid저장 -> splash에서 서버로 유효성 검사 수행
-        }
+    }
 
 
-        //이하 database access 객체 모두 close
-        parkingAppDBHelper.close()
-        sqlWrite.close()
-        sqlRead.close()
-        cursor.close()
+    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(_token = body.token, _email = body.email, _nickname = body.nickname)
 
-    }// saveTokenInternalDatabase
-
-
+    
     //=============================================================================================
+    private fun saveTokenSharedPreference(token : String){
+        val sharedPreference = context.getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putString("token", token)
+        //commit 의 경우 동기적으로 수행 되기에 write를 수행하는 크기가 크다면 UI coroutine 등을 통해 비 동기적으로 수행할것을 권장
+        editor.commit()
+    }
+    private fun getTokenSharedPreference() : String{
+        val sharedPreference = context.getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val token = sharedPreference.getString("token", "default")
+        return token!!
+    }
 
 }
