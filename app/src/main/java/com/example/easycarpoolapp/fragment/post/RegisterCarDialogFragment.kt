@@ -1,6 +1,5 @@
-package com.example.easycarpoolapp.fragment
+package com.example.easycarpoolapp.fragment.post
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,19 +7,20 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentLoginDialogBinding
+import com.example.easycarpoolapp.databinding.FragmentRegistercarDialogBinding
+import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
-class LoginDialogFragment: DialogFragment(){
+class RegisterCarDialogFragment() : DialogFragment(){
 
-    interface Callbacks{
-        fun onConfirmSelectedFromLoginDialog() //login activity로 이동
+    interface Callbacks {
+
+
+        fun onConfirmSelectedFromRegisterCar()
     }
 
     private var callbacks : Callbacks? = null
-
-    private lateinit var binding : FragmentLoginDialogBinding
-
+    private lateinit var binding : FragmentRegistercarDialogBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -31,7 +31,8 @@ class LoginDialogFragment: DialogFragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginDialogBinding.inflate(inflater, container, false)
+
+        binding = FragmentRegistercarDialogBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
@@ -47,11 +48,9 @@ class LoginDialogFragment: DialogFragment(){
         }
 
         binding.btnConfirm.setOnClickListener {
-            callbacks!!.onConfirmSelectedFromLoginDialog()
+            callbacks!!.onConfirmSelectedFromRegisterCar()
             this.dismiss()
         }
-
-
         return binding.root
     }
 

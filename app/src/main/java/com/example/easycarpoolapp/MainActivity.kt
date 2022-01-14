@@ -18,9 +18,12 @@ import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.fragment.post.PostDriverFormFragment
 import com.example.easycarpoolapp.fragment.post.PostHomeFragment
 import com.example.easycarpoolapp.fragment.post.PostPassengerFormFragment
+import com.example.easycarpoolapp.fragment.post.RegisterCarDialogFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
+import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 
-class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks{
+class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
+RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -103,10 +106,6 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
 
     override fun onLogoutSelected() {}
 
-    override fun onConfirmSelected() {
-        startActivity(Intent(this, AuthActivity::class.java))
-    }
-
     override fun onAddPassengerSelected() {
         val fragment = PostPassengerFormFragment.getInstance()
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
@@ -115,6 +114,19 @@ class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginD
     override fun onAddDriverSelected() {
         val fragment = PostDriverFormFragment.getInstance()
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onConfirmSelectedFromRegisterCar() {
+        val fragment = RegisterCarFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onConfirmSelectedFromLoginDialog() {
+        startActivity(Intent(this, AuthActivity::class.java))
+    }
+
+    override fun onNextSelectedFromRegisterCar() {
+        // register process ->  go on next page(register car picture)
     }
 }
 

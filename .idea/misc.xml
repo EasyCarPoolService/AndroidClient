@@ -26,6 +26,8 @@
         <entry key="app/src/main/res/layout/fragment_post_driver_form.xml" value="0.1286727456940223" />
         <entry key="app/src/main/res/layout/fragment_post_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_post_passenger_form.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_register_car.xml" value="0.2716318723490029" />
+        <entry key="app/src/main/res/layout/fragment_registercar_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/info_page_layout.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/join_athenticate_phone.xml" value="0.22" />
         <entry key="app/src/main/res/layout/login_dialog.xml" value="0.25729166666666664" />

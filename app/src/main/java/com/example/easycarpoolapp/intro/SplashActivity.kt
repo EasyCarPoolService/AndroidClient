@@ -42,6 +42,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         requestPermission()
         AuthRepository.init(context = this)
+
+        moveToMain()    // delete
+
         setObserver()
         setUserData()
 

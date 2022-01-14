@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
+import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
@@ -76,7 +77,10 @@ class PostHomeFragment : Fragment() {
 
 
         binding.btnAddDriver.setOnClickListener {
-            callbacks?.onAddDriverSelected()
+            // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
+            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+
+            //callbacks?.onAddDriverSelected()
         }
 
         binding.btnAddPassenger.setOnClickListener {
