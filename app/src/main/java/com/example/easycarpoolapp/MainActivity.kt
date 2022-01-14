@@ -21,6 +21,7 @@ import com.example.easycarpoolapp.fragment.post.PostPassengerFormFragment
 import com.example.easycarpoolapp.fragment.post.RegisterCarDialogFragment
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
+import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
@@ -126,8 +127,10 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
     }
 
     override fun onNextSelectedFromRegisterCar() {
-        // register process ->  go on next page(register car picture)
+        val fragment = RegisterCarImageFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
+
 }
 
 

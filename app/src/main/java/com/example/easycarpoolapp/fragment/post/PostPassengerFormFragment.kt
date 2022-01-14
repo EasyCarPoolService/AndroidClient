@@ -102,11 +102,11 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         binding.editMemo.addTextChangedListener(memoTextWatcher)
         setToggleButton()
 
+        // 등록 버튼 클릭
         binding.btnRegister.setOnClickListener {
             if(isRegisterAvailable()){  //게시글이 등록 가능한 상태일 경우 viewModel에 등록 요청
                 viewModel.register()
             }
-
         }
 
 

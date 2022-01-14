@@ -38,6 +38,12 @@ class RegisterCarFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_car, container, false)
 
+
+        binding.btnNext.setOnClickListener {
+            callbacks?.onNextSelectedFromRegisterCar()
+        }
+
+
         return binding.root
     }
 
