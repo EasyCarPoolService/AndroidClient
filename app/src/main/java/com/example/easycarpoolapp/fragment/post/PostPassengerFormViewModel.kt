@@ -1,6 +1,7 @@
 package com.example.easycarpoolapp.fragment.post
 
 import androidx.lifecycle.ViewModel
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 class PostPassengerFormViewModel :ViewModel(){
@@ -15,18 +16,21 @@ class PostPassengerFormViewModel :ViewModel(){
     public var departuretime : String? = null
     public var gift : ArrayList<String> = ArrayList() //transform to arrayList or hashMap
     public var hashTag : String = ""    //추후 개발 예정
-    public var memo : String = ""
+    public var message : String = ""
 
 
     public fun register(){
 
         val dto = PostPassengerDto(
+            email = LocalUserData.getEmail()!!,
+            nickname = LocalUserData.getNickname()!!,
+            gender = LocalUserData.getGender()!!,
             departure = departure!!,
             destination = destination!!,
             departureDate = departureDate!!,
             departureTime = departuretime!!,
             gift = gift,
-            memo = memo
+            message = message!!
             )
 
 

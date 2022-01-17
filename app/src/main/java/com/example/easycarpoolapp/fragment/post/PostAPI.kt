@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface PostAPI {
 
-    @POST("/api/post/save")
+    @POST("/api/post/passenger/register")
     public fun getSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<ResponseBody>
 
 

@@ -10,6 +10,15 @@ import com.google.gson.annotations.SerializedName
  */
 data class PostPassengerDto(
 
+    @SerializedName("email")
+    val email : String,
+
+    @SerializedName("nickname")
+    val nickname : String,
+
+    @SerializedName("gender")
+    val gender : String,
+
     @SerializedName("departure")
     val departure : String,
 
@@ -25,9 +34,9 @@ data class PostPassengerDto(
     @SerializedName("gift")
     val gift : ArrayList<String>,
 
-    //@SerializedName("hashTag")
+    //@SerializedName("hashTag")   //추후 hashTag구현 여부 판단
     //val hashTag : String,
 
-    @SerializedName("memo")
-    val memo : String
+    @SerializedName("message")
+    val message : String
 )

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.domain.User
 import com.example.easycarpoolapp.auth.dto.JoinDto
@@ -69,7 +70,7 @@ class AuthRepository private constructor(val context : Context){
     //variable
 
     private lateinit var verificationId : String
-    private val BASEURL :String = "http://192.168.45.64:8080"
+    private val BASEURL :String = "http://"+NetworkConfig.getIP()+":8080"
 
 
     //=============================================================================================
