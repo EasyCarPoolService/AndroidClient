@@ -15,8 +15,10 @@ data class LocalUserDto(
     val email : String? = null,
 
     @SerializedName("token")
-    val token : String? = null
+    val token : String? = null,
 
+    @SerializedName("gender")
+    val gender : String? = null
 )
 
 

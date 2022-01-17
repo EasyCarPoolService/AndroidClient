@@ -107,9 +107,7 @@ class PostHomeFragment : Fragment() {
 
         return arr
     }
-
-    //==========================================================================================
-
+    
 
     //==========================================================================================
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

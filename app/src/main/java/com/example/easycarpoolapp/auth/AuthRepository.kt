@@ -69,7 +69,7 @@ class AuthRepository private constructor(val context : Context){
     //variable
 
     private lateinit var verificationId : String
-    private val BASEURL :String = "http://192.168.45.138:8080"
+    private val BASEURL :String = "http://192.168.45.64:8080"
 
 
     //=============================================================================================
@@ -173,7 +173,7 @@ class AuthRepository private constructor(val context : Context){
 
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create(OKHttpHelper.createGson()))
-            .client(OKHttpHelper.createHttpClient(context))
+            .client(OKHttpHelper.createHttpClient(context))     //내부에 저장되어있는 코튼을 꺼내 client생성
             .build()
         val api = retrofit.create(AuthAPI::class.java)
 
@@ -183,17 +183,17 @@ class AuthRepository private constructor(val context : Context){
                 val body = response.body()
                 //Single패턴으로 유지될 UserLocalData 객체에 userData set 수행
 
-
                 if(body != null) {
                     setLocalUserData(body!!)
-                    tokenVerifyed.value = true
+                    tokenVerifyed.value = true  //인증성공
                 }else{
-                    tokenVerifyed.value = false
+                    tokenVerifyed.value = false //인증 실패
                 }
             }
 
             override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
                 Log.e("ERROR", t.message.toString())
+                tokenVerifyed.value = false // 인증 실패
             }
 
         })
@@ -202,9 +202,7 @@ class AuthRepository private constructor(val context : Context){
 
     }
 
-
-    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(_token = body.token, _email = body.email, _nickname = body.nickname)
-
+    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(_token = body.token, _email = body.email, _nickname = body.nickname, _gender = body.gender)
 
     //=============================================================================================
     private fun saveTokenSharedPreference(token : String){

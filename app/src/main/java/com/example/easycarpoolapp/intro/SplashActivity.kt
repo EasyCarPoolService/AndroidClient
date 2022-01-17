@@ -43,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
         requestPermission()
         AuthRepository.init(context = this)
 
-        moveToMain()    // delete
+        //moveToMain()    // delete
 
         setObserver()
         setUserData()

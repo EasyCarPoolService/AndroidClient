@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
@@ -34,6 +35,14 @@ class HomeFragment(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
+        binding.btnShowUserdata.setOnClickListener {
+            binding.textEmail.text = LocalUserData.getEmail()
+            binding.textNickname.text = LocalUserData.getNickname()
+            binding.textGender.text = LocalUserData.getGender()
+            binding.textToken.text = LocalUserData.getToken()
+        }
+
 
         return binding.root
     }
