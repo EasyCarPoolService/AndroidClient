@@ -110,7 +110,6 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         }
 
 
-
     }//onViewCreated
 
     //======================================================================================================

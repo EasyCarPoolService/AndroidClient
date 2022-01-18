@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
+import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
@@ -34,6 +37,9 @@ class PostHomeFragment : Fragment() {
 
     private var callbacks : PostHomeFragment.CallBacks? = null
     private lateinit var binding : FragmentPostHomeBinding
+    private val viewModel : PostHomeViewModel by lazy {
+        ViewModelProvider(this).get(PostHomeViewModel::class.java)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,7 +47,6 @@ class PostHomeFragment : Fragment() {
         callbacks = context as CallBacks?
 
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +57,7 @@ class PostHomeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_home, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = PostAdapter(createTestItems())
-
+        //adpater ? check
 
         return binding.root
     }
@@ -87,41 +91,51 @@ class PostHomeFragment : Fragment() {
             callbacks?.onAddPassengerSelected()
         }
 
+        //passenger 게시글 불러오기
+        binding.btnPassengerPost.setOnClickListener {
+            Toast.makeText(requireContext(), "btn work", Toast.LENGTH_SHORT).show()
+            viewModel.getPassengerPost()
+        }
 
+        viewModel.postPassengerItems.observe(viewLifecycleOwner, Observer {
+            updateToPassengerPost(it)
+        })
 
-    }
-
+    }// onViewCreated
+    //==========================================================================================
     override fun onDetach() {
         super.onDetach()
         callbacks = null
         PostRepository.onDestroy()
     }
-
-
-
-    private fun createTestItems(): ArrayList<String> {
-        val arr = ArrayList<String>()
-        for(i in 0..20){
-            arr.add(i.toString())
-        }
-
-        return arr
+    //==========================================================================================
+    private fun updateToPassengerPost(items : ArrayList<PostPassengerDto>){
+        binding.recyclerView.adapter = PostAdapter(items)
     }
-    
 
     //==========================================================================================
+    // 임시로 PassengerPost로 item 구성
+
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val text_departure : TextView = itemView.findViewById(R.id.text_departure)
+        val text_destination : TextView = itemView.findViewById(R.id.text_destination)
+        val text_date : TextView = itemView.findViewById(R.id.text_date)
+        val text_nickname : TextView = itemView.findViewById(R.id.text_nickname)
+        val text_gender : TextView = itemView.findViewById(R.id.text_gender)
 
-        val textView : TextView = itemView.findViewById(R.id.item_text)
 
-
-        public fun bind(item : String){
-            textView.text = item
+        public fun bind(item : PostPassengerDto){
+            text_departure.text = item.departure
+            text_destination.text = item.destination
+            text_date.text = item.departureDate + "  " + item.departureTime
+            text_nickname.text = item.nickname
+            text_gender.text = item.gender
         }
     }
 
+    //==========================================================================================
 
-    inner class PostAdapter(val items : ArrayList<String>) : RecyclerView.Adapter<PostViewHolder>(){
+    inner class PostAdapter(val items : ArrayList<PostPassengerDto>) : RecyclerView.Adapter<PostViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
             val view = layoutInflater.inflate(R.layout.post_item_layout, parent, false)
             return PostViewHolder(view)

@@ -32,7 +32,7 @@ data class PostPassengerDto(
     val departureTime : String,
 
     @SerializedName("gift")
-    val gift : ArrayList<String>,
+    val gift : String,
 
     //@SerializedName("hashTag")   //추후 hashTag구현 여부 판단
     //val hashTag : String,

@@ -2,6 +2,7 @@ package com.example.easycarpoolapp.fragment.post
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
@@ -12,6 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.ArrayList
 
 
 //PostHomeFragment 에서 init수행
@@ -50,7 +52,7 @@ class PostRepository private constructor(val context : Context){
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
-        val call = api.getSaveCall(postPassengerDto = dto)
+        val call = api.getPassengerSaveCall(postPassengerDto = dto)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.e(TAG, response.body().toString())
@@ -64,7 +66,28 @@ class PostRepository private constructor(val context : Context){
 
     }
 
+    fun getPassengerPost(postPassengerItems: MutableLiveData<ArrayList<PostPassengerDto>>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
 
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getPassengerPostCall()
+        call.enqueue(object : Callback<ArrayList<PostPassengerDto>> {
+            override fun onResponse(
+                call: Call<ArrayList<PostPassengerDto>>,
+                response: Response<ArrayList<PostPassengerDto>>
+            ) {
+                postPassengerItems.value = response.body()
+            }
+
+            override fun onFailure(call: Call<ArrayList<PostPassengerDto>>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+    }
 
 
 }

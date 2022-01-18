@@ -4,15 +4,16 @@ import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface PostAPI {
 
     @POST("/api/post/passenger/register")
-    public fun getSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<ResponseBody>
+    public fun getPassengerSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<ResponseBody>
 
-
-
+    @GET("/api/post/passenger/getPost")
+    public fun getPassengerPostCall() : Call<ArrayList<PostPassengerDto>>
 
 
 }
