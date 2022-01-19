@@ -1,6 +1,5 @@
 package com.example.easycarpoolapp
 
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,17 +7,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import com.example.easycarpoolapp.auth.AuthActivity
-import com.example.easycarpoolapp.databinding.ActivityInfoBinding
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.home.HomeFragment
-import com.example.easycarpoolapp.fragment.post.PostDriverFormFragment
-import com.example.easycarpoolapp.fragment.post.PostHomeFragment
-import com.example.easycarpoolapp.fragment.post.PostPassengerFormFragment
-import com.example.easycarpoolapp.fragment.post.RegisterCarDialogFragment
+import com.example.easycarpoolapp.fragment.post.*
+import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
@@ -117,9 +111,10 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
-
-    //check
-    override fun onPostSelected() {
+    // post클릭시 detail 창으로 이동
+    override fun onPostSelected(item : PostPassengerDto) {
+        val fragment = PostDetailFragment.getInstance(item)
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
 
     }
 

@@ -28,7 +28,7 @@ class PostHomeFragment : Fragment() {
     interface CallBacks{
         public fun onAddPassengerSelected()
         public fun onAddDriverSelected()
-        public fun onPostSelected()
+        public fun onPostSelected(item : PostPassengerDto)
     }
 
     companion object{
@@ -119,6 +119,8 @@ class PostHomeFragment : Fragment() {
     // 임시로 PassengerPost로 item 구성
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+        lateinit var item : PostPassengerDto
         val text_departure : TextView = itemView.findViewById(R.id.text_departure)
         val text_destination : TextView = itemView.findViewById(R.id.text_destination)
         val text_date : TextView = itemView.findViewById(R.id.text_date)
@@ -126,8 +128,14 @@ class PostHomeFragment : Fragment() {
         val text_gender : TextView = itemView.findViewById(R.id.text_gender)
         val text_message : TextView = itemView.findViewById(R.id.text_message)
 
+        init {
+            itemView.setOnClickListener {
+                callbacks!!.onPostSelected(item)
+            }
+        }
 
         public fun bind(item : PostPassengerDto){
+            this.item = item
             text_departure.text = text_departure.text.toString()+item.departure
             text_destination.text = text_destination.text.toString()+item.destination
             text_date.text = "날짜 : " + item.departureDate + " 시간 : " + item.departureTime
@@ -140,11 +148,7 @@ class PostHomeFragment : Fragment() {
             }
         }
 
-        init {
-            itemView.setOnClickListener {
-                callbacks!!.onPostSelected()
-            }
-        }
+
 
     }
 
