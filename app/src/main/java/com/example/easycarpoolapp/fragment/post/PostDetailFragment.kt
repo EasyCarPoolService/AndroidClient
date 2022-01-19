@@ -17,7 +17,7 @@ class PostDetailFragment : Fragment() {
     companion object{
         public fun getInstance(item: PostPassengerDto): PostDetailFragment{
             val bundle = Bundle().apply {
-
+                putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
                 putSerializable("gender", item.gender)
                 //putSerializable("rate", item.rate)  추후 기능 추가
@@ -32,6 +32,7 @@ class PostDetailFragment : Fragment() {
     }//companion object
 
     lateinit var binding : FragmentPostDetailBinding
+    var email : String? = null
     var nickname : String? = null
     var gender : String? = null
     var departure : String? =null
@@ -43,6 +44,7 @@ class PostDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        email = arguments?.getString("email")
         nickname = arguments?.getString("nickname")
         gender = arguments?.getString("gender")
         departure = arguments?.getString("departure")
@@ -78,9 +80,5 @@ class PostDetailFragment : Fragment() {
         binding.textMessage.text = message
 
     }//setUI
-
-
-
-
 
 }
