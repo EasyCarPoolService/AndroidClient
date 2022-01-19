@@ -117,6 +117,12 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
+
+    //check
+    override fun onPostSelected() {
+
+    }
+
     override fun onConfirmSelectedFromRegisterCar() {
         val fragment = RegisterCarFragment.getInstance()
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()

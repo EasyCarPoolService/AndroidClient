@@ -2,6 +2,7 @@ package com.example.easycarpoolapp.fragment.post
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class PostHomeFragment : Fragment() {
     interface CallBacks{
         public fun onAddPassengerSelected()
         public fun onAddDriverSelected()
+        public fun onPostSelected()
     }
 
     companion object{
@@ -122,15 +124,28 @@ class PostHomeFragment : Fragment() {
         val text_date : TextView = itemView.findViewById(R.id.text_date)
         val text_nickname : TextView = itemView.findViewById(R.id.text_nickname)
         val text_gender : TextView = itemView.findViewById(R.id.text_gender)
+        val text_message : TextView = itemView.findViewById(R.id.text_message)
 
 
         public fun bind(item : PostPassengerDto){
-            text_departure.text = item.departure
-            text_destination.text = item.destination
-            text_date.text = item.departureDate + "  " + item.departureTime
-            text_nickname.text = item.nickname
-            text_gender.text = item.gender
+            text_departure.text = text_departure.text.toString()+item.departure
+            text_destination.text = text_destination.text.toString()+item.destination
+            text_date.text = "날짜 : " + item.departureDate + " 시간 : " + item.departureTime
+            text_nickname.text = text_nickname.text.toString() + item.nickname
+            text_message.text = item.message
+            if(item.gender.equals("male")){
+                text_gender.text = "성별 : 남"
+            }else{
+                text_gender.text = "성별 : 여"
+            }
         }
+
+        init {
+            itemView.setOnClickListener {
+                callbacks!!.onPostSelected()
+            }
+        }
+
     }
 
     //==========================================================================================
