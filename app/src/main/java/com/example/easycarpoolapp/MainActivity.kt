@@ -10,7 +10,9 @@ import androidx.core.view.GravityCompat
 import com.example.easycarpoolapp.auth.AuthActivity
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
+import com.example.easycarpoolapp.fragment.chat.ChatFragment
 import com.example.easycarpoolapp.fragment.chat.ChatHomeFragment
+import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.fragment.post.*
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
@@ -19,7 +21,7 @@ import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
-RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
+RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -114,7 +116,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
 
     // post클릭시 detail 창으로 이동
     override fun onPostSelected(item : PostPassengerDto) {
-        val fragment = PostDetailFragment.getInstance(item)
+        val fragment = PostPassengerDetailFragment.getInstance(item)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
 
     }
@@ -130,6 +132,12 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks{
 
     override fun onNextSelectedFromRegisterCar() {
         val fragment = RegisterCarImageFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    //채팅방 생성 -> 채팅방으로 이동
+    override fun onSendMesageSelected(dto : ChatRoomDto) {
+        val fragment = ChatFragment.getInstance(dto)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 

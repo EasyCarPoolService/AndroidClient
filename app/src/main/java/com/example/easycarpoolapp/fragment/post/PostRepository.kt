@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
+import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -40,7 +41,8 @@ class PostRepository private constructor(val context : Context){
         fun onDestroy(){
             INSTANCE = null
         }//onDestroy
-    }
+    }//companion object
+
     //=============================================================================================
 
     public fun requestSavePost(dto: PostPassengerDto) {
@@ -87,7 +89,34 @@ class PostRepository private constructor(val context : Context){
             }
 
         })
-    }
+    }//getPassengerPost
+
+
+    //check
+    fun createChatRoom(dto : ChatRoomDto, roomInfo: MutableLiveData<ChatRoomDto>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getCreateRoomCall(chatRoomDto = dto)
+
+        call.enqueue(object : Callback<ChatRoomDto>{
+            override fun onResponse(call: Call<ChatRoomDto>, response: Response<ChatRoomDto>) {
+
+                roomInfo.value = response.body()!!
+            }
+
+            override fun onFailure(call: Call<ChatRoomDto>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+
+
+    }//createChatRoom
 
 
 }

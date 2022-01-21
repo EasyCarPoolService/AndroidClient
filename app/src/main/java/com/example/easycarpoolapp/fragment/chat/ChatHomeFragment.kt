@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatHomeBinding
+import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 
 class ChatHomeFragment : Fragment() {
 
@@ -19,27 +23,42 @@ class ChatHomeFragment : Fragment() {
     }
 
     private lateinit var binding : FragmentChatHomeBinding
+    private val viewModel :ChatHomeViewModel by lazy {
+        ViewModelProvider(this).get(ChatHomeViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ChatRepository.init(requireContext())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_home,container, false)
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = ChatAdapter(createTestData())
+        binding.recyclerView.adapter = ChatAdapter(ArrayList<ChatRoomDto>())
+
+        //사용자가 참여한 모든 채팅방 정보 불러오기
+        viewModel.getChatRoom()
+
         return binding.root
     }//onCreateView
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private fun createTestData() : ArrayList<String> {
-        val temp = ArrayList<String>()
+        viewModel.roomList.observe(viewLifecycleOwner, Observer{
+            updateUI(it)
+        })
 
-        for(i in 0..10){
-            temp.add(i.toString())
-        }
-        return temp
-    }
+    }// onViewCreated
+
+    private fun updateUI(items : ArrayList<ChatRoomDto>){
+        binding.recyclerView.adapter = ChatAdapter(items)
+    }//updateUI
 
 
     inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -47,15 +66,18 @@ class ChatHomeFragment : Fragment() {
         val nickname : TextView = itemView.findViewById(R.id.text_nickname)
         val content : TextView = itemView.findViewById(R.id.text_content)
 
-        fun bind(item : String){
-            nickname.text = item
-            content.text = item
+        fun bind(item : ChatRoomDto){
+            if(LocalUserData.getNickname() == item.driverNickname){
+                nickname.text = item.passengerNickname
+            }else{
+                nickname.text = item.driverNickname
+            }
         }
 
     }// ChatHolder
 
 
-    inner class ChatAdapter(val items : ArrayList<String>) : RecyclerView.Adapter<ChatHolder>(){
+    inner class ChatAdapter(val items : ArrayList<ChatRoomDto>) : RecyclerView.Adapter<ChatHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
             val view = layoutInflater.inflate(R.layout.item_chat_home_layout, parent, false)
             return ChatHolder(view)
@@ -70,14 +92,5 @@ class ChatHomeFragment : Fragment() {
         }
 
     }    //ChatAdapter
-
-
-
-
-
-
-
-
-
 
 }
