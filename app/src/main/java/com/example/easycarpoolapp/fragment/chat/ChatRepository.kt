@@ -6,19 +6,26 @@ import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
+import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.PostAPI
 import com.example.easycarpoolapp.fragment.post.PostRepository
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.StompClient
 
 class ChatRepository private constructor(val context : Context){
 
 
     private val BASEURL :String = "http://"+ NetworkConfig.getIP()+":8080"
+
+
+    private lateinit var stompClient : StompClient
 
     companion object{
         private var INSTANCE : ChatRepository? = null
@@ -38,7 +45,32 @@ class ChatRepository private constructor(val context : Context){
         fun onDestroy(){
             INSTANCE = null
         }//onDestroy
+
     }//companion object
+
+
+    public fun subscribe(roomId: String, chatList: MutableLiveData<java.util.ArrayList<JSONObject>>) {
+        // STOMP전용 URL설정 필요 여부 판단
+        stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, NetworkConfig.getSocketURL())
+        stompClient.connect()
+        stompClient.topic("/sub/chat/room"+roomId).subscribe{
+            val jsonObj = JSONObject(it.payload)
+            var temp = chatList.value
+            temp!!.add(jsonObj)
+            chatList.postValue(temp)
+        }
+    }//subscribe
+
+    fun sendMessage(roomId: String, email: String?, message: String) {
+        val data = JSONObject().apply {
+            put("roomId", roomId)
+            put("writer", email)
+            put("message", message)
+        }
+
+        stompClient.send("/app/chat/message", data.toString()).subscribe()
+
+    }//sendMessage
 
 
     fun getChatRoom(dto : LocalUserDto, items : MutableLiveData<ArrayList<ChatRoomDto>>) {
@@ -64,6 +96,8 @@ class ChatRepository private constructor(val context : Context){
             }
 
         })
-    }
+    }//getChatRoom
+
+
 
 }

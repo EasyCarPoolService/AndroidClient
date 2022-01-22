@@ -5,10 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import org.json.JSONObject
 
 
 // ChatHomeFragment에서 repository를 생성해야함 유념
@@ -37,11 +45,14 @@ class ChatFragment : Fragment() {
     private lateinit var passenger : String
     private lateinit var driverNickname : String
     private lateinit var passengerNickname : String
+    private lateinit var adapter : ChatAdapter
+    private val viewModel : ChatViewModel by lazy {
+        ViewModelProvider(this).get(ChatViewModel::class.java)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         ChatRepository.init(requireContext())
 
         roomId = arguments?.getString("roomid")!!
@@ -49,8 +60,8 @@ class ChatFragment : Fragment() {
         passenger = arguments?.getString("passenger")!!
         driverNickname = arguments?.getString("drivernickname")!!
         passengerNickname = arguments?.getString("passengernickname")!!
-    }
 
+    }
 
 
     override fun onCreateView(
@@ -59,8 +70,78 @@ class ChatFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
 
+        //구독요청
+        viewModel.subscribe(roomId)
+
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setRecycler()
+
+        binding.btnSend.setOnClickListener {
+            val message : String = binding.editMessage.text.toString()
+            viewModel.sendMessage(message)
+        }
+
+    }//onViewCreated
+
+    private fun setRecycler(){
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = ChatAdapter(ArrayList<JSONObject>())
+        binding.recyclerView.adapter = adapter
+
+        viewModel.chatList.observe(viewLifecycleOwner, Observer {
+            updateUI(it)
+        })
+    }//setRecycler
+
+    private fun updateUI(items : ArrayList<JSONObject>){
+        adapter = ChatAdapter(items)
+        binding.recyclerView.adapter = adapter
+    }//upadteUI
+
+
+    inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+        val myLayout = itemView.findViewById<LinearLayout>(R.id.chat_layout_mine)
+        val opponent_layout = itemView.findViewById<LinearLayout>(R.id.chat_layout_opponent)
+        val opponent_message = itemView.findViewById<TextView>(R.id.chat_text_content_opponent)
+        val opponent_time = itemView.findViewById<TextView>(R.id.chat_text_time_opponent)
+        val my_message = itemView.findViewById<TextView>(R.id.chat_text_content_mine)
+        val my_time = itemView.findViewById<TextView>(R.id.chat_text_time_mine)
+
+
+        public fun bind(item : JSONObject){
+            if(item.getString("writer")==LocalUserData.getEmail()){ //내가 작성한 글
+                myLayout.visibility = View.VISIBLE
+                opponent_layout.visibility = View.INVISIBLE
+                my_message.text = item.getString("message")
+                //time set 필요
+            }else{  //상대가 작성한 글
+                myLayout.visibility = View.INVISIBLE
+                opponent_layout.visibility = View.VISIBLE
+                opponent_message.text = item.getString("message")
+            }
+        }
+    }
+    inner class ChatAdapter(val items : ArrayList<JSONObject>) : RecyclerView.Adapter<ChatHolder>(){
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
+            val view = layoutInflater.inflate(R.layout.item_chat_layout, parent, false)
+            return ChatHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ChatHolder, position: Int) {
+            holder.bind(items.get(position))
+        }
+
+        override fun getItemCount(): Int {
+            return items.size
+        }
+
     }
 
 }

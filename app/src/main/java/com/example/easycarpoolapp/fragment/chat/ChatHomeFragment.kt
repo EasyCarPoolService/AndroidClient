@@ -1,5 +1,6 @@
 package com.example.easycarpoolapp.fragment.chat
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,19 +19,31 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 
 class ChatHomeFragment : Fragment() {
 
+    interface Callbacks{
+        fun onChatRoomSelected(dto : ChatRoomDto)
+    }
+
     companion object{
         public fun getInstance() : ChatHomeFragment = ChatHomeFragment()
     }
 
     private lateinit var binding : FragmentChatHomeBinding
+    private var callbacks : Callbacks? = null
     private val viewModel :ChatHomeViewModel by lazy {
         ViewModelProvider(this).get(ChatHomeViewModel::class.java)
     }
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    } // onAttach
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ChatRepository.init(requireContext())
-    }
+
+    }//onCreate
 
 
     override fun onCreateView(
@@ -56,6 +69,12 @@ class ChatHomeFragment : Fragment() {
 
     }// onViewCreated
 
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    } //onDetach
+
+
     private fun updateUI(items : ArrayList<ChatRoomDto>){
         binding.recyclerView.adapter = ChatAdapter(items)
     }//updateUI
@@ -63,10 +82,19 @@ class ChatHomeFragment : Fragment() {
 
     inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
+        lateinit var dto : ChatRoomDto
         val nickname : TextView = itemView.findViewById(R.id.text_nickname)
         val content : TextView = itemView.findViewById(R.id.text_content)
 
+        init{
+            itemView.setOnClickListener {
+                callbacks?.onChatRoomSelected(dto = dto)
+            }
+        }
+
         fun bind(item : ChatRoomDto){
+            dto = item
+
             if(LocalUserData.getNickname() == item.driverNickname){
                 nickname.text = item.passengerNickname
             }else{

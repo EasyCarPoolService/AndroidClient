@@ -21,7 +21,7 @@ import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
-RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks{
+RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -137,6 +137,11 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
     //채팅방 생성 -> 채팅방으로 이동
     override fun onSendMesageSelected(dto : ChatRoomDto) {
+        val fragment = ChatFragment.getInstance(dto)
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onChatRoomSelected(dto: ChatRoomDto) {
         val fragment = ChatFragment.getInstance(dto)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
