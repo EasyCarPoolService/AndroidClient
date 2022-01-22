@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <!--내가 보낸 메시지-->
+    <LinearLayout
+        android:id="@+id/layout_mine"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:orientation="horizontal"
+        android:gravity="right"
+        >
+        <TextView
+            android:id="@+id/text_time_mine"
+            android:layout_gravity="bottom"
+            android:textColor="@color/gray_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Time"
+            />
+
+        <TextView
+            android:id="@+id/text_content_mine"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@drawable/btn_radius_gray"
+            android:textSize="16sp"
+            android:text="내용asdasdadasdasdasdadasdasdasdasdasdasdasdsadasdasd"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+
+    <!--상대가 보낸 메시지-->
+    <LinearLayout
+        android:id="@+id/layout_opponent"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ImageButton
+            android:id="@+id/profile_opponent"
+            android:layout_margin="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/icon_profile_empty"
+            />
+
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"
+            android:background="@drawable/btn_radius_gray"
+            android:id="@+id/text_content_opponent"
+            android:textSize="16sp"
+            android:text="내용asdasdadasdasdasdadasdasdasdasdasdasdasdsadasdasd"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/text_time_opponent"
+            android:layout_gravity="bottom"
+            android:textColor="@color/gray_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Time"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+</FrameLayout>
