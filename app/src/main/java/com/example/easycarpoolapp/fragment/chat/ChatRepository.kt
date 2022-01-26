@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.fragment.chat
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
@@ -18,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.StompHeader
 
 class ChatRepository private constructor(val context : Context){
 
@@ -52,6 +54,7 @@ class ChatRepository private constructor(val context : Context){
     public fun subscribe(roomId: String, chatList: MutableLiveData<java.util.ArrayList<JSONObject>>) {
         // STOMP전용 URL설정 필요 여부 판단
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, NetworkConfig.getSocketURL())
+
         stompClient.connect()
         stompClient.topic("/sub/chat/room"+roomId).subscribe{
             val jsonObj = JSONObject(it.payload)

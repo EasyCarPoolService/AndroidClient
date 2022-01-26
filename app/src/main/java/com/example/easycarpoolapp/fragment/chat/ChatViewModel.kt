@@ -12,6 +12,10 @@ class ChatViewModel : ViewModel(){
     public var chatList : MutableLiveData<ArrayList<JSONObject>> = MutableLiveData()
     private lateinit var roomId : String
 
+    init {
+        chatList.value = ArrayList<JSONObject>()
+    }
+
     //특정 채팅방에대한 구독 요청
     public fun subscribe(roomId : String){
         this.roomId = roomId
