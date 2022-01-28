@@ -51,15 +51,20 @@ class ChatRepository private constructor(val context : Context){
     }//companion object
 
 
-    public fun subscribe(roomId: String, chatList: MutableLiveData<java.util.ArrayList<JSONObject>>) {
+    public fun subscribe(roomId: String, chatList: MutableLiveData<java.util.ArrayList<ChatDto>>) {
         // STOMP전용 URL설정 필요 여부 판단
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, NetworkConfig.getSocketURL())
 
         stompClient.connect()
         stompClient.topic("/sub/chat/room"+roomId).subscribe{
+
             val jsonObj = JSONObject(it.payload)
+            val message = jsonObj.getString("message")
+            val time= jsonObj.getString("time")
+            val writer = jsonObj.getString("writer")
+            val dto = ChatDto(roomId=roomId, writer = writer ,message = message, time = time)
             var temp = chatList.value
-            temp!!.add(jsonObj)
+            temp!!.add(dto)
             chatList.postValue(temp)
         }
     }//subscribe
@@ -101,6 +106,33 @@ class ChatRepository private constructor(val context : Context){
         })
     }//getChatRoom
 
+    fun findMessageByRoomId(roomId: String, chatList: MutableLiveData<java.util.ArrayList<ChatDto>>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(ChatAPI::class.java)
+        val call = api.getFindMessageCall(ChatRoomDto(roomId = roomId))
+        call.enqueue(object :Callback<ArrayList<ChatDto>>{
+            override fun onResponse(
+                call: Call<ArrayList<ChatDto>>,
+                response: Response<ArrayList<ChatDto>>
+            ) {
+
+                Log.e("VALUE!!", response.body().toString())
+                chatList.value = response.body()
+            }
+
+            override fun onFailure(call: Call<ArrayList<ChatDto>>, t: Throwable) {
+                Log.e("FindMessage FAIL!!", t.message.toString())
+            }
+
+        })
+
+
+
+    }
 
 
 }

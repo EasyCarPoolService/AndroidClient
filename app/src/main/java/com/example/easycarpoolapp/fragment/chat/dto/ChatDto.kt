@@ -7,7 +7,10 @@ data class ChatDto (
 
     @SerializedName("writer") var writer : String="",
 
-    @SerializedName("message") var message : String=""
+    @SerializedName("message") var message : String="",
+
+    @SerializedName("time") var time : String=""
+
 )
 
 

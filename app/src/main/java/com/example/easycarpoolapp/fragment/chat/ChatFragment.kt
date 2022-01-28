@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
+import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import org.json.JSONObject
 
@@ -91,15 +92,17 @@ class ChatFragment : Fragment() {
 
     private fun setRecycler(){
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = ChatAdapter(ArrayList<JSONObject>())
+        adapter = ChatAdapter(ArrayList<ChatDto>())
         binding.recyclerView.adapter = adapter
+
+        viewModel.findMessageByRoomId(roomId)
 
         viewModel.chatList.observe(viewLifecycleOwner, Observer {
             updateUI(it)
         })
     }//setRecycler
 
-    private fun updateUI(items : ArrayList<JSONObject>){
+    private fun updateUI(items : ArrayList<ChatDto>){
         adapter = ChatAdapter(items)
         binding.recyclerView.adapter = adapter
     }//upadteUI
@@ -115,20 +118,22 @@ class ChatFragment : Fragment() {
         val my_time = itemView.findViewById<TextView>(R.id.chat_text_time_mine)
 
 
-        public fun bind(item : JSONObject){
-            if(item.getString("writer")==LocalUserData.getEmail()){ //내가 작성한 글
+        public fun bind(item : ChatDto){
+            if(item.writer == LocalUserData.getEmail()){ //내가 작성한 글
                 myLayout.visibility = View.VISIBLE
                 opponent_layout.visibility = View.INVISIBLE
-                my_message.text = item.getString("message")
+                my_message.text = item.message
+                my_time.text = item.time
                 //time set 필요
             }else{  //상대가 작성한 글
                 myLayout.visibility = View.INVISIBLE
                 opponent_layout.visibility = View.VISIBLE
-                opponent_message.text = item.getString("message")
+                opponent_message.text = item.message
+                opponent_time.text = item.time
             }
         }
     }
-    inner class ChatAdapter(val items : ArrayList<JSONObject>) : RecyclerView.Adapter<ChatHolder>(){
+    inner class ChatAdapter(val items : ArrayList<ChatDto>) : RecyclerView.Adapter<ChatHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
             val view = layoutInflater.inflate(R.layout.item_chat_layout, parent, false)
             return ChatHolder(view)
@@ -143,5 +148,8 @@ class ChatFragment : Fragment() {
         }
 
     }
+
+
+
 
 }

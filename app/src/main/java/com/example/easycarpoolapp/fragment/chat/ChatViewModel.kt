@@ -9,11 +9,11 @@ import org.json.JSONObject
 class ChatViewModel : ViewModel(){
 
     private val repository = ChatRepository.getInstance()
-    public var chatList : MutableLiveData<ArrayList<JSONObject>> = MutableLiveData()
+    public var chatList : MutableLiveData<ArrayList<ChatDto>> = MutableLiveData()
     private lateinit var roomId : String
 
     init {
-        chatList.value = ArrayList<JSONObject>()
+        chatList.value = ArrayList<ChatDto>()
     }
 
     //특정 채팅방에대한 구독 요청
@@ -27,6 +27,10 @@ class ChatViewModel : ViewModel(){
         repository?.sendMessage(roomId, LocalUserData.getEmail(), message)
     }
 
+    // 최초 방에 입장했을때 이전 메시지를 서버로 부터 로드
+    fun findMessageByRoomId(roomId: String) {
+        repository?.findMessageByRoomId(roomId, chatList)
+    }
 
 
 
