@@ -3,7 +3,7 @@ package com.example.easycarpoolapp.auth.dto
 import com.example.easycarpoolapp.auth.domain.User
 import com.google.gson.annotations.SerializedName
 
-class JoinDto(name : String, email : String, nickname : String, password :String, birth : String, gender : String) {
+class JoinDto(name : String, email : String, nickname : String, password :String, birth : String, gender : String, driverAuthentication : Boolean) {
 
 
     @SerializedName("name")
@@ -24,5 +24,7 @@ class JoinDto(name : String, email : String, nickname : String, password :String
     @SerializedName("gender")
     val gender : String = gender
 
+    @SerializedName("driverAuthentication")
+    val driverAuthentication : Boolean = driverAuthentication
 
 }

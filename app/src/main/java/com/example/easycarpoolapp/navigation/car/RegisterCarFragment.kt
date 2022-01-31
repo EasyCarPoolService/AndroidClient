@@ -13,11 +13,16 @@ import com.example.easycarpoolapp.databinding.FragmentRegisterCarBinding
 class RegisterCarFragment : Fragment() {
 
     interface CallBacks{
-        public fun onNextSelectedFromRegisterCar()
+        public fun onNextSelectedFromRegisterCar(
+            carNumber: String,
+            manufacturer: String,
+            model: String
+        )
     }
 
     companion object{
         public fun getInstance() : RegisterCarFragment{
+
             return RegisterCarFragment()
         }
     }
@@ -27,8 +32,8 @@ class RegisterCarFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         callbacks = context as CallBacks?
+
     }
 
 
@@ -38,8 +43,16 @@ class RegisterCarFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register_car, container, false)
 
+        //editText get
+
+
+
         binding.btnNext.setOnClickListener {
-            callbacks?.onNextSelectedFromRegisterCar()
+            val carNumber : String = binding.editCarNumber.text.toString()
+            val manufacturer : String = binding.editManufacturer.text.toString()
+            val model : String = binding.editModel.text.toString()
+
+            callbacks?.onNextSelectedFromRegisterCar(carNumber, manufacturer, model)
         }
 
         return binding.root

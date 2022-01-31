@@ -130,8 +130,15 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         startActivity(Intent(this, AuthActivity::class.java))
     }
 
-    override fun onNextSelectedFromRegisterCar() {
-        val fragment = RegisterCarImageFragment.getInstance()
+    override fun onNextSelectedFromRegisterCar(
+        carNumber: String,
+        manufacturer: String,
+        model: String
+    ) {
+        val fragment = RegisterCarImageFragment.getInstance(
+            carNumber,
+            manufacturer,
+            model)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 

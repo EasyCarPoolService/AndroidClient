@@ -199,11 +199,16 @@ class AuthRepository private constructor(val context : Context){
 
         })
 
-
-
     }
 
-    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(_token = body.token, _email = body.email, _nickname = body.nickname, _gender = body.gender)
+    //splashActivity에서 토큰 인증 후 결과로 얻은 유저정보 set
+    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(
+        _token = body.token,
+        _email = body.email,
+        _nickname = body.nickname,
+        _gender = body.gender,
+        _driverAuthentication = body.driverAuthentication
+        )
 
     //=============================================================================================
     private fun saveTokenSharedPreference(token : String){

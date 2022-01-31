@@ -25,9 +25,6 @@ class NavigationViewManager (val context : Context, val binding : ActivityMainBi
         callback = context as Callback
     }
 
-
-
-
     public fun setNavView(){
 
         val btnLogState : TextView = binding.navView.getHeaderView(0).findViewById(R.id.navLogStateBtn)

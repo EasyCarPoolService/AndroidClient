@@ -84,7 +84,12 @@ class PostHomeFragment : Fragment() {
 
         binding.btnAddDriver.setOnClickListener {
             // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
-            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+
+            if(LocalUserData.getDriverAuthentication()!=null&&LocalUserData.getDriverAuthentication() == true){ //운전자 등록이 되어있는 경우
+                Toast.makeText(requireContext(), "POSTHOMEFRAGMENT btnAddDriver", Toast.LENGTH_SHORT).show()
+            }else{ //운전자 등록이 되어있지 않은 경우
+                RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+            }
 
             //callbacks?.onAddDriverSelected()
         }

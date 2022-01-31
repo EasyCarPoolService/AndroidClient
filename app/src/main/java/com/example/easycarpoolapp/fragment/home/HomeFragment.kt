@@ -41,6 +41,7 @@ class HomeFragment(): Fragment() {
             binding.textNickname.text = LocalUserData.getNickname()
             binding.textGender.text = LocalUserData.getGender()
             binding.textToken.text = LocalUserData.getToken()
+            binding.textDriverAuth.text = LocalUserData.getDriverAuthentication().toString()
         }
 
 

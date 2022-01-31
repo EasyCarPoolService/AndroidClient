@@ -92,18 +92,19 @@ class JoinFormFragment private constructor(): Fragment() {
                 binding.editPassword1.text.length < 6){
                 Toast.makeText(requireContext(), "비밀번호를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()
             }else{
+
+                //check  -> joinDto 에 driverAuthentication 추가
                 viewModel.join(JoinDto(
                     name = binding.editName.text.toString(),
                     email = binding.editEmail.text.toString(),
                     nickname = binding.editNickname.text.toString(),
                     password = binding.editPassword1.text.toString(),
                     birth = binding.editBirth.text.toString(),
-                    gender = gender
+                    gender = gender,
+                    driverAuthentication = false    // 최초 회원가입시 아직 인증하지 않았으므로 false
                 ))
 
             }
-
-
         }
         return binding.root
     }
