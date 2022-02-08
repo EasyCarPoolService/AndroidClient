@@ -59,8 +59,8 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
             when(it.itemId){
                 R.id.activity_main_bottom_nav_home->{
                     val fragment = HomeFragment.getInstance()
-                    //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-                    LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+
                     true
                 }
                 R.id.activity_main_bottom_nav_map->{
@@ -69,13 +69,21 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
                     true
                 }
                 R.id.activity_main_bottom_nav_posts->{
-                    val fragment = PostHomeFragment.getInstance()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    if(LocalUserData.getEmail()!=null){
+                        val fragment = PostHomeFragment.getInstance()
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    }else{
+                        LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+                    }
                     true
                 }
                 R.id.activity_main_bottom_nav_chat->{
-                    val fragment = ChatHomeFragment.getInstance()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    if(LocalUserData.getEmail()!=null){
+                        val fragment = ChatHomeFragment.getInstance()
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    }else{
+                        LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+                    }
                     true
                 }
 
