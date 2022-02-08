@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -12,7 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
@@ -116,6 +119,7 @@ class ChatFragment : Fragment() {
         val opponent_time = itemView.findViewById<TextView>(R.id.chat_text_time_opponent)
         val my_message = itemView.findViewById<TextView>(R.id.chat_text_content_mine)
         val my_time = itemView.findViewById<TextView>(R.id.chat_text_time_mine)
+        val opponent_profile = itemView.findViewById<ImageView>(R.id.chat_profile_opponent)
 
 
         public fun bind(item : ChatDto){
@@ -130,6 +134,10 @@ class ChatFragment : Fragment() {
                 opponent_layout.visibility = View.VISIBLE
                 opponent_message.text = item.message
                 opponent_time.text = item.time
+                //check
+                Glide.with(this@ChatFragment)
+                    .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+item.writer)
+                    .into(opponent_profile)
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -91,7 +92,6 @@ class PostHomeFragment : Fragment() {
             }
         }
 
-
         binding.btnAddDriver.setOnClickListener {
             // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
 
@@ -153,14 +153,16 @@ class PostHomeFragment : Fragment() {
         val text_nickname : TextView = itemView.findViewById(R.id.text_nickname)
         val text_gender : TextView = itemView.findViewById(R.id.text_gender)
         val text_message : TextView = itemView.findViewById(R.id.text_message)
+        var imageView : ImageView = itemView.findViewById(R.id.item_post_profile)
 
         init {
             itemView.setOnClickListener {
                 callbacks!!.onPostSelected(item)
             }
-        }
+        }//init
 
         public fun bind(item : PostPassengerDto){
+
             this.item = item
             text_departure.text = text_departure.text.toString()+item.departure
             text_destination.text = text_destination.text.toString()+item.destination
@@ -172,12 +174,13 @@ class PostHomeFragment : Fragment() {
             }else{
                 text_gender.text = "성별 : 여"
             }
-        }
+            Glide.with(this@PostHomeFragment)
+                .load("http://"+NetworkConfig.getIP()+":8080/api/image/profile?email="+item.email)
+                .into(imageView)
 
-
+        }//bind
 
     }
-
     //==========================================================================================
 
     inner class PostAdapter(val items : ArrayList<PostPassengerDto>) : RecyclerView.Adapter<PostViewHolder>(){

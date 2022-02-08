@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -45,12 +45,19 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     >
-                    <ImageButton
+
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageView_profile"
                         android:layout_margin="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/image_profile"
-                        android:background="@drawable/shape_radius"
+                        android:background="@android:color/transparent"
+                        app:civ_border_overlay="true"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="#ffffff"
                         />
 
                     <LinearLayout

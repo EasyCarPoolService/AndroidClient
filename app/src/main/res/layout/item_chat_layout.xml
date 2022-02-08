@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
     <!--내가 보낸 메시지-->
     <LinearLayout
@@ -56,12 +56,16 @@
         android:orientation="horizontal"
         >
 
-        <ImageButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chat_profile_opponent"
             android:layout_margin="8dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/icon_profile_empty"
+            android:src="@drawable/icon_profile_empty"
+            android:background="@android:color/transparent"
+            app:civ_border_overlay="true"
+            app:civ_border_width="3dp"
+            app:civ_border_color="#ffffff"
             />
 
 

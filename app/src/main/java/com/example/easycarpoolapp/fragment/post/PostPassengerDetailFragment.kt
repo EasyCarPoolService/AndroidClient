@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostDetailBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
@@ -103,7 +105,12 @@ class PostPassengerDetailFragment : Fragment() {
             callbacks!!.onSendMesageSelected(dto = it)
         })
 
-    }
+        Glide.with(this)
+            .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+email)
+            .into(binding.imageViewProfile)
+
+
+    }//onViewCreated
 
 
     private fun setUI(){
