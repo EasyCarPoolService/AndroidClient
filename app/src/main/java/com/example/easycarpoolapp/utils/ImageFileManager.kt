@@ -18,7 +18,7 @@ class ImageFileManager(context : Context) {
     }
 
     //return 값은 생성된 파일의 경로
-    public fun createImageFile(image : Bitmap) : String{
+    public fun createImageFile(image : Bitmap) : File{
 
         //uuid+.jpg파일 형식으로 저장되는지 체크
         val targetPath = BASEURL+"/"+createUUID()
@@ -36,8 +36,8 @@ class ImageFileManager(context : Context) {
             out?.close()
         }
 
-        return targetPath
-    }//createImageFile
+        return File(targetPath)
+    } //createImageFile
 
 
     private fun createUUID() : String = UUID.randomUUID().toString() + ".jpg"

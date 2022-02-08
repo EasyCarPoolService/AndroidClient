@@ -30,6 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KParameter
@@ -135,19 +136,18 @@ class AuthRepository private constructor(val context : Context){
 
         //image 내부 저장소에 저장
         if(profile_image!=null){
-            val profileImagePath : String = imageFileManager.createImageFile(profile_image)
+            val profileImageFile : File = imageFileManager.createImageFile(profile_image)
             val fileName : String = email+"_profile.jpg" //서버에 저장되는 파일명
+            //val fileName : String = "testImage.jpg" //서버에 저장되는 파일명
 
             //fileManager.getFile() -> 미리 지정해둔 특정 파일 하나에 해당
-            var requestBody_image : RequestBody = RequestBody.create(MediaType.parse("image/*"), profileImagePath)
+            var requestBody_image : RequestBody = RequestBody.create(MediaType.parse("image/*"), profileImageFile)
 
             //createFoemData에 지정한 name -> (Spring Boot) files.getName() 메서드로 얻는 이름
             //fileName 변수에 저장되어있는 문자열 -> Server에 저장되는 파일명(확장자포함)
             //requestBody -> imageFile에 해당
             profile_image_body = MultipartBody.Part.createFormData("profile_image", fileName, requestBody_image)
         }
-
-
 
         val name_body = RequestBody.create(MediaType.parse("text/plain"), name)
         val email_body = RequestBody.create(MediaType.parse("text/plain"), email)
