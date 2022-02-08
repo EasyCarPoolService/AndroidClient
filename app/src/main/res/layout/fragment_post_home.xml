@@ -60,14 +60,29 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <ImageButton
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_margin="8dp"
+                            android:id="@+id/imageBtn_profile"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            app:civ_border_overlay="true"
+                            app:civ_border_width="3dp"
+                            app:civ_border_color="#ffffff"
+                            android:src="@drawable/image_profile" />
+
+
+                        <!--<ImageButton
                             android:id="@+id/imageBtn_profile"
                             android:layout_margin="8dp"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:src="@drawable/image_profile"
+                            android:scaleType="fitXY"
                             android:background="@drawable/shape_circle_gray"
-                            />
+                            />-->
 
                         <TextView
                             android:id="@+id/text_nickname"

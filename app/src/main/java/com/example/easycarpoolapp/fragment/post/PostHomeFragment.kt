@@ -74,6 +74,11 @@ class PostHomeFragment : Fragment() {
         setImageBtnProfile()
 
 
+        binding.imageBtnProfile.setOnClickListener{
+            Toast.makeText(requireContext(), "imageView clicked", Toast.LENGTH_SHORT).show()
+        }
+
+
         binding.btnAdd.setOnClickListener {
             val state = binding.slideLayout.panelState
             // 닫힌 상태일 경우 열기
