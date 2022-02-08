@@ -61,11 +61,12 @@
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:id="@+id/imageBtn_profile"
                             android:layout_margin="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/image_profile"
-                            android:background="@drawable/shape_radius"
+                            android:background="@drawable/shape_circle_gray"
                             />
 
                         <TextView

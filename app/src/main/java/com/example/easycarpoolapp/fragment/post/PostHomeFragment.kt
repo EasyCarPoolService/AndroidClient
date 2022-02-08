@@ -14,7 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
@@ -69,6 +71,9 @@ class PostHomeFragment : Fragment() {
         binding.textNickname.text = LocalUserData.getNickname().toString()
 
 
+        setImageBtnProfile()
+
+
         binding.btnAdd.setOnClickListener {
             val state = binding.slideLayout.panelState
             // 닫힌 상태일 경우 열기
@@ -109,6 +114,17 @@ class PostHomeFragment : Fragment() {
         })
 
     }// onViewCreated
+
+
+    //==========================================================================================
+    private fun setImageBtnProfile() {
+        Glide.with(this)
+            .load("http://"+NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
+            .into(binding.imageBtnProfile)
+
+
+    }//setImageBtnProfile()
+
     //==========================================================================================
     override fun onDetach() {
         super.onDetach()
