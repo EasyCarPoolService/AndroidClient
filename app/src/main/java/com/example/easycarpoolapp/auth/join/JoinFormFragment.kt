@@ -1,7 +1,12 @@
 package com.example.easycarpoolapp.auth.join
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -12,6 +17,8 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -67,7 +74,7 @@ class JoinFormFragment private constructor(): Fragment() {
         }
     }//radioGroupListener
 
-
+    private var bitmap_profile : Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +92,10 @@ class JoinFormFragment private constructor(): Fragment() {
         //radioGroup
         binding.radioGroup.setOnCheckedChangeListener(radioGroupListener)
 
+        binding.btnProfile.setOnClickListener {
+            getImageFromGallery()
+        }
+
         //회원가입 버튼 클릭
         binding.btnJoin.setOnClickListener {
 
@@ -93,17 +104,15 @@ class JoinFormFragment private constructor(): Fragment() {
                 Toast.makeText(requireContext(), "비밀번호를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()
             }else{
 
-                //check  -> joinDto 에 driverAuthentication 추가
-                viewModel.join(JoinDto(
+                viewModel.join(
+                    profile_image = bitmap_profile,
                     name = binding.editName.text.toString(),
                     email = binding.editEmail.text.toString(),
                     nickname = binding.editNickname.text.toString(),
                     password = binding.editPassword1.text.toString(),
                     birth = binding.editBirth.text.toString(),
-                    gender = gender,
-                    driverAuthentication = false    // 최초 회원가입시 아직 인증하지 않았으므로 false
-                ))
-
+                    gender = gender
+                )
             }
         }
         return binding.root
@@ -142,7 +151,14 @@ class JoinFormFragment private constructor(): Fragment() {
         binding.btnJoin.setBackgroundResource(R.drawable.btn_radius_main)
     }
 
-
+    private fun getImageFromGallery(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            "image/*"
+        )
+        filterActivityLauncher.launch(intent)
+    }//getImageFromGallery()
 
     private inner class textWathcer(val item : String) : TextWatcher{
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -156,6 +172,37 @@ class JoinFormFragment private constructor(): Fragment() {
                 checkFlags()
             }
         }
-    }
+    }//textWathcer
+
+    private val filterActivityLauncher : ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if(it.resultCode == Activity.RESULT_OK && it.data !=null) {
+                var currentImageUri = it.data?.data
+                try {
+                    currentImageUri?.let {
+                        if(Build.VERSION.SDK_INT < 28) {
+                            val bitmap = MediaStore.Images.Media.getBitmap(
+                                requireContext().contentResolver,
+                                currentImageUri
+                            )
+                            binding.btnProfile.setImageBitmap(bitmap)
+                            bitmap_profile = bitmap
+                        } else {
+                            val source = ImageDecoder.createSource(requireContext().contentResolver, currentImageUri)
+                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            binding.btnProfile.setImageBitmap(bitmap)
+                            bitmap_profile = bitmap
+                        }
+                    }
+
+                }catch(e:Exception) {
+                    e.printStackTrace()
+                }
+            } else if(it.resultCode == Activity.RESULT_CANCELED){
+                Toast.makeText(requireContext(), "사진 선택 취소", Toast.LENGTH_LONG).show()
+            }else{
+                Log.d("ActivityResult","something wrong")
+            }
+        }//filterActivityLauncher
 
 }

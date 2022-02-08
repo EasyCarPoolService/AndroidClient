@@ -6,7 +6,6 @@ import android.util.Log
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
-import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -49,7 +48,8 @@ class NavigationRepository private constructor(val context : Context){
     private val TAG : String = "NavigationRepository"
 
 
-    public fun authenticateDriver(bitmapId : Bitmap, bitmapCar : Bitmap){
+
+    public fun authenticateDriver(bitmapId : Bitmap, bitmapCar : Bitmap, carNumber : String, manufacturer : String, model : String){
 
         //retrofit갤러리로 부터 선택한 비트맵을 파일형태로 특정 경로에 저장 -> retrofit을 통해 이미지를 업로드할때 사용
         val idImagePath : String =imageFileManager!!.createImageFile(bitmapId)
@@ -67,6 +67,18 @@ class NavigationRepository private constructor(val context : Context){
         var body_id : MultipartBody.Part = MultipartBody.Part.createFormData("idImage", idImageFileName, requestBody_id)
         var body_car : MultipartBody.Part = MultipartBody.Part.createFormData("carImage", carImageFileNmae, requestBody_car)
 
+        //testCode start
+        var testBody : RequestBody = RequestBody.create(MediaType.parse("text/plain"), carNumber)
+
+
+        var testPart : MultipartBody.Part = MultipartBody.Part.createFormData("testData", carNumber)
+
+        //testCode end
+
+        val text = "some text"
+        val requestBody = RequestBody.create(MediaType.parse("text/plain"), text)
+
+        //retrofit
         var gson : Gson =  GsonBuilder()
             .setLenient()
             .create()
@@ -77,7 +89,7 @@ class NavigationRepository private constructor(val context : Context){
             .build()
 
         val api = retrofit.create(NavigationAPI::class.java)
-        val call = api.getDriverAuthCall(body_id, body_car)
+        val call = api.getDriverAuthCall(body_id, body_car, testPart)
 
         call.enqueue(object : Callback<ResponseBody>{
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -88,13 +100,5 @@ class NavigationRepository private constructor(val context : Context){
             }
         })
     }//authenticateDriver
-
-
-
-
-
-
-
-
 
 }

@@ -130,7 +130,6 @@ class RegisterCarImageFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             val fileManager = ImageFileManager(requireContext())
 
-
             //check
             bitmapId?.let { it1 -> bitmapCar?.let { it2 -> viewModel.authenticateDriver(it1, it2) } }
 
@@ -151,7 +150,7 @@ class RegisterCarImageFragment : Fragment() {
             "image/*"
         )
         filterActivityLauncher.launch(intent)
-    }
+    }//getImageFromGallery()
 
     override fun onDetach() {
         super.onDetach()

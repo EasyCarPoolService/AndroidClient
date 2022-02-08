@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
@@ -15,10 +16,14 @@ import com.example.easycarpoolapp.auth.dto.JoinDto
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.auth.dto.LoginDto
 import com.example.easycarpoolapp.auth.dto.TokenDto
+import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,9 +39,11 @@ class AuthRepository private constructor(val context : Context){
 
     companion object{
         private var INSTANCE: AuthRepository?=null   //Singleton패턴을 위한 INSTANCE변수
+        private lateinit var imageFileManager: ImageFileManager
 
         fun init(context: Context){
             if(INSTANCE ==null){
+                imageFileManager = ImageFileManager(context)
                 INSTANCE = AuthRepository(context)   //MainActivity가 onCreate될경우 호출
             }
 
@@ -71,6 +78,7 @@ class AuthRepository private constructor(val context : Context){
 
     private lateinit var verificationId : String
     private val BASEURL :String = "http://"+NetworkConfig.getIP()+":8080"
+
 
 
     //=============================================================================================
@@ -117,13 +125,49 @@ class AuthRepository private constructor(val context : Context){
 
     //=============================================================================================
 
-    public fun signUp(joinDto : JoinDto){
+    //회원가입의 경우 driverAuthentication은 항상 false
+    public fun signUp(profile_image : Bitmap?, name : String, email : String, nickname : String, password : String, birth : String, gender : String){
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        var profile_image_body : MultipartBody.Part? = null
+
+        //image 내부 저장소에 저장
+        if(profile_image!=null){
+            val profileImagePath : String = imageFileManager.createImageFile(profile_image)
+            val fileName : String = email+"_profile.jpg" //서버에 저장되는 파일명
+
+            //fileManager.getFile() -> 미리 지정해둔 특정 파일 하나에 해당
+            var requestBody_image : RequestBody = RequestBody.create(MediaType.parse("image/*"), profileImagePath)
+
+            //createFoemData에 지정한 name -> (Spring Boot) files.getName() 메서드로 얻는 이름
+            //fileName 변수에 저장되어있는 문자열 -> Server에 저장되는 파일명(확장자포함)
+            //requestBody -> imageFile에 해당
+            profile_image_body = MultipartBody.Part.createFormData("profile_image", fileName, requestBody_image)
+        }
+
+
+
+        val name_body = RequestBody.create(MediaType.parse("text/plain"), name)
+        val email_body = RequestBody.create(MediaType.parse("text/plain"), email)
+        val nickname_body = RequestBody.create(MediaType.parse("text/plain"), nickname)
+        val password_body = RequestBody.create(MediaType.parse("text/plain"), password)
+        val birth_body = RequestBody.create(MediaType.parse("text/plain"), birth)
+        val gender_body = RequestBody.create(MediaType.parse("text/plain"), gender)
+
+
         val api = retrofit.create(AuthAPI::class.java)
-        val call = api.getSignUpCall(joinDto = joinDto)
+        val call = api.getSignUpCall(
+            profile_image_body,
+            name = name_body,
+            email = email_body,
+            nickname = nickname_body,
+            password = password_body,
+            birth = birth_body,
+            gender = gender_body
+            )
+
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 Log.e("RESPONSE", response.body().toString())
