@@ -12,8 +12,6 @@ import retrofit2.http.Part
 //image전송할 수 있도록 변경
 interface NavigationAPI {
 
-
-
     @Multipart
     @POST("/api/user/driverAuth")
     public fun getDriverAuthCall(

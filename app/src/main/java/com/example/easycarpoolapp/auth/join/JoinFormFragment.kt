@@ -25,6 +25,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.auth.dto.JoinDto
 import com.example.easycarpoolapp.databinding.FragmentJoinFormBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 @RequiresApi(Build.VERSION_CODES.N)
 class JoinFormFragment private constructor(): Fragment() {
@@ -41,6 +43,7 @@ class JoinFormFragment private constructor(): Fragment() {
     }
 
     private lateinit var binding : FragmentJoinFormBinding
+    private lateinit var fcmToken :String
     private val viewModel : JoinFormViewModel by lazy {
         ViewModelProvider(this).get(JoinFormViewModel::class.java)
     }
@@ -78,10 +81,10 @@ class JoinFormFragment private constructor(): Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //이전 프래그먼트에서 인증 완료한 사용자의 휴대전화 번호 -> ViewModel에 저장
         viewModel.phoneNumber = arguments?.getString("phoneNumber")
 
+        getToken()  //FCM Device Token 얻기
     }
 
     override fun onCreateView(
@@ -111,7 +114,8 @@ class JoinFormFragment private constructor(): Fragment() {
                     nickname = binding.editNickname.text.toString(),
                     password = binding.editPassword1.text.toString(),
                     birth = binding.editBirth.text.toString(),
-                    gender = gender
+                    gender = gender,
+                    fcmToken = fcmToken
                 )
             }
         }
@@ -204,5 +208,13 @@ class JoinFormFragment private constructor(): Fragment() {
                 Log.d("ActivityResult","something wrong")
             }
         }//filterActivityLauncher
+
+
+    //FCM Service를 위한 DeviceToken을 얻는 메서드
+    private fun getToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            fcmToken = task.result.toString()
+        })
+    }//getToken()
 
 }

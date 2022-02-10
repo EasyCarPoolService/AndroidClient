@@ -20,8 +20,8 @@ class JoinFormViewModel : ViewModel(){
     }*/
 
 
-    public fun join(profile_image : Bitmap?, name : String, email:String, nickname:String, password : String, birth:String, gender:String){
-        authRepository?.signUp(profile_image = profile_image, name, email, nickname, password, birth, gender)
+    public fun join(profile_image : Bitmap?, name : String, email:String, nickname:String, password : String, birth:String, gender:String, fcmToken : String){
+        authRepository?.signUp(profile_image = profile_image, name, email, nickname, password, birth, gender, fcmToken)
     }
 
 

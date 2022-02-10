@@ -127,7 +127,7 @@ class AuthRepository private constructor(val context : Context){
     //=============================================================================================
 
     //회원가입의 경우 driverAuthentication은 항상 false
-    public fun signUp(profile_image : Bitmap?, name : String, email : String, nickname : String, password : String, birth : String, gender : String){
+    public fun signUp(profile_image : Bitmap?, name : String, email : String, nickname : String, password : String, birth : String, gender : String, fcmToken : String){
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -155,6 +155,7 @@ class AuthRepository private constructor(val context : Context){
         val password_body = RequestBody.create(MediaType.parse("text/plain"), password)
         val birth_body = RequestBody.create(MediaType.parse("text/plain"), birth)
         val gender_body = RequestBody.create(MediaType.parse("text/plain"), gender)
+        val fcmToken_body = RequestBody.create(MediaType.parse("text/plain"), fcmToken)
 
 
         val api = retrofit.create(AuthAPI::class.java)
@@ -165,7 +166,8 @@ class AuthRepository private constructor(val context : Context){
             nickname = nickname_body,
             password = password_body,
             birth = birth_body,
-            gender = gender_body
+            gender = gender_body,
+            fcmToken = fcmToken_body
             )
 
         call.enqueue(object : Callback<ResponseBody> {
