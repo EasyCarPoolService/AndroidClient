@@ -20,7 +20,6 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
-import org.json.JSONObject
 
 
 // ChatHomeFragment에서 repository를 생성해야함 유념
@@ -36,6 +35,9 @@ class ChatFragment : Fragment() {
                 putSerializable("passenger", dto.passenger)
                 putSerializable("drivernickname", dto.driverNickname)
                 putSerializable("passengernickname", dto.passengerNickname)
+                putSerializable("driverFcmToken", dto.driverFcmToken)
+                putSerializable("passengerFcmToken", dto.passengerFcmToken)
+
             }
 
             return ChatFragment().apply { arguments = bundle }
@@ -49,6 +51,9 @@ class ChatFragment : Fragment() {
     private lateinit var passenger : String
     private lateinit var driverNickname : String
     private lateinit var passengerNickname : String
+    private lateinit var driverFcmToken : String
+    private lateinit var passengerFcmToken : String
+
     private lateinit var adapter : ChatAdapter
     private val viewModel : ChatViewModel by lazy {
         ViewModelProvider(this).get(ChatViewModel::class.java)
@@ -64,7 +69,8 @@ class ChatFragment : Fragment() {
         passenger = arguments?.getString("passenger")!!
         driverNickname = arguments?.getString("drivernickname")!!
         passengerNickname = arguments?.getString("passengernickname")!!
-
+        driverFcmToken = arguments?.getString("driverFcmToken")!!
+        passengerFcmToken = arguments?.getString("passengerFcmToken")!!
     }
 
 
@@ -85,13 +91,27 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setRecycler()
+        val opponentFcmToken = findOpponentFcmToken()
 
         binding.btnSend.setOnClickListener {
             val message : String = binding.editMessage.text.toString()
-            viewModel.sendMessage(message)
+            viewModel.sendMessage(message, opponentFcmToken)
         }
 
     }//onViewCreated
+
+    private fun findOpponentFcmToken() : String{
+
+        var temp : String
+
+        if (driverFcmToken == LocalUserData.getFcmToken()){
+            temp = passengerFcmToken
+        }else{
+            temp = driverFcmToken
+        }
+        return temp
+    }
+
 
     private fun setRecycler(){
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -156,8 +176,5 @@ class ChatFragment : Fragment() {
         }
 
     }
-
-
-
 
 }

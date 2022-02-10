@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
-import org.json.JSONObject
 
 class ChatViewModel : ViewModel(){
 
@@ -23,8 +22,9 @@ class ChatViewModel : ViewModel(){
     }
 
     //현재 구독한 방에 대해 메시지 전송
-    public fun sendMessage(message: String){
-        repository?.sendMessage(roomId, LocalUserData.getEmail(), message)
+    public fun sendMessage(message: String, opponentFcmToken: String){
+        //check for fcm push message
+        repository?.sendMessage(roomId, LocalUserData.getEmail(), message, opponentFcmToken)
     }
 
     // 최초 방에 입장했을때 이전 메시지를 서버로 부터 로드

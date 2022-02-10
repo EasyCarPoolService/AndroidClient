@@ -3,14 +3,11 @@ package com.example.easycarpoolapp.fragment.chat
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
-import com.example.easycarpoolapp.fragment.post.PostAPI
-import com.example.easycarpoolapp.fragment.post.PostRepository
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +16,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
-import ua.naiksoftware.stomp.dto.StompHeader
 
 class ChatRepository private constructor(val context : Context){
 
@@ -69,11 +65,12 @@ class ChatRepository private constructor(val context : Context){
         }
     }//subscribe
 
-    fun sendMessage(roomId: String, email: String?, message: String) {
+    fun sendMessage(roomId: String, email: String?, message: String, fcmToken : String) {
         val data = JSONObject().apply {
             put("roomId", roomId)
             put("writer", email)
             put("message", message)
+            put("fcmToken", fcmToken)
         }
 
         stompClient.send("/app/chat/message", data.toString()).subscribe()
@@ -119,7 +116,6 @@ class ChatRepository private constructor(val context : Context){
                 call: Call<ArrayList<ChatDto>>,
                 response: Response<ArrayList<ChatDto>>
             ) {
-
                 Log.e("VALUE!!", response.body().toString())
                 chatList.value = response.body()
             }
@@ -131,8 +127,7 @@ class ChatRepository private constructor(val context : Context){
         })
 
 
-
-    }
+    }//findMessageByRoomId
 
 
 }

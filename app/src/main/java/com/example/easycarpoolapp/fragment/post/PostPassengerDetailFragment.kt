@@ -27,8 +27,6 @@ class PostPassengerDetailFragment : Fragment() {
     }
 
 
-
-
     companion object{
         public fun getInstance(item: PostPassengerDto): PostPassengerDetailFragment{
             val bundle = Bundle().apply {
@@ -41,6 +39,7 @@ class PostPassengerDetailFragment : Fragment() {
                 putSerializable("date", item.departureDate)
                 putSerializable("time", item.departureTime)
                 putSerializable("message", item.message)
+                putSerializable("fcmToken", item.fcmToken)
             }
             return PostPassengerDetailFragment().apply { arguments = bundle }
         }
@@ -62,6 +61,8 @@ class PostPassengerDetailFragment : Fragment() {
     var date : String? = null
     var time : String? = null
     var message : String? = null
+    var fcmToken : String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +77,7 @@ class PostPassengerDetailFragment : Fragment() {
         date = arguments?.getString("date")
         time = arguments?.getString("time")
         message = arguments?.getString("message")
+        fcmToken = arguments?.getString("fcmToken")
 
     }
 
@@ -91,7 +93,9 @@ class PostPassengerDetailFragment : Fragment() {
             viewModel.createRoom(driver = LocalUserData.getEmail()!!,
                 passenger = email!!,
                 driverNickname = LocalUserData.getNickname()!!,
-                passengerNickname = nickname!!
+                passengerNickname = nickname!!,
+                driverFcmToken = LocalUserData.getFcmToken()!!,
+                passengerFcmToken = fcmToken!!
                 )
         }
 
