@@ -66,7 +66,7 @@ class PostRepository private constructor(val context : Context){
 
         })
 
-    }
+    } // requestSavePost
 
     fun getPassengerPost(postPassengerItems: MutableLiveData<ArrayList<PostPassengerDto>>) {
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)

@@ -38,5 +38,9 @@ data class PostPassengerDto(
     //val hashTag : String,
 
     @SerializedName("message")
-    val message : String
+    val message : String,
+
+    @SerializedName("fcmToken")
+    val fcmToken : String
+
 )

@@ -19,6 +19,7 @@ class PostPassengerFormViewModel :ViewModel(){
     public var hashTag : String = ""    //추후 개발 예정
     public var message : String = ""
 
+
     public fun register(){
 
         val dto = PostPassengerDto(
@@ -30,7 +31,8 @@ class PostPassengerFormViewModel :ViewModel(){
             departureDate = departureDate!!,
             departureTime = departuretime!!,
             gift = giftToString(),
-            message = message!!
+            message = message!!,
+            fcmToken = LocalUserData.getFcmToken()!!
             )
         repository!!.requestSavePost(dto)
     }

@@ -109,9 +109,7 @@ class PostPassengerDetailFragment : Fragment() {
             .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+email)
             .into(binding.imageViewProfile)
 
-
     }//onViewCreated
-
 
     private fun setUI(){
 
