@@ -209,7 +209,7 @@ class AuthRepository private constructor(val context : Context){
 
         })
 
-    }
+    }//login
 
     //=============================================================================================
 
@@ -244,8 +244,7 @@ class AuthRepository private constructor(val context : Context){
             }
 
         })
-
-    }
+    }//getUserData
 
     //splashActivity에서 토큰 인증 후 결과로 얻은 유저정보 set
     private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(
@@ -253,8 +252,9 @@ class AuthRepository private constructor(val context : Context){
         _email = body.email,
         _nickname = body.nickname,
         _gender = body.gender,
-        _driverAuthentication = body.driverAuthentication
-        )
+        _driverAuthentication = body.driverAuthentication,
+        _fcmToken = body.fcmToken
+        )//setLocalUserData
 
     //=============================================================================================
     private fun saveTokenSharedPreference(token : String){
@@ -263,7 +263,7 @@ class AuthRepository private constructor(val context : Context){
         editor.putString("token", token)
         //commit 의 경우 동기적으로 수행 되기에 write를 수행하는 크기가 크다면 UI coroutine 등을 통해 비 동기적으로 수행할것을 권장
         editor.commit()
-    }
+    }//saveTokenSharedPreference
 
 
 }

@@ -21,7 +21,10 @@ data class LocalUserDto(
     val gender : String? = null,
 
     @SerializedName("driverAuthentication")
-    val driverAuthentication : Boolean? = null
+    val driverAuthentication : Boolean? = null,
+
+    @SerializedName("fcmToken")
+    val fcmToken : String? = null
 
 )
 

@@ -11,6 +11,7 @@ class LocalUserData private constructor(){
         private var gender : String? = null
         private var instance: LocalUserData? = null
         private var driverAuthentication : Boolean? = null
+        private var fcmToken : String? = null
 
         //singleton객체 생성은 SplashActivity가 실행될때 반드시 수행해야함 -> 이후의 모든서비스에서 static방식으로 메서드를 사용
         public fun createInstance() {
@@ -19,12 +20,13 @@ class LocalUserData private constructor(){
             }
         }
 
-        public fun login(_token : String?, _email:String?, _nickname : String?, _gender : String?, _driverAuthentication : Boolean?){
+        public fun login(_token : String?, _email:String?, _nickname : String?, _gender : String?, _driverAuthentication : Boolean?, _fcmToken : String?){
             token = _token
             email = _email
             nickname = _nickname
             gender = _gender
             driverAuthentication = _driverAuthentication
+            fcmToken = _fcmToken
         }
 
         public fun logout(){
@@ -33,6 +35,7 @@ class LocalUserData private constructor(){
             nickname = null
             gender = null
             driverAuthentication = null
+            fcmToken = null
         }
 
         public fun getEmail() : String? = email
@@ -40,6 +43,7 @@ class LocalUserData private constructor(){
         public fun getToken() : String? = token
         public fun getGender() : String? = gender
         public fun getDriverAuthentication() : Boolean? = driverAuthentication
+        public fun getFcmToken() : String? = fcmToken
 
     }
 }
