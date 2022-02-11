@@ -39,7 +39,6 @@ class AuthMainFragment() : Fragment() {
     }
 
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
@@ -81,7 +80,7 @@ class AuthMainFragment() : Fragment() {
             }
         })
 
-    }
+    } //onCreateView
 
     override fun onDetach() {
         super.onDetach()
@@ -108,8 +107,5 @@ class AuthMainFragment() : Fragment() {
 
         })
     }
-
-
-
 
 }

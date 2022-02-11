@@ -32,6 +32,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 class JoinFormFragment private constructor(): Fragment() {
 
     companion object{
+
+
+
         public fun getInstance(phoneNumber : String) : JoinFormFragment{
             val args = Bundle().apply{
                 putSerializable("phoneNumber", phoneNumber)
@@ -42,8 +45,8 @@ class JoinFormFragment private constructor(): Fragment() {
         }
     }
 
-    private lateinit var binding : FragmentJoinFormBinding
     private lateinit var fcmToken :String
+    private lateinit var binding : FragmentJoinFormBinding
     private val viewModel : JoinFormViewModel by lazy {
         ViewModelProvider(this).get(JoinFormViewModel::class.java)
     }
@@ -85,6 +88,7 @@ class JoinFormFragment private constructor(): Fragment() {
         viewModel.phoneNumber = arguments?.getString("phoneNumber")
 
         getToken()  //FCM Device Token 얻기
+
     }
 
     override fun onCreateView(
@@ -101,6 +105,8 @@ class JoinFormFragment private constructor(): Fragment() {
 
         //회원가입 버튼 클릭
         binding.btnJoin.setOnClickListener {
+
+            Log.e("TEST!!", fcmToken)
 
             if(binding.editPassword1.text.toString() != binding.editPassword2.text.toString() ||
                 binding.editPassword1.text.length < 6){
@@ -214,6 +220,9 @@ class JoinFormFragment private constructor(): Fragment() {
     private fun getToken(){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             fcmToken = task.result.toString()
+
+            Log.e("TEST!!", fcmToken)
+
         })
     }//getToken()
 

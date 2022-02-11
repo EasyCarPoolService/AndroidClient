@@ -36,7 +36,6 @@ class SplashActivity : AppCompatActivity() {
         ViewModelProvider(this).get(SplashViewModel::class.java)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

@@ -134,6 +134,9 @@ class AuthRepository private constructor(val context : Context){
 
         var profile_image_body : MultipartBody.Part? = null
 
+
+        Log.e("REPOSITORY", fcmToken)
+
         //image 내부 저장소에 저장
         if(profile_image!=null){
             val profileImageFile : File = imageFileManager.createImageFile(profile_image)

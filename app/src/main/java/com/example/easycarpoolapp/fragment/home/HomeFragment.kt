@@ -17,8 +17,7 @@ import com.example.easycarpoolapp.databinding.FragmentHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
 
-class HomeFragment(): Fragment() {
-
+class HomeFragment() : Fragment() {
 
     companion object{
         fun getInstance() : HomeFragment{
@@ -27,8 +26,6 @@ class HomeFragment(): Fragment() {
     }
 
     private lateinit var binding : FragmentHomeBinding
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,15 +41,12 @@ class HomeFragment(): Fragment() {
             binding.textDriverAuth.text = LocalUserData.getDriverAuthentication().toString()
         }
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
-
 
 
 }
