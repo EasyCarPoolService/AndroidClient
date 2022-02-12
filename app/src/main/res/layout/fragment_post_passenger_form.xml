@@ -395,7 +395,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
-                android:text="태워주세요."
+                android:text="태워주세요"
                 android:textColor="@color/main_color"
                 android:textStyle="bold"
                 android:layout_margin="8dp"

@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -45,7 +47,32 @@ class PostRepository private constructor(val context : Context){
 
     //=============================================================================================
 
-    public fun requestSavePost(dto: PostPassengerDto) {
+    public fun requestSaveDriverPost(dto: PostDriverDto) {
+        Log.e(TAG, dto.toString())
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getDriverSaveCall(postDriverDto = dto)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.e(TAG, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+    } // requestSavePassengerPost
+
+    //=============================================================================================
+
+    public fun requestSavePassengerPost(dto: PostPassengerDto) {
         Log.e(TAG, dto.toString())
 
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
@@ -66,9 +93,9 @@ class PostRepository private constructor(val context : Context){
 
         })
 
-    } // requestSavePost
+    } // requestSavePassengerPost
 
-    fun getPassengerPost(postPassengerItems: MutableLiveData<ArrayList<PostPassengerDto>>) {
+    fun getPassengerPost(postItems: MutableLiveData<ArrayList<PostDto>>) {
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(OKHttpHelper.createHttpClient(context))
@@ -76,20 +103,48 @@ class PostRepository private constructor(val context : Context){
 
         val api = retrofit.create(PostAPI::class.java)
         val call = api.getPassengerPostCall()
-        call.enqueue(object : Callback<ArrayList<PostPassengerDto>> {
+
+        call.enqueue(object : Callback<ArrayList<PostDto>>{
             override fun onResponse(
-                call: Call<ArrayList<PostPassengerDto>>,
-                response: Response<ArrayList<PostPassengerDto>>
+                call: Call<ArrayList<PostDto>>,
+                response: Response<ArrayList<PostDto>>
             ) {
-                postPassengerItems.value = response.body()
+                postItems.value = response.body()
             }
 
-            override fun onFailure(call: Call<ArrayList<PostPassengerDto>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 
         })
+
     }//getPassengerPost
+
+
+    fun getDriverPost(postItems: MutableLiveData<ArrayList<PostDto>>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getDriverPostCall()
+
+        call.enqueue(object : Callback<ArrayList<PostDto>>{
+            override fun onResponse(
+                call: Call<ArrayList<PostDto>>,
+                response: Response<ArrayList<PostDto>>
+            ) {
+                postItems.value = response.body()
+            }
+
+            override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+    }//getDrvierPost
 
 
     //check

@@ -15,13 +15,15 @@ import com.example.easycarpoolapp.fragment.chat.ChatHomeFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.fragment.post.*
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
-RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks{
+RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
+    PostDriverDetailFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -122,12 +124,19 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
-    // post클릭시 detail 창으로 이동
-    override fun onPostSelected(item : PostPassengerDto) {
+
+    // 태워주세요 클릭시 이동
+    override fun onPassengerPostSelected(item: PostDto) {
         val fragment = PostPassengerDetailFragment.getInstance(item)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
-
     }
+
+    // 타세요 클릭시 이동 -> PostDriverDetailFragment생성
+    override fun onDriverPostSelected(item: PostDto) {
+        val fragment = PostDriverDetailFragment.getInstance(item)
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }
+
 
     override fun onConfirmSelectedFromRegisterCar() {
         val fragment = RegisterCarFragment.getInstance()

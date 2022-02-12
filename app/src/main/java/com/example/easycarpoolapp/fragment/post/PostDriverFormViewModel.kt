@@ -1,15 +1,13 @@
 package com.example.easycarpoolapp.fragment.post
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
-class PostPassengerFormViewModel :ViewModel(){
+class PostDriverFormViewModel : ViewModel(){
 
-    // PostPassengerFormFragment를 Hosting하는 Activity에서 PostRepository.init(context)수행
     private val repository : PostRepository? = PostRepository.getInstance()
-
 
     public var departure : String? = null
     public var destination : String? = null
@@ -22,8 +20,8 @@ class PostPassengerFormViewModel :ViewModel(){
 
     public fun register(){
 
-        val dto = PostPassengerDto(
-            type = "passenger",
+        val dto = PostDriverDto(
+            type = "driver",
             email = LocalUserData.getEmail()!!,
             nickname = LocalUserData.getNickname()!!,
             gender = LocalUserData.getGender()!!,
@@ -34,9 +32,10 @@ class PostPassengerFormViewModel :ViewModel(){
             gift = giftToString(),
             message = message!!,
             fcmToken = LocalUserData.getFcmToken()!!
-            )
-        repository!!.requestSavePassengerPost(dto)
+        )
+        repository!!.requestSaveDriverPost(dto)
     }//register
+
 
     private fun giftToString() : String{
         var result : String=""
@@ -44,7 +43,6 @@ class PostPassengerFormViewModel :ViewModel(){
             result+=item+","
         }
         return result
-    }//giftToString()
-
+    }//giftToSrtring
 
 }

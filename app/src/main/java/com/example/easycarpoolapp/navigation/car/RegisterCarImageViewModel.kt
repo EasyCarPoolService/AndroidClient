@@ -17,5 +17,4 @@ class RegisterCarImageViewModel : ViewModel() {
         repository?.authenticateDriver(bitmapId = bitmapId, bitmapCar = bitmapCar, carNumber = carNumber!!, manufacturer = manufacturer!!, model = model!!)
     }//authenticateDriver
 
-
 }

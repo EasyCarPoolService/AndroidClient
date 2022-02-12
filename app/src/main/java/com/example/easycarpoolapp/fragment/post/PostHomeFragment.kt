@@ -21,6 +21,8 @@ import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
+import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -31,7 +33,8 @@ class PostHomeFragment : Fragment() {
     interface CallBacks{
         public fun onAddPassengerSelected()
         public fun onAddDriverSelected()
-        public fun onPostSelected(item : PostPassengerDto)
+        public fun onPassengerPostSelected(item : PostDto)
+        public fun onDriverPostSelected(item : PostDto)
     }
 
     companion object{
@@ -45,6 +48,7 @@ class PostHomeFragment : Fragment() {
     private val viewModel : PostHomeViewModel by lazy {
         ViewModelProvider(this).get(PostHomeViewModel::class.java)
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,7 +66,7 @@ class PostHomeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_home, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        //adpater ? check
+
 
         return binding.root
     }
@@ -71,9 +75,7 @@ class PostHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.textNickname.text = LocalUserData.getNickname().toString()
 
-
         setImageBtnProfile()
-
 
         binding.imageBtnProfile.setOnClickListener{
             Toast.makeText(requireContext(), "imageView clicked", Toast.LENGTH_SHORT).show()
@@ -94,9 +96,8 @@ class PostHomeFragment : Fragment() {
 
         binding.btnAddDriver.setOnClickListener {
             // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
-
             if(LocalUserData.getDriverAuthentication()!=null&&LocalUserData.getDriverAuthentication() == true){ //운전자 등록이 되어있는 경우
-                Toast.makeText(requireContext(), "POSTHOMEFRAGMENT btnAddDriver", Toast.LENGTH_SHORT).show()
+                callbacks?.onAddDriverSelected()
             }else{ //운전자 등록이 되어있지 않은 경우
                 RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
             }
@@ -110,12 +111,17 @@ class PostHomeFragment : Fragment() {
 
         //passenger 게시글 불러오기
         binding.btnPassengerPost.setOnClickListener {
-            Toast.makeText(requireContext(), "btn work", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "passenger post", Toast.LENGTH_SHORT).show()
             viewModel.getPassengerPost()
-        }
+        }//btnPassengerPost
 
-        viewModel.postPassengerItems.observe(viewLifecycleOwner, Observer {
-            updateToPassengerPost(it)
+        binding.btnDriverPost.setOnClickListener {
+            Toast.makeText(requireContext(), "driver post", Toast.LENGTH_SHORT).show()
+            viewModel.getDriverPost()
+        }//btnDriverPost
+
+        viewModel.postItems.observe(viewLifecycleOwner, Observer {
+            updatePost(it)
         })
 
     }// onViewCreated
@@ -137,8 +143,8 @@ class PostHomeFragment : Fragment() {
         PostRepository.onDestroy()
     }
     //==========================================================================================
-    private fun updateToPassengerPost(items : ArrayList<PostPassengerDto>){
-        binding.recyclerView.adapter = PostAdapter(items)
+    private fun updatePost(items : ArrayList<PostDto>){
+        binding.recyclerView.adapter = PostAdapter(items = items)
     }
 
     //==========================================================================================
@@ -146,7 +152,7 @@ class PostHomeFragment : Fragment() {
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        lateinit var item : PostPassengerDto
+        lateinit var item : PostDto
         val text_departure : TextView = itemView.findViewById(R.id.text_departure)
         val text_destination : TextView = itemView.findViewById(R.id.text_destination)
         val text_date : TextView = itemView.findViewById(R.id.text_date)
@@ -157,13 +163,20 @@ class PostHomeFragment : Fragment() {
 
         init {
             itemView.setOnClickListener {
-                callbacks!!.onPostSelected(item)
+                if(item.type.equals("driver")){ //타세요 게시글의 경우
+                    callbacks!!.onDriverPostSelected(item)
+                }else{  //태워주세요 게시글의 경우
+                    callbacks!!.onPassengerPostSelected(item)
+                }
+
+
             }
         }//init
 
-        public fun bind(item : PostPassengerDto){
 
+        public fun bind(item : PostDto){
             this.item = item
+
             text_departure.text = text_departure.text.toString()+item.departure
             text_destination.text = text_destination.text.toString()+item.destination
             text_date.text = "날짜 : " + item.departureDate + " 시간 : " + item.departureTime
@@ -183,7 +196,7 @@ class PostHomeFragment : Fragment() {
     }
     //==========================================================================================
 
-    inner class PostAdapter(val items : ArrayList<PostPassengerDto>) : RecyclerView.Adapter<PostViewHolder>(){
+    inner class PostAdapter(val items : ArrayList<PostDto>) : RecyclerView.Adapter<PostViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
             val view = layoutInflater.inflate(R.layout.post_item_layout, parent, false)
             return PostViewHolder(view)

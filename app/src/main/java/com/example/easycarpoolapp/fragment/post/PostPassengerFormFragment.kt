@@ -47,7 +47,7 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
             viewModel.message = s.toString()
         }
 
-    }
+    }//memoTextWathcer
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,7 +116,7 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
 
     //======================================================================================================
 
-    //check
+
     private fun setToggleButton(){
 
         binding.toggleGroup.setOnSelectListener {
@@ -150,7 +150,7 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         }else{
             return true
         }
-    }
+    }//isRegisterAvailable()
 
 
 

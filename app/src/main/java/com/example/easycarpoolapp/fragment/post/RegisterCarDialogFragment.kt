@@ -14,8 +14,6 @@ import com.example.easycarpoolapp.fragment.LoginDialogFragment
 class RegisterCarDialogFragment() : DialogFragment(){
 
     interface Callbacks {
-
-
         fun onConfirmSelectedFromRegisterCar()
     }
 

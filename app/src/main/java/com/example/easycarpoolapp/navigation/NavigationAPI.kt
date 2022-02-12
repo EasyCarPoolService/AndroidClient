@@ -17,7 +17,9 @@ interface NavigationAPI {
     public fun getDriverAuthCall(
         @Part image_id: MultipartBody.Part,
         @Part image_car: MultipartBody.Part,
-        @Part testData : MultipartBody.Part
+        @Part("carNumber") name: RequestBody?,
+        @Part("manufacturer") email: RequestBody?,
+        @Part("model") nickname: RequestBody?
     ) : Call<ResponseBody>
 
 }

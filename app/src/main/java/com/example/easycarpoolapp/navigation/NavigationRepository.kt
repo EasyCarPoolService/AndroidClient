@@ -68,16 +68,12 @@ class NavigationRepository private constructor(val context : Context){
         var body_id : MultipartBody.Part = MultipartBody.Part.createFormData("idImage", idImageFileName, requestBody_id)
         var body_car : MultipartBody.Part = MultipartBody.Part.createFormData("carImage", carImageFileNmae, requestBody_car)
 
-        //testCode start
-        var testBody : RequestBody = RequestBody.create(MediaType.parse("text/plain"), carNumber)
 
+        //car info
+        val carNumber_body = RequestBody.create(MediaType.parse("text/plain"), carNumber)
+        val manufacturer_body = RequestBody.create(MediaType.parse("text/plain"), manufacturer)
+        val model_body = RequestBody.create(MediaType.parse("text/plain"), model)
 
-        var testPart : MultipartBody.Part = MultipartBody.Part.createFormData("testData", carNumber)
-
-        //testCode end
-
-        val text = "some text"
-        val requestBody = RequestBody.create(MediaType.parse("text/plain"), text)
 
         //retrofit
         var gson : Gson =  GsonBuilder()
@@ -90,7 +86,7 @@ class NavigationRepository private constructor(val context : Context){
             .build()
 
         val api = retrofit.create(NavigationAPI::class.java)
-        val call = api.getDriverAuthCall(body_id, body_car, testPart)
+        val call = api.getDriverAuthCall(body_id, body_car, carNumber_body, manufacturer_body, model_body)
 
         call.enqueue(object : Callback<ResponseBody>{
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

@@ -16,21 +16,21 @@ import com.example.easycarpoolapp.databinding.FragmentPostDetailBinding
 import com.example.easycarpoolapp.databinding.FragmentPostDriverDetailBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 
-//현재 태워주세요게시글에 대한 PostDetail 창 -> nickname변수는 passenger
-// 현재 게시글을 선택한 사용자는 Driver 추후 수정여부 판단
-class PostPassengerDetailFragment : Fragment() {
+class PostDriverDetailFragment : Fragment() {
+
 
     interface Callbacks{
         //방생성후 방 UUID를 서버로 부터 전달받아 Observer패턴에 의해 Fragment이동
+
+        //check Passenger 와 구분하도록 수정
         public fun onSendMesageSelected(dto : ChatRoomDto)
     }
 
 
     companion object{
-        public fun getInstance(item: PostDto): PostPassengerDetailFragment{
+        public fun getInstance(item: PostDto): PostDriverDetailFragment{
             val bundle = Bundle().apply {
                 putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
@@ -43,17 +43,14 @@ class PostPassengerDetailFragment : Fragment() {
                 putSerializable("message", item.message)
                 putSerializable("fcmToken", item.fcmToken)
             }
-            return PostPassengerDetailFragment().apply { arguments = bundle }
+            return PostDriverDetailFragment().apply { arguments = bundle }
         }
     }//companion object
 
-
-
-
-    private lateinit var binding : FragmentPostDetailBinding
-    private var callbacks : Callbacks? = null
-    private val viewModel : PostPassengerDetailViewModel by lazy {
-        ViewModelProvider(this).get(PostPassengerDetailViewModel::class.java)
+    private lateinit var binding : FragmentPostDriverDetailBinding
+    private var callbacks : PostDriverDetailFragment.Callbacks? = null
+    private val viewModel : PostDriverDetailViewModel by lazy {
+        ViewModelProvider(this).get(PostDriverDetailViewModel::class.java)
     }
 
     var email : String? = null
@@ -66,10 +63,8 @@ class PostPassengerDetailFragment : Fragment() {
     var message : String? = null
     var fcmToken : String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         callbacks = context as Callbacks?
 
         email = arguments?.getString("email")
@@ -82,14 +77,16 @@ class PostPassengerDetailFragment : Fragment() {
         message = arguments?.getString("message")
         fcmToken = arguments?.getString("fcmToken")
 
-    }
+    }//onCreate
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_detail, container, false)
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_driver_detail, container, false)
         setUI()
+
 
         binding.btnSendMessage.setOnClickListener {
             //게시글 작성자에게 메시지 보내기 -> 대화창 생성및 이동
@@ -99,22 +96,20 @@ class PostPassengerDetailFragment : Fragment() {
                 passengerNickname = nickname!!,
                 driverFcmToken = LocalUserData.getFcmToken()!!,
                 passengerFcmToken = fcmToken!!
-                )
+            )
         }
 
         return binding.root
     }//onCreateView
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setImage()
 
         viewModel.roomInfo.observe(viewLifecycleOwner, Observer {
             callbacks!!.onSendMesageSelected(dto = it)
         })
-
-        Glide.with(this)
-            .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+email)
-            .into(binding.imageViewProfile)
 
     }//onViewCreated
 
@@ -128,5 +123,19 @@ class PostPassengerDetailFragment : Fragment() {
         binding.textMessage.text = message
 
     }//setUI
+
+    private fun setImage(){
+
+        Glide.with(this)
+            .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+email)
+            .into(binding.imageViewProfile) //profile image set
+
+        Glide.with(this)
+            .load("http://"+ NetworkConfig.getIP()+":8080/api/image/car?email="+email)
+            .into(binding.imageCar) //profile image set
+
+    }//setImage()
+
+
 
 }
