@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.auth.join
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
@@ -86,6 +87,8 @@ class JoinFormFragment private constructor(): Fragment() {
         super.onCreate(savedInstanceState)
         //이전 프래그먼트에서 인증 완료한 사용자의 휴대전화 번호 -> ViewModel에 저장
         viewModel.phoneNumber = arguments?.getString("phoneNumber")
+
+        bitmap_profile = BitmapFactory.decodeResource(requireContext().resources, R.drawable.default_image)
 
         getToken()  //FCM Device Token 얻기
 
