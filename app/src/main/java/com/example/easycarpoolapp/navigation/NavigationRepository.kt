@@ -69,7 +69,8 @@ class NavigationRepository private constructor(val context : Context){
         var body_car : MultipartBody.Part = MultipartBody.Part.createFormData("carImage", carImageFileNmae, requestBody_car)
 
 
-        //car info
+        //car info & user Email
+        val email_body = RequestBody.create(MediaType.parse("text/plain"), LocalUserData.getEmail())
         val carNumber_body = RequestBody.create(MediaType.parse("text/plain"), carNumber)
         val manufacturer_body = RequestBody.create(MediaType.parse("text/plain"), manufacturer)
         val model_body = RequestBody.create(MediaType.parse("text/plain"), model)
@@ -86,7 +87,7 @@ class NavigationRepository private constructor(val context : Context){
             .build()
 
         val api = retrofit.create(NavigationAPI::class.java)
-        val call = api.getDriverAuthCall(body_id, body_car, carNumber_body, manufacturer_body, model_body)
+        val call = api.getDriverAuthCall(body_id, body_car, email_body ,carNumber_body, manufacturer_body, model_body)
 
         call.enqueue(object : Callback<ResponseBody>{
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
