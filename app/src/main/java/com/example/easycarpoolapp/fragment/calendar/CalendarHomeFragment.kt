@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.R
@@ -26,13 +27,27 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade
 class CalendarHomeFragment : Fragment() {
 
     private lateinit var binding : FragmentCalendarHomeBinding
+    private val viewModel : CalendarHomeViewModel by lazy {
+        ViewModelProvider(this).get(CalendarHomeViewModel::class.java)
+    }
+
 
     companion object{
         public fun getInstance() : CalendarHomeFragment {
             return CalendarHomeFragment()
         }
-    }
+    }//companion object
+    //=============================================================================
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CalendarRepository.init(requireContext())
+
+
+    }//onCreate()
+
+
+    //=============================================================================
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +68,16 @@ class CalendarHomeFragment : Fragment() {
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             getWordsFromCalendarTBL(date)
         }
-        
+
         return binding.root
     }//onCreateView()
 
+    //=============================================================================
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CalendarRepository.onDestroy()
+    }//onDestroy
     //=============================================================================
 
     fun getWordsFromCalendarTBL(date : CalendarDay){
@@ -132,6 +153,7 @@ class CalendarHomeFragment : Fragment() {
     }   // TodayDecorator
 
     //=============================================================================
+
 
 
 
