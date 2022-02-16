@@ -30,7 +30,7 @@ interface PostAPI {
     public fun getCreateRoomCall(@Body chatRoomDto: ChatRoomDto) : Call<ChatRoomDto>
 
 
-    @POST("/api/user/getdriverauth")
+    @POST("/api/user/getDriverAuth")
     public fun getDriverAuthCall(@Body localUserDto : LocalUserDto) : Call<LocalUserDto>
 
 }

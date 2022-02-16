@@ -38,6 +38,12 @@ class LocalUserData private constructor(){
             fcmToken = null
         }
 
+
+        public fun updateDriverAuthentication(driverAuth : Boolean){
+            this.driverAuthentication = driverAuth
+        }
+
+
         public fun getEmail() : String? = email
         public fun getNickname() : String? = nickname
         public fun getToken() : String? = token

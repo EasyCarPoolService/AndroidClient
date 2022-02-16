@@ -2,10 +2,12 @@ package com.example.easycarpoolapp.fragment.post
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
+import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
@@ -48,6 +50,7 @@ class PostRepository private constructor(val context : Context){
 
     //=============================================================================================
 
+    //mutableLiveData 추가할것
     public fun getDriverAuth(){
 
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
@@ -56,10 +59,35 @@ class PostRepository private constructor(val context : Context){
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
-        val call = api.getDriverAuthCall(LocalUserData.getEmail())
+
+        val call = api.getDriverAuthCall(LocalUserDto(email = LocalUserData.getEmail()))
+        call.enqueue(object : Callback<LocalUserDto>{
+            override fun onResponse(call: Call<LocalUserDto>, response: Response<LocalUserDto>) {
+                val body = response.body()
+                if(body != null) {
+                    Log.e("TAG", body.driverAuthentication.toString())
+                    LocalUserData.updateDriverAuthentication(body.driverAuthentication!!)
+                }
+            }
+
+            override fun onFailure(call: Call<LocalUserDto>, t: Throwable) {
+                Log.e("TAG", t.message.toString())
+            }
+
+        })
+
+    }//getDriverAuth()
 
 
-    }
+    //=============================================================================================
+    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(
+        _token = body.token,
+        _email = body.email,
+        _nickname = body.nickname,
+        _gender = body.gender,
+        _driverAuthentication = body.driverAuthentication,
+        _fcmToken = body.fcmToken
+    )//setLocalUserData
 
 
 

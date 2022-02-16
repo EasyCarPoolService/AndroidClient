@@ -53,14 +53,22 @@ class PostHomeFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as CallBacks?
-    }
+    }//onAttach
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        PostRepository.init(requireContext())
+        viewModel.getDriverAuth()
+
+    }//onCreat()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        PostRepository.init(requireContext())
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_home, container, false)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -98,7 +106,7 @@ class PostHomeFragment : Fragment() {
             // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
             //server로 부터 인증받아 LocalUserData Update수행
 
-            viewModel.getDriverAuth()
+            //viewModel.getDriverAuth()
 
             if(LocalUserData.getDriverAuthentication()!=null&&LocalUserData.getDriverAuthentication() == true){ //운전자 등록이 되어있는 경우
                 callbacks?.onAddDriverSelected()
