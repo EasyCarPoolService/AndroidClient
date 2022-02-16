@@ -24,6 +24,7 @@ import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
+import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
@@ -57,7 +58,6 @@ class PostHomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         PostRepository.init(requireContext())
         viewModel.getDriverAuth()
 
@@ -82,6 +82,9 @@ class PostHomeFragment : Fragment() {
         binding.textNickname.text = LocalUserData.getNickname().toString()
 
         setImageBtnProfile()
+        viewModel.getUserPostData() //User가 작성한 게시글 혹은 진행중 게시글 정보 조회 -> 레이아웃 상단에 띄우기
+
+
 
         binding.imageBtnProfile.setOnClickListener{
             Toast.makeText(requireContext(), "imageView clicked", Toast.LENGTH_SHORT).show()
@@ -132,9 +135,17 @@ class PostHomeFragment : Fragment() {
             viewModel.getDriverPost()
         }//btnDriverPost
 
+        // 태워주세요 혹은 타세요 게시글 갱신
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
             updatePost(it)
         })
+
+        //user가 작성한 게시글 혹은 진행중 정보 갱신
+        viewModel.userPostDto.observe(viewLifecycleOwner, Observer {
+            updateUserPostData(it)
+        })
+
+
 
     }// onViewCreated
 
@@ -155,6 +166,16 @@ class PostHomeFragment : Fragment() {
         PostRepository.onDestroy()
     }
     //==========================================================================================
+    //현재 User가 작성한 혹은 진행중 게시글 갱신
+    private fun updateUserPostData(userPostDto: UserPostDto){
+        binding.userPostDriver.text = userPostDto.driver
+        binding.userPostPassenger.text = userPostDto.passenger
+        binding.userPostOngoing.text = userPostDto.ongoing
+    }
+
+
+    //==========================================================================================
+    // 타세요 혹은 태워주세요 게시글 갱신
     private fun updatePost(items : ArrayList<PostDto>){
         binding.recyclerView.adapter = PostAdapter(items = items)
     }

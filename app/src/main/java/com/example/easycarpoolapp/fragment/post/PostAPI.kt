@@ -6,6 +6,7 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
+import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -32,5 +33,8 @@ interface PostAPI {
 
     @POST("/api/user/getDriverAuth")
     public fun getDriverAuthCall(@Body localUserDto : LocalUserDto) : Call<LocalUserDto>
+
+    @POST("/api/post/getUserPostData")
+    public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
 
 }

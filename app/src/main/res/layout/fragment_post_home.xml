@@ -116,7 +116,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/post_driver"
+                            android:id="@+id/user_post_driver"
                             android:textColor="@color/main_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
 
                         <TextView
                             android:textColor="@color/main_color"
-                            android:id="@+id/post_passenger"
+                            android:id="@+id/user_post_passenger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
@@ -172,7 +172,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/post_process"
+                            android:id="@+id/user_post_ongoing"
                             android:textColor="@color/main_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

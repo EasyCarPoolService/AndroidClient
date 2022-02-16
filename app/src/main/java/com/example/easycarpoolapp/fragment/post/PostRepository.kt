@@ -12,6 +12,7 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
+import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -216,4 +217,32 @@ class PostRepository private constructor(val context : Context){
         })
 
     }//createChatRoom
+
+    fun getUserPostData(userPostDto: MutableLiveData<UserPostDto>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getUserPostDataCall(LocalUserDto(email = LocalUserData.getEmail()))
+
+        call.enqueue(object : Callback<UserPostDto> {
+            override fun onResponse(call: Call<UserPostDto>, response: Response<UserPostDto>) {
+                val body = response.body()
+
+                if(body != null){
+                    Log.e(TAG, body.driver.toString())
+                    userPostDto.value = body
+                }
+            }
+            override fun onFailure(call: Call<UserPostDto>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+
+
+    }//getUserPostData
 }
