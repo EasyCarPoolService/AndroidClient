@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat
 import com.example.easycarpoolapp.auth.AuthActivity
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
+import com.example.easycarpoolapp.fragment.calendar.CalendarHomeFragment
 import com.example.easycarpoolapp.fragment.chat.ChatFragment
 import com.example.easycarpoolapp.fragment.chat.ChatHomeFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
@@ -65,8 +66,8 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
                     true
                 }
-                R.id.activity_main_bottom_nav_map->{
-                    val fragment = HomeFragment.getInstance()
+                R.id.activity_main_bottom_nav_calendar->{
+                    val fragment = CalendarHomeFragment.getInstance()
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
                     true
                 }
