@@ -18,4 +18,10 @@ class PostHomeViewModel : ViewModel(){
         repository!!.getDriverPost(postItems)
     }
 
+    //Driver 인증 여부 결과 받아 LocalUserData 업데이트 수행
+    public fun getDriverAuth(){
+        repository!!.getDriverAuth()
+    }
+
+
 }

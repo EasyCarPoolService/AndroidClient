@@ -52,9 +52,7 @@ class PostHomeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         callbacks = context as CallBacks?
-
     }
 
     override fun onCreateView(
@@ -94,8 +92,14 @@ class PostHomeFragment : Fragment() {
             }
         }
 
+
+        //driver post 작성하기
         binding.btnAddDriver.setOnClickListener {
             // 차량 등록 여부 판단 -> 미등록(차량등록 다이어로그 메시지 띄우기) / 등록(등록창으로 이동)
+            //server로 부터 인증받아 LocalUserData Update수행
+
+            viewModel.getDriverAuth()
+
             if(LocalUserData.getDriverAuthentication()!=null&&LocalUserData.getDriverAuthentication() == true){ //운전자 등록이 되어있는 경우
                 callbacks?.onAddDriverSelected()
             }else{ //운전자 등록이 되어있지 않은 경우
@@ -173,6 +177,7 @@ class PostHomeFragment : Fragment() {
             }
         }//init
 
+        //==========================================================================================
 
         public fun bind(item : PostDto){
             this.item = item
@@ -194,7 +199,7 @@ class PostHomeFragment : Fragment() {
         }//bind
 
     }
-    //==========================================================================================
+        //==========================================================================================
 
     inner class PostAdapter(val items : ArrayList<PostDto>) : RecyclerView.Adapter<PostViewHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {

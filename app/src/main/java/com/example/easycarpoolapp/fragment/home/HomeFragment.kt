@@ -39,10 +39,18 @@ class HomeFragment() : Fragment() {
             binding.textGender.text = LocalUserData.getGender()
             binding.textToken.text = LocalUserData.getToken()
             binding.textDriverAuth.text = LocalUserData.getDriverAuthentication().toString()
+
         }
 
+
+        binding.btnLogout.setOnClickListener {
+            LocalUserData.logout()
+        }
+
+
+
         return binding.root
-    }
+    }//onCreateView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.fragment.post
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
@@ -44,6 +45,23 @@ class PostRepository private constructor(val context : Context){
             INSTANCE = null
         }//onDestroy
     }//companion object
+
+    //=============================================================================================
+
+    public fun getDriverAuth(){
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getDriverAuthCall(LocalUserData.getEmail())
+
+
+    }
+
+
 
     //=============================================================================================
 

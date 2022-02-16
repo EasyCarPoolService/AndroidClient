@@ -1,5 +1,7 @@
 package com.example.easycarpoolapp.fragment.post
 
+import com.example.easycarpoolapp.auth.domain.User
+import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
@@ -26,5 +28,9 @@ interface PostAPI {
 
     @POST("/api/chat/createroom")
     public fun getCreateRoomCall(@Body chatRoomDto: ChatRoomDto) : Call<ChatRoomDto>
+
+
+    @POST("/api/user/getdriverauth")
+    public fun getDriverAuthCall(@Body localUserDto : LocalUserDto) : Call<LocalUserDto>
 
 }
