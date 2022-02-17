@@ -26,8 +26,8 @@ class CalendarUtil {
 
         val TAG  : String = "CalendarUtil"
 
-        public fun getTodayDecorator() : TodayDecorator {
-            return TodayDecorator()
+        public fun getTodayDecorator(context: Activity) : TodayDecorator {
+            return TodayDecorator(context)
         }//getTodayDecorator()
 
         public fun getEventDecorator(context: Activity, posts : ArrayList<PostDto>) :EventDecorator{
@@ -56,18 +56,26 @@ class CalendarUtil {
     //====================================================================================
 
 
-    class TodayDecorator: DayViewDecorator {
+    class TodayDecorator(context : Activity): DayViewDecorator {
         private var date = CalendarDay.today()
+        private val drawable: Drawable
 
         override fun shouldDecorate(day: CalendarDay?): Boolean {
             return day?.equals(date)!!
         }
 
         override fun decorate(view: DayViewFacade?) {
-            view?.addSpan(StyleSpan(Typeface.BOLD))
+            /*view?.addSpan(StyleSpan(Typeface.BOLD))
             view?.addSpan(RelativeSizeSpan(1.7f))
-            view?.addSpan(ForegroundColorSpan(Color.parseColor("#ffffff")))
+            view?.addSpan(ForegroundColorSpan(Color.parseColor("#ffffff")))*/
+            view?.setSelectionDrawable(drawable)
+            //view?.addSpan(DotSpan(5f, Color.RED)); // 날자밑에 점
         }
+
+        init {
+            drawable = context.resources.getDrawable(R.drawable.icon_calendar_maincolor)
+        }
+
     }   // TodayDecorator
 
 
@@ -80,7 +88,7 @@ class CalendarUtil {
         }
 
         override fun decorate(view: DayViewFacade) {
-            view.setSelectionDrawable(drawable)
+            //view.setSelectionDrawable(drawable)
             view.addSpan(DotSpan(5f, Color.RED)); // 날자밑에 점
         }
 

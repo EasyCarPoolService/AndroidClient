@@ -71,7 +71,7 @@ class CalendarHomeFragment : Fragment() {
 
         viewModel.getPostData()
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
-            binding.calendarView.addDecorator(CalendarUtil.getTodayDecorator())
+            binding.calendarView.addDecorator(CalendarUtil.getTodayDecorator(requireActivity()))
             binding.calendarView.addDecorator(CalendarUtil.getEventDecorator(requireActivity(), it))
         })
 
