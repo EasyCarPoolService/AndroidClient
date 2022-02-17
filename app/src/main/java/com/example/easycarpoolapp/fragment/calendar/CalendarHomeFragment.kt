@@ -13,13 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -45,8 +46,6 @@ class CalendarHomeFragment : Fragment() {
 
 
     }//onCreate()
-
-
     //=============================================================================
 
     override fun onCreateView(
@@ -63,14 +62,26 @@ class CalendarHomeFragment : Fragment() {
         //calendar를 꾸미기위한 Decorator추가
         binding.calendarView.addDecorator(TodayDecorator())
 
-
         //날짜 선택시 이벤트 발생
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             getWordsFromCalendarTBL(date)
         }
 
+
+
         return binding.root
     }//onCreateView()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.postItems.observe(viewLifecycleOwner, Observer {
+            showPostData(it)
+        })
+
+        viewModel.getPostData()
+
+    }
 
     //=============================================================================
 
@@ -92,7 +103,13 @@ class CalendarHomeFragment : Fragment() {
         //calendarViewModel.getWordsFromCalendarTBL(selectedDate)
     }//getWordsFromCalendarTBL
 
-
+    //=============================================================================
+    private fun showPostData(arrayList: ArrayList<PostDto>) {
+        for(i in arrayList){
+            //post들의 날짜 출력
+            Log.e("showPostData!", i.departureDate.toString())
+        }
+    }//showPostData()
 
     //=============================================================================
     private fun createTestData(): ArrayList<String> {
@@ -102,7 +119,7 @@ class CalendarHomeFragment : Fragment() {
         }
 
         return temp
-    }
+    }// createTestData()
 
     //=============================================================================
 
@@ -153,9 +170,5 @@ class CalendarHomeFragment : Fragment() {
     }   // TodayDecorator
 
     //=============================================================================
-
-
-
-
 
 }
