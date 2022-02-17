@@ -19,9 +19,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="8dp"
             android:padding="8dp"
+            android:background="#eeeeee"
+            android:elevation="24dp"
             >
+
+            <ImageButton
+                android:id="@+id/btn_plus"
+                android:layout_marginRight="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:src="@drawable/icon_plus_white"
+                android:background="@drawable/btn_radius"
+                android:backgroundTint="@color/main_color"
+                android:textColor="@color/white"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:text="전송"
+                />
+
             <EditText
                 android:background="@drawable/btn_radius_gray"
                 android:id="@+id/edit_message"
@@ -33,7 +49,22 @@
                 android:padding="8dp"
                 />
 
-            <Button
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_marginLeft="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:src="@drawable/icon_upward_whitecolor"
+                android:background="@drawable/btn_radius"
+                android:backgroundTint="@color/main_color"
+                android:textColor="@color/white"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:text="전송"
+                />
+
+
+            <!--<Button
                 android:id="@+id/btn_send"
                 android:layout_marginLeft="8dp"
                 android:textSize="16sp"
@@ -44,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="전송"
-                />
+                />-->
         </LinearLayout>
 
     </LinearLayout>

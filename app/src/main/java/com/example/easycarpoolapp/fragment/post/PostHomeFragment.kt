@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -120,20 +122,28 @@ class PostHomeFragment : Fragment() {
             //callbacks?.onAddDriverSelected()
         }
 
-        binding.btnAddPassenger.setOnClickListener {
-            callbacks?.onAddPassengerSelected()
-        }
-
         //passenger 게시글 불러오기
         binding.btnPassengerPost.setOnClickListener {
-            Toast.makeText(requireContext(), "passenger post", Toast.LENGTH_SHORT).show()
+            setButtonEffect(it as Button)
             viewModel.getPassengerPost()
         }//btnPassengerPost
 
         binding.btnDriverPost.setOnClickListener {
-            Toast.makeText(requireContext(), "driver post", Toast.LENGTH_SHORT).show()
+            setButtonEffect(it as Button)
             viewModel.getDriverPost()
         }//btnDriverPost
+
+
+        binding.btnUserPost.setOnClickListener {
+            setButtonEffect(it as Button)
+        }
+
+
+
+
+        binding.btnAddPassenger.setOnClickListener {
+            callbacks?.onAddPassengerSelected()
+        }
 
         // 태워주세요 혹은 타세요 게시글 갱신
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
@@ -149,6 +159,13 @@ class PostHomeFragment : Fragment() {
 
     }// onViewCreated
 
+    //==========================================================================================
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+        PostRepository.onDestroy()
+    }
+
 
     //==========================================================================================
     private fun setImageBtnProfile() {
@@ -159,12 +176,7 @@ class PostHomeFragment : Fragment() {
 
     }//setImageBtnProfile()
 
-    //==========================================================================================
-    override fun onDetach() {
-        super.onDetach()
-        callbacks = null
-        PostRepository.onDestroy()
-    }
+
     //==========================================================================================
     //현재 User가 작성한 혹은 진행중 게시글 갱신
     private fun updateUserPostData(userPostDto: UserPostDto){
@@ -172,6 +184,15 @@ class PostHomeFragment : Fragment() {
         binding.userPostPassenger.text = userPostDto.passenger
         binding.userPostOngoing.text = userPostDto.ongoing
     }
+
+    //==========================================================================================
+    private fun setButtonEffect(selectedButton : Button){
+        binding.btnDriverPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_color))
+        binding.btnPassengerPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_color))
+        binding.btnUserPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_color))
+        selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
+    }
+
 
 
     //==========================================================================================
