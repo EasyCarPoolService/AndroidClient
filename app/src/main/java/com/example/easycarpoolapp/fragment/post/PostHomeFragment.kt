@@ -58,6 +58,7 @@ class PostHomeFragment : Fragment() {
         callbacks = context as CallBacks?
     }//onAttach
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         PostRepository.init(requireContext())

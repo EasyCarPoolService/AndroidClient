@@ -24,7 +24,7 @@ import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
-    PostDriverDetailFragment.Callbacks{
+    PostDriverDetailFragment.Callbacks {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -56,7 +56,6 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
     private fun setBottomNav(){
 
-
         binding.appBarMain.mainContentLayout.bottomNavigationView.setOnItemSelectedListener{
 
             when(it.itemId){
@@ -67,8 +66,13 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
                     true
                 }
                 R.id.activity_main_bottom_nav_calendar->{
-                    val fragment = CalendarHomeFragment.getInstance()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    if(LocalUserData.getEmail()!=null){
+                        val fragment = CalendarHomeFragment.getInstance()
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    }else{
+                        LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+                    }
+
                     true
                 }
                 R.id.activity_main_bottom_nav_posts->{
@@ -94,6 +98,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
             true
         }
     }
+
     private fun setActionBar(){
         setSupportActionBar(binding.appBarMain.toolbar)
         actionBar = supportActionBar!!

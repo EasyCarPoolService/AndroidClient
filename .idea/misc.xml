@@ -4,13 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.225" />
-        <entry key="../../../../layout/custom_preview.xml" value="0.2125" />
         <entry key="app/src/main/res/drawable-v24/icon_check_gray.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/drawable/btn_radius.xml" value="0.2734375" />
         <entry key="app/src/main/res/drawable/btn_radius_gray.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/drawable/edit_memo.xml" value="0.27447916666666666" />
-        <entry key="app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.259375" />
-        <entry key="app/src/main/res/drawable/icon_location.xml" value="0.259375" />
         <entry key="app/src/main/res/drawable/shape_circle_gray.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_circle_maincolor.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_radius.xml" value="0.31927083333333334" />
@@ -20,8 +17,7 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.33177083333333335" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/fragment_auth_main.xml" value="0.15" />
-        <entry key="app/src/main/res/layout/fragment_calendar_home.xml" value="0.24322916666666666" />
-        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_chat_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_join.xml" value="0.18" />
@@ -37,8 +33,8 @@
         <entry key="app/src/main/res/layout/fragment_register_car.xml" value="0.2716318723490029" />
         <entry key="app/src/main/res/layout/fragment_register_car_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registercar_dialog.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_request_driver_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/info_page_layout.xml" value="0.16822916666666668" />
-        <entry key="app/src/main/res/layout/item_calendar_layout.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/layout/item_chat_home_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_chat_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/join_athenticate_phone.xml" value="0.22" />

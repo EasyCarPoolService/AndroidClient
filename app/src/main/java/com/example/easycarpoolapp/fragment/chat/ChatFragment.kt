@@ -20,6 +20,8 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.post.RegisterCarDialogFragment
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 
 // ChatHomeFragment에서 repository를 생성해야함 유념
@@ -97,6 +99,25 @@ class ChatFragment : Fragment() {
             val message : String = binding.editMessage.text.toString()
             viewModel.sendMessage(message, opponentFcmToken)
         }
+
+        binding.btnPlus.setOnClickListener {
+            val state = binding.slideLayout.panelState
+            // 닫힌 상태일 경우 열기
+            if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                binding.slideLayout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+            }
+
+        }
+
+        binding.btnRequestDriver.setOnClickListener {
+            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+        }
+
+        binding.btnRequestPassenger.setOnClickListener {
+            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+        }
+
+
 
     }//onViewCreated
 
