@@ -137,9 +137,8 @@ class PostHomeFragment : Fragment() {
 
         binding.btnUserPost.setOnClickListener {
             setButtonEffect(it as Button)
+            viewModel.getUserPost()
         }
-
-
 
 
         binding.btnAddPassenger.setOnClickListener {

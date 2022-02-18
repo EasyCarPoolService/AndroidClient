@@ -194,6 +194,36 @@ class PostRepository private constructor(val context : Context){
     }//getDrvierPost
 
 
+    //User가 작성한 게시글 조회하여 RecyclerView에 띄우기
+    fun getUserPost(postItems: MutableLiveData<ArrayList<PostDto>>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getUserPostCall(LocalUserDto(email = LocalUserData.getEmail()))
+
+        call.enqueue(object : Callback<ArrayList<PostDto>>{
+            override fun onResponse(
+                call: Call<ArrayList<PostDto>>,
+                response: Response<ArrayList<PostDto>>
+            ) {
+                val body = response.body()
+                if(body != null){
+                    postItems.value = body
+                }
+
+            }
+
+            override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+    }//getUserPost
+
+
     //check
     fun createChatRoom(dto : ChatRoomDto, roomInfo: MutableLiveData<ChatRoomDto>) {
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
@@ -245,4 +275,5 @@ class PostRepository private constructor(val context : Context){
 
 
     }//getUserPostData
+
 }

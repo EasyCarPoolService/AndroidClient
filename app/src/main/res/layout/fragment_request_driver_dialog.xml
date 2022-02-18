@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text=". \n 차량등록 페이지로 이동하시겠습니까?"
+        android:text="타세요 요청하기"
         />
 
 

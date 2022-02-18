@@ -15,17 +15,26 @@ import retrofit2.http.POST
 
 interface PostAPI {
 
+    //태워주세요 게시글 등록
     @POST("/api/post/passenger/register")
     public fun getPassengerSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<ResponseBody>
 
+    //타세요 게시글 등록
     @POST("/api/post/driver/register")
     public fun getDriverSaveCall(@Body postDriverDto: PostDriverDto) : Call<ResponseBody>
 
+
+    //태워주세요 게시글 조회
     @GET("/api/post/passenger/getPost")
     public fun getPassengerPostCall() : Call<ArrayList<PostDto>>
 
+    //타세요 게시글 조회
     @GET("/api/post/driver/getPost")
     public fun getDriverPostCall() : Call<ArrayList<PostDto>>
+
+    //User가 작성한 게시글 조회
+    @POST("/api/post/user/getPost")
+    fun getUserPostCall(@Body localUserDto: LocalUserDto): Call<ArrayList<PostDto>>
 
     @POST("/api/chat/createroom")
     public fun getCreateRoomCall(@Body chatRoomDto: ChatRoomDto) : Call<ChatRoomDto>
@@ -36,5 +45,6 @@ interface PostAPI {
 
     @POST("/api/post/getUserPostData")
     public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
+
 
 }
