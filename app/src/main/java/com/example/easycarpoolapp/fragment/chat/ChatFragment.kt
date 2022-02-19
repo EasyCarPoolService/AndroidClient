@@ -26,7 +26,6 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 // ChatHomeFragment에서 repository를 생성해야함 유념
 
-
 class ChatFragment : Fragment() {
 
     companion object{
@@ -106,11 +105,11 @@ class ChatFragment : Fragment() {
             if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
                 binding.slideLayout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
             }
-
         }
 
         binding.btnRequestDriver.setOnClickListener {
             RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
+
         }
 
         binding.btnRequestPassenger.setOnClickListener {

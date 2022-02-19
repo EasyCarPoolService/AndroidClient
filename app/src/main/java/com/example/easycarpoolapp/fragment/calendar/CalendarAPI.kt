@@ -9,6 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface CalendarAPI {
+
     @POST("/api/calendar/post")
     public fun getPostDataCall(@Body localUserDto: LocalUserDto) : Call<ArrayList<PostDto>>
 

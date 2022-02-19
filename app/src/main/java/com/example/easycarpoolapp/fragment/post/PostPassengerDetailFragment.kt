@@ -1,6 +1,7 @@
 package com.example.easycarpoolapp.fragment.post
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class PostPassengerDetailFragment : Fragment() {
     companion object{
         public fun getInstance(item: PostDto): PostPassengerDetailFragment{
             val bundle = Bundle().apply {
+                putLong("postId", item.postId)
                 putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
                 putSerializable("gender", item.gender)
@@ -49,13 +51,14 @@ class PostPassengerDetailFragment : Fragment() {
 
 
 
-
+    private val TAG : String = "PostPassengerDetail"
     private lateinit var binding : FragmentPostDetailBinding
     private var callbacks : Callbacks? = null
     private val viewModel : PostPassengerDetailViewModel by lazy {
         ViewModelProvider(this).get(PostPassengerDetailViewModel::class.java)
     }
 
+    var postId : Long? = null
     var email : String? = null
     var nickname : String? = null
     var gender : String? = null
@@ -72,6 +75,7 @@ class PostPassengerDetailFragment : Fragment() {
 
         callbacks = context as Callbacks?
 
+        postId = arguments?.getLong("postId")
         email = arguments?.getString("email")
         nickname = arguments?.getString("nickname")
         gender = arguments?.getString("gender")
@@ -81,6 +85,9 @@ class PostPassengerDetailFragment : Fragment() {
         time = arguments?.getString("time")
         message = arguments?.getString("message")
         fcmToken = arguments?.getString("fcmToken")
+
+
+        Log.e(TAG, postId.toString())
 
     }
 

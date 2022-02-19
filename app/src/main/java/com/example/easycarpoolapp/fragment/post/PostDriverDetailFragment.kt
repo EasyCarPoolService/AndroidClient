@@ -1,6 +1,7 @@
 package com.example.easycarpoolapp.fragment.post
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.example.easycarpoolapp.fragment.post.dto.PostDto
 class PostDriverDetailFragment : Fragment() {
 
 
+
     interface Callbacks{
         //방생성후 방 UUID를 서버로 부터 전달받아 Observer패턴에 의해 Fragment이동
 
@@ -32,6 +34,8 @@ class PostDriverDetailFragment : Fragment() {
     companion object{
         public fun getInstance(item: PostDto): PostDriverDetailFragment{
             val bundle = Bundle().apply {
+                //check for putSerializable or putLong
+                putLong("postId", item.postId)
                 putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
                 putSerializable("gender", item.gender)
@@ -47,12 +51,14 @@ class PostDriverDetailFragment : Fragment() {
         }
     }//companion object
 
+    private val TAG : String = "PostDriverDetail"
     private lateinit var binding : FragmentPostDriverDetailBinding
     private var callbacks : PostDriverDetailFragment.Callbacks? = null
     private val viewModel : PostDriverDetailViewModel by lazy {
         ViewModelProvider(this).get(PostDriverDetailViewModel::class.java)
     }
 
+    var postId : Long? = null
     var email : String? = null
     var nickname : String? = null
     var gender : String? = null
@@ -67,6 +73,7 @@ class PostDriverDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         callbacks = context as Callbacks?
 
+        postId = arguments?.getLong("postId")
         email = arguments?.getString("email")
         nickname = arguments?.getString("nickname")
         gender = arguments?.getString("gender")
@@ -76,6 +83,8 @@ class PostDriverDetailFragment : Fragment() {
         time = arguments?.getString("time")
         message = arguments?.getString("message")
         fcmToken = arguments?.getString("fcmToken")
+
+        Log.e(TAG, postId.toString())
 
     }//onCreate
 

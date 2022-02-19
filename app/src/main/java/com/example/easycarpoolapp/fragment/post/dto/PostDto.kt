@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class PostDto(
 
+    @SerializedName("postId")
+    var postId : Long,
+
     @SerializedName("type")
     val type : String,
 
