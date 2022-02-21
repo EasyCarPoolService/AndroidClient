@@ -114,7 +114,6 @@ class ChatHomeFragment : Fragment() {
 
     }// ChatHolder
 
-
     inner class ChatAdapter(val items : ArrayList<ChatRoomDto>) : RecyclerView.Adapter<ChatHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
             val view = layoutInflater.inflate(R.layout.item_chat_home_layout, parent, false)

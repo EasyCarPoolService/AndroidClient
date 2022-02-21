@@ -4,11 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
+import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 
 class ChatViewModel : ViewModel(){
 
     private val repository = ChatRepository.getInstance()
     public var chatList : MutableLiveData<ArrayList<ChatDto>> = MutableLiveData()
+    public var postInfo : MutableLiveData<PostDto> = MutableLiveData()
     private lateinit var roomId : String
 
     init {
@@ -32,6 +35,11 @@ class ChatViewModel : ViewModel(){
         repository?.findMessageByRoomId(roomId, chatList)
     }
 
+
+    //채팅방에 해당하는 게시글 조회하여 저장
+    fun getPostInfo(postType : String, postId : Long) {
+        repository?.getPostInfo(ChatRoomDto(postType = postType, postId = postId), postInfo)
+    }
 
 
 }

@@ -8,6 +8,7 @@ import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,6 +24,7 @@ class ChatRepository private constructor(val context : Context){
     private val BASEURL :String = "http://"+ NetworkConfig.getIP()+":8080"
 
 
+    private val TAG : String = "ChatRepository"
     private lateinit var stompClient : StompClient
 
     companion object{
@@ -128,5 +130,33 @@ class ChatRepository private constructor(val context : Context){
 
 
     }//findMessageByRoomId
+
+    fun getPostInfo(chatRoomDto: ChatRoomDto, postInfo: MutableLiveData<PostDto>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(ChatAPI::class.java)
+        val call = api.getFindPostCall(chatRoomDto)
+
+        call.enqueue(object : Callback<PostDto> {
+            override fun onResponse(call: Call<PostDto>, response: Response<PostDto>) {
+                val body = response.body()
+                if (body != null) {
+                    postInfo.value = body
+                }else{
+                    Log.e(TAG, "response is null!!")
+                }
+            }
+
+            override fun onFailure(call: Call<PostDto>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+
+    }//getPostInfo
 
 }

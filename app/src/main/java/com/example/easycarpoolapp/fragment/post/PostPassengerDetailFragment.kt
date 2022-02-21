@@ -33,6 +33,7 @@ class PostPassengerDetailFragment : Fragment() {
     companion object{
         public fun getInstance(item: PostDto): PostPassengerDetailFragment{
             val bundle = Bundle().apply {
+                putSerializable("postType", item.type)
                 putLong("postId", item.postId)
                 putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
@@ -58,6 +59,7 @@ class PostPassengerDetailFragment : Fragment() {
         ViewModelProvider(this).get(PostPassengerDetailViewModel::class.java)
     }
 
+    var postType : String? = null
     var postId : Long? = null
     var email : String? = null
     var nickname : String? = null
@@ -75,6 +77,7 @@ class PostPassengerDetailFragment : Fragment() {
 
         callbacks = context as Callbacks?
 
+        postType = arguments?.getString("postType")
         postId = arguments?.getLong("postId")
         email = arguments?.getString("email")
         nickname = arguments?.getString("nickname")
@@ -100,6 +103,7 @@ class PostPassengerDetailFragment : Fragment() {
         binding.btnSendMessage.setOnClickListener {
             //게시글 작성자에게 메시지 보내기 -> 대화창 생성및 이동
             viewModel.createRoom(
+                postType = postType!!,
                 postId = postId!!,
                 driver = LocalUserData.getEmail()!!,
                 passenger = email!!,

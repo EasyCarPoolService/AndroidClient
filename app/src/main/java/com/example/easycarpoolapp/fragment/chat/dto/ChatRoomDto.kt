@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ChatRoomDto(
     @SerializedName("roomId") var roomId: String = "",
+    @SerializedName("postType") var postType : String = "",
     @SerializedName("postId") var postId : Long? = null,    //어떠한 게시글에 대한 채팅방인지 식별
     @SerializedName("driver") var driver: String = "",
     @SerializedName("driverNickname") var driverNickname: String = "",
@@ -15,3 +16,4 @@ data class ChatRoomDto(
     @SerializedName("passengerNickname") var passengerNickname: String = "",
     @SerializedName("passengerFcmToken") var passengerFcmToken: String = ""
 )
+

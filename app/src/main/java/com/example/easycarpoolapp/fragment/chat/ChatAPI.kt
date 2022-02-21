@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.fragment.chat
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -19,5 +20,8 @@ interface ChatAPI {
 
     @POST("api/chat/findMessageByRoomId")
     public fun getFindMessageCall(@Body roomDto : ChatRoomDto) : Call<ArrayList<ChatDto>>
+
+    @POST("api/chat/findPostInfo")
+    public fun getFindPostCall(@Body roomDto : ChatRoomDto) : Call<PostDto>
 
 }

@@ -1,6 +1,7 @@
 package com.example.easycarpoolapp.fragment.chat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,6 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
-import com.example.easycarpoolapp.fragment.post.RegisterCarDialogFragment
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 
@@ -32,6 +32,8 @@ class ChatFragment : Fragment() {
         public fun getInstance(dto : ChatRoomDto) : ChatFragment{
             val bundle = Bundle().apply {
                 putSerializable("roomid", dto.roomId)
+                putSerializable("postType", dto.postType)
+                putLong("postId", dto.postId!!)
                 putSerializable("driver", dto.driver)
                 putSerializable("passenger", dto.passenger)
                 putSerializable("drivernickname", dto.driverNickname)
@@ -48,6 +50,8 @@ class ChatFragment : Fragment() {
     // 각 사용자의 닉네임 사용 여부 판단
     private lateinit var binding : FragmentChatBinding
     private lateinit var roomId : String
+    private lateinit var postType : String
+    private var postId : Long? = null
     private lateinit var driver : String
     private lateinit var passenger : String
     private lateinit var driverNickname : String
@@ -66,13 +70,18 @@ class ChatFragment : Fragment() {
         ChatRepository.init(requireContext())
 
         roomId = arguments?.getString("roomid")!!
+        postType = arguments?.getString("postType")!!
+        postId = arguments?.getLong("postId")!!
         driver = arguments?.getString("driver")!!
         passenger = arguments?.getString("passenger")!!
         driverNickname = arguments?.getString("drivernickname")!!
         passengerNickname = arguments?.getString("passengernickname")!!
         driverFcmToken = arguments?.getString("driverFcmToken")!!
         passengerFcmToken = arguments?.getString("passengerFcmToken")!!
-    }
+
+
+        viewModel.getPostInfo(postType = postType, postId = postId!!)
+    }// onCreate()
 
 
     override fun onCreateView(
@@ -86,9 +95,10 @@ class ChatFragment : Fragment() {
 
 
         return binding.root
-    }
+    } //onCreateView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
 
         setRecycler()
@@ -107,16 +117,17 @@ class ChatFragment : Fragment() {
             }
         }
 
-        binding.btnRequestDriver.setOnClickListener {
-            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
-
-        }
-
-        binding.btnRequestPassenger.setOnClickListener {
-            RegisterCarDialogFragment().show(requireActivity().supportFragmentManager, "RegisterCarDialog")
-        }
+        binding.btnRequest.setOnClickListener {
 
 
+            if(postType.equals("passenger")){
+                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
+            }else{
+                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
+            }
+
+
+        }   // 상대방에게 요청 보내기
 
     }//onViewCreated
 
