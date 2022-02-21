@@ -19,16 +19,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
-import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.DayViewDecorator
-import com.prolificinteractive.materialcalendarview.DayViewFacade
+
 
 import android.app.Activity
 
 import android.graphics.drawable.Drawable
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
+import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 
 class CalendarHomeFragment : Fragment() {

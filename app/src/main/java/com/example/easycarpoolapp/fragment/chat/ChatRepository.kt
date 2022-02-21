@@ -8,6 +8,7 @@ import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import org.json.JSONObject
 import retrofit2.Call
@@ -57,19 +58,21 @@ class ChatRepository private constructor(val context : Context){
         stompClient.topic("/sub/chat/room"+roomId).subscribe{
 
             val jsonObj = JSONObject(it.payload)
+            val type = jsonObj.getString("type")
             val message = jsonObj.getString("message")
             val time= jsonObj.getString("time")
             val writer = jsonObj.getString("writer")
-            val dto = ChatDto(roomId=roomId, writer = writer ,message = message, time = time)
+            val dto = ChatDto(roomId=roomId, type = type, writer = writer ,message = message, time = time)
             var temp = chatList.value
             temp!!.add(dto)
             chatList.postValue(temp)
         }
     }//subscribe
 
-    fun sendMessage(roomId: String, email: String?, message: String, fcmToken : String) {
+    fun sendMessage(roomId: String, type : String, email: String?, message: String, fcmToken : String) {
         val data = JSONObject().apply {
             put("roomId", roomId)
+            put("type", type)
             put("writer", email)
             put("message", message)
             put("fcmToken", fcmToken)
@@ -158,5 +161,29 @@ class ChatRepository private constructor(val context : Context){
 
 
     }//getPostInfo
+
+    fun registerReservedPost(reservedPostDto: ReservedPostDto) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+        val api = retrofit.create(ChatAPI::class.java)
+        val call = api.getRegisterReservedPostCall(reservedPostDto)
+
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.e(TAG, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+
+        })
+
+
+
+    }//registerReservedPost()
 
 }

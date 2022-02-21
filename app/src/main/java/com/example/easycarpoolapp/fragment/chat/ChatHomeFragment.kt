@@ -20,7 +20,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatHomeBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 
-class ChatHomeFragment : Fragment() {
+class ChatHomeFragment : Fragment(){
 
     interface Callbacks{
         fun onChatRoomSelected(dto : ChatRoomDto)
@@ -129,5 +129,8 @@ class ChatHomeFragment : Fragment() {
         }
 
     }    //ChatAdapter
+
+
+
 
 }

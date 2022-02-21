@@ -8,16 +8,30 @@ import android.os.Bundle
 import android.renderscript.ScriptGroup
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.databinding.FragmentRequestPassengerDialogBinding
+import com.example.easycarpoolapp.fragment.post.PostHomeFragment
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
+import javax.security.auth.callback.Callback
 
 
-class RequestPassengerDialogFragment(val postDto : PostDto) : DialogFragment(){
+class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : Fragment) : DialogFragment(){
 
+
+    interface  Callbacks{
+        //요청하기 버튼 클릭시 이벤트
+        public fun onPassengerRequestButtonClicked()
+    }
 
     private lateinit var binding : FragmentRequestPassengerDialogBinding
+    private var callbacks : Callbacks? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        callbacks = hostFragment as Callbacks?
+    }
 
 
     override fun onCreateView(
@@ -36,6 +50,15 @@ class RequestPassengerDialogFragment(val postDto : PostDto) : DialogFragment(){
 
         return binding.root
     }//onCreateView()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnSendRequest.setOnClickListener {
+            callbacks?.onPassengerRequestButtonClicked()
+        }
+
+    }//onViewCreated()
 
     override fun onResume() {
         super.onResume()

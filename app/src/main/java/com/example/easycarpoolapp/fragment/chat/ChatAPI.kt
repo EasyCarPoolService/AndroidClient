@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.fragment.chat
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import okhttp3.RequestBody
@@ -23,5 +24,9 @@ interface ChatAPI {
 
     @POST("api/chat/findPostInfo")
     public fun getFindPostCall(@Body roomDto : ChatRoomDto) : Call<PostDto>
+
+    @POST("api/chat/registerReservedPost")
+    public fun getRegisterReservedPostCall(@Body reservedPostDto: ReservedPostDto): Call<String>
+
 
 }

@@ -1,11 +1,13 @@
 package com.example.easycarpoolapp.fragment.chat
 
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -26,7 +28,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 // ChatHomeFragment에서 repository를 생성해야함 유념
 
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, RequestDriverDialogFragment.Callbacks{
 
     companion object{
         public fun getInstance(dto : ChatRoomDto) : ChatFragment{
@@ -58,6 +60,8 @@ class ChatFragment : Fragment() {
     private lateinit var passengerNickname : String
     private lateinit var driverFcmToken : String
     private lateinit var passengerFcmToken : String
+
+    private lateinit var opponentFcmToken : String
 
     private lateinit var adapter : ChatAdapter
     private val viewModel : ChatViewModel by lazy {
@@ -102,11 +106,11 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setRecycler()
-        val opponentFcmToken = findOpponentFcmToken()
+        opponentFcmToken = findOpponentFcmToken()
 
         binding.btnSend.setOnClickListener {
             val message : String = binding.editMessage.text.toString()
-            viewModel.sendMessage(message, opponentFcmToken)
+            viewModel.sendMessage(message, opponentFcmToken, "message")
         }
 
         binding.btnPlus.setOnClickListener {
@@ -121,9 +125,9 @@ class ChatFragment : Fragment() {
 
 
             if(postType.equals("passenger")){
-                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
             }else{
-                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1, this).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
             }
 
 
@@ -162,9 +166,22 @@ class ChatFragment : Fragment() {
     }//upadteUI
 
 
+    override fun onPassengerRequestButtonClicked() {
+        viewModel.sendMessage("request reservation", opponentFcmToken, "request")
+    }// RequestPassengerDialogFragment.Callbacks 구현
+
+    override fun onDriverRequestButtonClicked() {
+        viewModel.sendMessage("request reservation", opponentFcmToken, "request")
+    }// RequestPassengerDialogFragment.Callbacks 구현
+
+
+    //==========================================================================================================
+
     inner class ChatHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         val myLayout = itemView.findViewById<LinearLayout>(R.id.chat_layout_mine)
+        val my_request_layout = itemView.findViewById<LinearLayout>(R.id.request_mine_layout)
+        val opponent_request_layout = itemView.findViewById<LinearLayout>(R.id.request_opponent_layout)
         val opponent_layout = itemView.findViewById<LinearLayout>(R.id.chat_layout_opponent)
         val opponent_message = itemView.findViewById<TextView>(R.id.chat_text_content_opponent)
         val opponent_time = itemView.findViewById<TextView>(R.id.chat_text_time_opponent)
@@ -173,24 +190,73 @@ class ChatFragment : Fragment() {
         val opponent_profile = itemView.findViewById<ImageView>(R.id.chat_profile_opponent)
 
 
+        //request 상대방
+        val opponent_driver = itemView.findViewById<TextView>(R.id.request_driver_opponent)
+        val opponent_passenger = itemView.findViewById<TextView>(R.id.request_passenger_opponent)
+        val opponent_departure = itemView.findViewById<TextView>(R.id.request_departure_opponent)
+        val opponent_destination = itemView.findViewById<TextView>(R.id.request_destination_opponent)
+        val opponent_departure_time = itemView.findViewById<TextView>(R.id.request_time_opponent)
+        val btn_confirm_opponent = itemView.findViewById<Button>(R.id.btn_request_confirm_opponent)
+
+
+        //request 현재 사용자
+        val mine_driver = itemView.findViewById<TextView>(R.id.request_driver_mine)
+        val mine_passenger = itemView.findViewById<TextView>(R.id.request_passenger_mine)
+        val mine_departure = itemView.findViewById<TextView>(R.id.request_departure_mine)
+        val mine_destination = itemView.findViewById<TextView>(R.id.request_destination_mine)
+        val mine_departure_time = itemView.findViewById<TextView>(R.id.request_time_mine)
+
+
         public fun bind(item : ChatDto){
             if(item.writer == LocalUserData.getEmail()){ //내가 작성한 글
                 myLayout.visibility = View.VISIBLE
-                opponent_layout.visibility = View.INVISIBLE
-                my_message.text = item.message
+                if(item.type.equals("message")){
+                    my_message.apply {
+                        visibility = View.VISIBLE
+                        text = item.message
+                    }
+                }else{
+                    my_request_layout.visibility = View.VISIBLE
+                    mine_driver.text = mine_driver.text.toString()+driverNickname
+                    mine_passenger.text = mine_passenger.text.toString()+passengerNickname
+                    mine_departure.text = mine_departure.text.toString()+viewModel.postInfo.value?.departure
+                    mine_destination.text = mine_destination.text.toString()+viewModel.postInfo.value?.destination
+                    mine_departure_time.text = mine_departure_time.text.toString()+viewModel.postInfo.value?.departureTime
+
+                }
+
                 my_time.text = item.time
                 //time set 필요
             }else{  //상대가 작성한 글
-                myLayout.visibility = View.INVISIBLE
                 opponent_layout.visibility = View.VISIBLE
-                opponent_message.text = item.message
+                if(item.type.equals("message")){
+                    opponent_message.apply {
+                        visibility = View.VISIBLE
+                        text = item.message
+                    }
+                }else{
+                    opponent_request_layout.visibility = View.VISIBLE
+                    opponent_driver.text = opponent_driver.text.toString()+driverNickname
+                    opponent_passenger.text = opponent_passenger.text.toString()+passengerNickname
+                    opponent_departure.text = opponent_departure.text.toString()+viewModel.postInfo.value?.departure
+                    opponent_destination.text = opponent_destination.text.toString()+viewModel.postInfo.value?.destination
+                    opponent_departure_time.text = opponent_departure_time.text.toString()+viewModel.postInfo.value?.departureTime
+                }
+
                 opponent_time.text = item.time
                 //check
                 Glide.with(this@ChatFragment)
                     .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+item.writer)
                     .into(opponent_profile)
             }
-        }
+        }//bind
+
+        init{
+            btn_confirm_opponent.setOnClickListener {
+                //check
+                viewModel.registerReservedPost(postId = postId!!, driver = driver, passenger = passenger, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
+            }
+        } //init()
     }
     inner class ChatAdapter(val items : ArrayList<ChatDto>) : RecyclerView.Adapter<ChatHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
@@ -207,5 +273,7 @@ class ChatFragment : Fragment() {
         }
 
     }
+
+
 
 }

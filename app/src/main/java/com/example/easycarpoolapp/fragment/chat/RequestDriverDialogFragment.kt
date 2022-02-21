@@ -7,14 +7,27 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.databinding.FragmentRequestDriverDialogBinding
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 
-class RequestDriverDialogFragment(val postDto : PostDto) : DialogFragment(){
+class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Fragment) : DialogFragment(){
+
+    interface Callbacks{
+        public fun onDriverRequestButtonClicked()
+    }
+
+
 
     private lateinit var binding : FragmentRequestDriverDialogBinding
+    private var callbacks : Callbacks? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        callbacks = hostFragment as Callbacks?
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +46,10 @@ class RequestDriverDialogFragment(val postDto : PostDto) : DialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setImage()
-    }
+
+        callbacks?.onDriverRequestButtonClicked()
+
+    }// onViewCreated()
 
     override fun onResume() {
         super.onResume()

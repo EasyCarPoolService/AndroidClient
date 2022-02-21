@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 
 class ChatViewModel : ViewModel(){
@@ -25,9 +26,9 @@ class ChatViewModel : ViewModel(){
     }
 
     //현재 구독한 방에 대해 메시지 전송
-    public fun sendMessage(message: String, opponentFcmToken: String){
+    public fun sendMessage(message: String, opponentFcmToken: String, type : String){
         //check for fcm push message
-        repository?.sendMessage(roomId, LocalUserData.getEmail(), message, opponentFcmToken)
+        repository?.sendMessage(roomId, type, LocalUserData.getEmail(), message, opponentFcmToken)
     }
 
     // 최초 방에 입장했을때 이전 메시지를 서버로 부터 로드
@@ -40,6 +41,16 @@ class ChatViewModel : ViewModel(){
     fun getPostInfo(postType : String, postId : Long) {
         repository?.getPostInfo(ChatRoomDto(postType = postType, postId = postId), postInfo)
     }
+
+    fun registerReservedPost(postId : Long, driver : String, passenger : String, date : String, time : String){
+        repository?.registerReservedPost(ReservedPostDto(
+            postId = postId,
+            driver = driver,
+            passenger = passenger,
+            date = date,
+            time = time
+        ))
+    }//registerReservedPost()
 
 
 }
