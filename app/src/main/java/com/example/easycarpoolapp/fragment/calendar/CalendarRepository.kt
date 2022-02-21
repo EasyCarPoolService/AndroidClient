@@ -7,14 +7,14 @@ import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
-import com.example.easycarpoolapp.fragment.post.PostRepository
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class CalendarRepository private constructor(val context : Context){
 
@@ -44,7 +44,7 @@ class CalendarRepository private constructor(val context : Context){
 
 
     //=============================================================================================
-    fun getPostData(postItems: MutableLiveData<ArrayList<PostDto>>) {
+    fun getPostData(postItems: MutableLiveData<ArrayList<ReservedPostDto>>) {
 
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -53,10 +53,10 @@ class CalendarRepository private constructor(val context : Context){
 
         val api = retrofit.create(CalendarAPI::class.java)
         val call = api.getPostDataCall(LocalUserDto(email = LocalUserData.getEmail()))
-        call.enqueue(object : Callback<ArrayList<PostDto>>{
+        call.enqueue(object : Callback<ArrayList<ReservedPostDto>>{
             override fun onResponse(
-                call: Call<ArrayList<PostDto>>,
-                response: Response<ArrayList<PostDto>>
+                call: Call<ArrayList<ReservedPostDto>>,
+                response: Response<ArrayList<ReservedPostDto>>
             ) {
                 val body = response.body()
                 if(body!=null){
@@ -64,7 +64,7 @@ class CalendarRepository private constructor(val context : Context){
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<ReservedPostDto>>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 

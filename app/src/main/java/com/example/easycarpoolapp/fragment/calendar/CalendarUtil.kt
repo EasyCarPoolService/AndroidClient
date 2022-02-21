@@ -9,6 +9,7 @@ import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.util.Log
 import com.example.easycarpoolapp.R
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -30,16 +31,16 @@ class CalendarUtil {
             return TodayDecorator(context)
         }//getTodayDecorator()
 
-        public fun getEventDecorator(context: Activity, posts : ArrayList<PostDto>) :EventDecorator{
+        public fun getEventDecorator(context: Activity, posts : ArrayList<ReservedPostDto>) :EventDecorator{
             return EventDecorator(createEventCalendarDay(posts), context)
         }//getEventDecorator()
 
-        private fun createEventCalendarDay(posts: ArrayList<PostDto>): HashSet<CalendarDay> {
+        private fun createEventCalendarDay(posts: ArrayList<ReservedPostDto>): HashSet<CalendarDay> {
 
             val eventDays : HashSet<CalendarDay> = HashSet()
             for (post in posts){
-                Log.e(TAG, post.departureDate)
-                val dateArr = post.departureDate.split(".")
+                Log.e(TAG, post.date)
+                val dateArr = post.date.split(".")
                 val year : Int = dateArr.get(0).toInt()
                 val month : Int = dateArr.get(1).toInt()-1
                 val day : Int = dateArr.get(2).toInt()

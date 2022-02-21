@@ -25,6 +25,7 @@ import android.app.Activity
 
 import android.graphics.drawable.Drawable
 import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
+import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.prolificinteractive.materialcalendarview.CalendarDay
 
@@ -88,7 +89,7 @@ class CalendarHomeFragment : Fragment() {
     }//onDestroy
     //=============================================================================
 
-    private fun getPostByDate(date : CalendarDay): ArrayList<PostDto> {
+    private fun getPostByDate(date : CalendarDay): ArrayList<ReservedPostDto> {
         fun String.convertSingleToDoubleDigit(): String = if (this.length < 2) "0$this" else this
         var year = date.year.toString().convertSingleToDoubleDigit()
         var month = (date.month+1).toString().convertSingleToDoubleDigit()
@@ -97,11 +98,11 @@ class CalendarHomeFragment : Fragment() {
 
         Log.e("selectedDate", selectedDate)
 
-        val datePosts = ArrayList<PostDto>()
+        val datePosts = ArrayList<ReservedPostDto>()
         val AllPosts = viewModel.postItems.value!!
 
         for(i in AllPosts){
-            if(i.departureDate.equals(selectedDate)){
+            if(i.date.equals(selectedDate)){
                 datePosts.add(i)
             }
         }
