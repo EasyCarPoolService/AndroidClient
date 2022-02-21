@@ -81,15 +81,14 @@ class PostRepository private constructor(val context : Context){
 
 
     //=============================================================================================
-    private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(
+    /*private fun setLocalUserData(body : LocalUserDto) = LocalUserData.login(
         _token = body.token,
         _email = body.email,
         _nickname = body.nickname,
         _gender = body.gender,
         _driverAuthentication = body.driverAuthentication,
         _fcmToken = body.fcmToken
-    )//setLocalUserData
-
+    )//setLocalUserData*/
 
 
     //=============================================================================================

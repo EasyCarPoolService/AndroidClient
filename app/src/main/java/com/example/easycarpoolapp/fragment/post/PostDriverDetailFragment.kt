@@ -99,7 +99,9 @@ class PostDriverDetailFragment : Fragment() {
 
         binding.btnSendMessage.setOnClickListener {
             //게시글 작성자에게 메시지 보내기 -> 대화창 생성및 이동
-            viewModel.createRoom(driver = LocalUserData.getEmail()!!,
+            viewModel.createRoom(
+                postId = postId!!,
+                driver = LocalUserData.getEmail()!!,
                 passenger = email!!,
                 driverNickname = LocalUserData.getNickname()!!,
                 passengerNickname = nickname!!,

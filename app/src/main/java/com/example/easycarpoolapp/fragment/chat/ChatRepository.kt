@@ -129,5 +129,4 @@ class ChatRepository private constructor(val context : Context){
 
     }//findMessageByRoomId
 
-
 }

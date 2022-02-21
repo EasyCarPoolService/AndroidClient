@@ -13,6 +13,7 @@ class PostPassengerDetailViewModel : ViewModel(){
 
     //방정보를 서버로 부터 받아 roomInfo에 저장
     public fun createRoom(
+        postId : Long,
         driver: String,
         passenger: String,
         driverNickname: String,
@@ -20,10 +21,8 @@ class PostPassengerDetailViewModel : ViewModel(){
         driverFcmToken: String,
         passengerFcmToken: String
     ){
-        val dto = ChatRoomDto(driver = driver, passenger = passenger, driverNickname = driverNickname, passengerNickname = passengerNickname, driverFcmToken = driverFcmToken, passengerFcmToken = passengerFcmToken)
+        val dto = ChatRoomDto(postId = postId, driver = driver, passenger = passenger, driverNickname = driverNickname, passengerNickname = passengerNickname, driverFcmToken = driverFcmToken, passengerFcmToken = passengerFcmToken)
         repository?.createChatRoom(dto, roomInfo)
     }
-
-
 
 }
