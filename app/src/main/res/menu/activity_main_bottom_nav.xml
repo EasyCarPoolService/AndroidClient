@@ -12,6 +12,11 @@
         />
 
     <item
+        android:id="@+id/activity_main_bottom_nav_location"
+        android:icon="@drawable/icon_location"
+        />
+
+    <item
         android:id="@+id/activity_main_bottom_nav_posts"
         android:icon="@drawable/icon_posts"
 

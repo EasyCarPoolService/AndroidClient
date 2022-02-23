@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/btn_radius.xml" value="0.2734375" />
         <entry key="app/src/main/res/drawable/btn_radius_gray.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/drawable/edit_memo.xml" value="0.27447916666666666" />
+        <entry key="app/src/main/res/drawable/icon_location.xml" value="0.2564102564102564" />
         <entry key="app/src/main/res/drawable/shape_circle_gray.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_circle_maincolor.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_radius.xml" value="0.31927083333333334" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_join_form.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_join_phone.xml" value="0.2864583333333333" />
         <entry key="app/src/main/res/layout/fragment_join_phone_verify.xml" value="0.11367753623188406" />
+        <entry key="app/src/main/res/layout/fragment_location_home.xml" value="0.24427083333333333" />
         <entry key="app/src/main/res/layout/fragment_login_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_post_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_post_driver_detail.xml" value="0.25" />
@@ -35,7 +37,7 @@
         <entry key="app/src/main/res/layout/fragment_register_car_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registercar_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_request_driver_dialog.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_request_passenger_dialog.xml" value="0.24048913043478262" />
+        <entry key="app/src/main/res/layout/fragment_request_passenger_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/info_page_layout.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/layout/item_calendar_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_chat_home_layout.xml" value="0.335" />

@@ -15,6 +15,7 @@ import com.example.easycarpoolapp.fragment.chat.ChatFragment
 import com.example.easycarpoolapp.fragment.chat.ChatHomeFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.home.HomeFragment
+import com.example.easycarpoolapp.fragment.location.LocationHomeFragment
 import com.example.easycarpoolapp.fragment.post.*
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
@@ -75,6 +76,19 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
                     true
                 }
+
+                R.id.activity_main_bottom_nav_location->{
+                    if(LocalUserData.getEmail()!=null){
+                        //지도 프래그먼트 띄우기
+                        val fragment = LocationHomeFragment.getInstance()
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    }else{
+                        LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+                    }
+
+                    true
+                }
+
                 R.id.activity_main_bottom_nav_posts->{
                     if(LocalUserData.getEmail()!=null){
                         val fragment = PostHomeFragment.getInstance()

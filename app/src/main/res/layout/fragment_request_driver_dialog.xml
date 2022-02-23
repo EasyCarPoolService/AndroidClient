@@ -253,8 +253,46 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/layout_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_radius_gray"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_margin="16dp"
+                    android:text="취소 하기"
+                    />
+
+                <Button
+                    android:id="@+id/btn_send_request"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_radius_main"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_margin="16dp"
+                    android:text="요청 보내기"
+                    />
+
+            </LinearLayout>
+
+
             <Button
-                android:id="@+id/btn_send_request"
+                android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_radius_main"
@@ -262,7 +300,7 @@
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:layout_margin="16dp"
-                android:text="요청 보내기"
+                android:text="확인"
                 android:visibility="gone"
                 />
 

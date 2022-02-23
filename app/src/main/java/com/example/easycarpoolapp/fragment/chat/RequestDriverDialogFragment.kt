@@ -46,7 +46,17 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
         super.onViewCreated(view, savedInstanceState)
         setImage()
 
-        callbacks?.onDriverRequestButtonClicked()
+        binding.btnSendRequest.setOnClickListener {
+            callbacks?.onDriverRequestButtonClicked()
+            dismiss()
+        }
+        binding.btnCancel.setOnClickListener {
+            dismiss()
+        }
+
+        binding.btnConfirm.setOnClickListener {
+            dismiss()
+        }
 
     }// onViewCreated()
 
@@ -59,7 +69,9 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
 
     private fun setUI(){
         if(buttonAvailable){    // chatting중 요청 보낼경우 버튼 활성화
-            binding.btnSendRequest.visibility = View.VISIBLE
+            binding.layoutBtn.visibility = View.VISIBLE
+        }else{
+            binding.btnConfirm.visibility = View.VISIBLE
         }
 
         binding.textNickname.text = postDto.nickname

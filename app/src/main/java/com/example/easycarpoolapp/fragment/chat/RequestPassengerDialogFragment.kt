@@ -56,6 +56,17 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
 
         binding.btnSendRequest.setOnClickListener {
             callbacks?.onPassengerRequestButtonClicked()
+            dismiss()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            dismiss()
+        }
+
+
+        //check
+        binding.btnConfirm.setOnClickListener {
+            dismiss()
         }
 
     }//onViewCreated()
@@ -72,7 +83,9 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
 
     private fun setUI(){
         if(buttonAvailable){    //채팅중 요청 보낼 경우 버튼 활성화
-            binding.btnSendRequest.visibility = View.VISIBLE
+            binding.layoutBtn.visibility = View.VISIBLE
+        }else{
+            binding.btnConfirm.visibility = View.VISIBLE
         }
 
         binding.textNickname.text = postDto.nickname
