@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.app.Activity
 
 import android.graphics.drawable.Drawable
+import android.widget.LinearLayout
+import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
@@ -31,6 +33,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 
 
 class CalendarHomeFragment : Fragment() {
+
 
     private lateinit var binding : FragmentCalendarHomeBinding
     private val viewModel : CalendarHomeViewModel by lazy {
@@ -60,7 +63,7 @@ class CalendarHomeFragment : Fragment() {
         binding.calendarView.setSelectedDate(CalendarDay.today())
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = CalendarAdapter(createTestData())
+        binding.recyclerView.adapter = CalendarAdapter(ArrayList<ReservedPostDto>())
 
         return binding.root
     }//onCreateView()
@@ -68,16 +71,18 @@ class CalendarHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getPostData()
+        viewModel.getPostData() //reserved Post  조회하기
+
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
             binding.calendarView.addDecorator(CalendarUtil.getTodayDecorator(requireActivity()))
             binding.calendarView.addDecorator(CalendarUtil.getEventDecorator(requireActivity(), it))
+            //reservedPost기반 recyclerview set하기
         })
 
         //날짜 선택시 이벤트 발생
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             val posts = getPostByDate(date)
-
+            setRecyclerView(posts)
         }
 
     }//onViewCreated
@@ -87,6 +92,13 @@ class CalendarHomeFragment : Fragment() {
         super.onDestroy()
         CalendarRepository.onDestroy()
     }//onDestroy
+    //=============================================================================
+    private fun setRecyclerView(items : ArrayList<ReservedPostDto>){
+        binding.recyclerView.adapter = CalendarAdapter(items)
+    }// setRecyclerView()
+
+
+
     //=============================================================================
 
     private fun getPostByDate(date : CalendarDay): ArrayList<ReservedPostDto> {
@@ -110,31 +122,36 @@ class CalendarHomeFragment : Fragment() {
     }
 
     //=============================================================================
-    private fun createTestData(): ArrayList<String> {
-        val temp = ArrayList<String>()
-        for(i in 0..20){
-            temp.add(i.toString())
-        }
-
-        return temp
-    }// createTestData()
-
-    //=============================================================================
 
     inner class CalendarHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        val textView : TextView = itemView.findViewById(com.example.easycarpoolapp.R.id.item_text)
+        val itemLayout : LinearLayout = itemView.findViewById(R.id.item_calendar_layout)
+        val driver : TextView = itemView.findViewById(R.id.item_calendar_driver)
+        val passenger : TextView = itemView.findViewById(R.id.item_calendar_passenger)
+        val date : TextView = itemView.findViewById(R.id.item_calendar_date)
+        val time : TextView = itemView.findViewById(R.id.item_calendar_time)
 
-        public fun bind(items : String){
-            textView.text = items
-        }
 
+
+        public fun bind(item : ReservedPostDto){
+            driver.text = driver.text.toString()+item.driver
+            passenger.text = passenger.text.toString()+item.passenger
+            date.text = date.text.toString()+item.date
+            time.text = time.text.toString()+item.time
+        }//bind()
+
+        init{
+            itemLayout.setOnClickListener {
+                Toast.makeText(requireContext(), "item layout clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        }//init
 
     } //CalendarHolder
 
     //=============================================================================
 
-    inner class CalendarAdapter(val items : ArrayList<String>) : RecyclerView.Adapter<CalendarHolder>(){
+    inner class CalendarAdapter(val items : ArrayList<ReservedPostDto>) : RecyclerView.Adapter<CalendarHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarHolder {
             val view = layoutInflater.inflate(com.example.easycarpoolapp.R.layout.item_calendar_layout, parent, false)
             return CalendarHolder(view)

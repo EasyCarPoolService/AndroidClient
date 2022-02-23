@@ -109,6 +109,42 @@
 
         </LinearLayout>
 
+        <!--내가 보낸 확인-->
+        <LinearLayout
+            android:id="@+id/confirm_mine_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_radius"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:padding="8dp"
+                android:text="요청 수락!"
+                android:textColor="@color/gray_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:padding="8dp"
+                android:text="예약된 카풀은 캘린더에서 확인할 수 있습니다."
+                android:textColor="@color/gray_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <!--내가 보낸 확인-->
+
         <TextView
             android:visibility="gone"
             android:id="@+id/chat_text_content_mine"
@@ -129,8 +165,7 @@
 
 
 
-    <!--상대가 보낸 메시지-->
-
+    <!--상대방 레이아웃-->
     <LinearLayout
         android:id="@+id/chat_layout_opponent"
         android:layout_width="match_parent"
@@ -149,6 +184,7 @@
             app:civ_border_color="#ffffff"
             app:civ_border_overlay="true"
             app:civ_border_width="3dp" />
+
 
         <!--상대가 보낸 요청-->
         <LinearLayout
@@ -230,6 +266,45 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
+
+
+
+        <!--상대가 보낸 요청 수락 -->
+        <LinearLayout
+            android:id="@+id/confirm_opponent_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_radius"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:padding="8dp"
+                android:text="요청 수락!"
+                android:textColor="@color/gray_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:padding="8dp"
+                android:text="예약된 카풀은 캘린더에서 확인할 수 있습니다."
+                android:textColor="@color/gray_color"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <!--상대가 보낸 요청 수락 -->
+
 
 
         <!--상대가 보낸 메시지-->

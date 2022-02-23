@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_calendar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="8dp"
     >
-    <TextView
-        android:id="@+id/item_text"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        />
+        android:orientation="horizontal"
+        android:layout_margin="4dp"
+        >
+
+        <TextView
+            android:id="@+id/item_calendar_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text="날짜 : "
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text=" | "
+            />
+        <TextView
+            android:id="@+id/item_calendar_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text="시간 : "
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="4dp"
+        >
+
+        <TextView
+            android:id="@+id/item_calendar_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text="운전자 : "
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text=" | "
+            />
+
+        <TextView
+            android:id="@+id/item_calendar_passenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/gray_color"
+            android:text="탑승자 : "
+            />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
 
 </LinearLayout>
+
+
+
+
+    <!--@SerializedName("driver")
+    val driver : String,
+
+    @SerializedName("passenger")
+    val passenger : String,
+
+    @SerializedName("date")
+    val date : String,
+
+    @SerializedName("time")
+    val time : String-->

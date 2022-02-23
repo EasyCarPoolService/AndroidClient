@@ -206,6 +206,10 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
         val mine_destination = itemView.findViewById<TextView>(R.id.request_destination_mine)
         val mine_departure_time = itemView.findViewById<TextView>(R.id.request_time_mine)
 
+        //confirm layout
+        val confirm_opponent = itemView.findViewById<LinearLayout>(R.id.confirm_opponent_layout)
+        val confirm_mine = itemView.findViewById<LinearLayout>(R.id.confirm_mine_layout)
+
 
         public fun bind(item : ChatDto){
             if(item.writer == LocalUserData.getEmail()){ //내가 작성한 글
@@ -215,7 +219,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
                         visibility = View.VISIBLE
                         text = item.message
                     }
-                }else{
+                }else if(item.type.equals("request")){
                     my_request_layout.visibility = View.VISIBLE
                     mine_driver.text = mine_driver.text.toString()+driverNickname
                     mine_passenger.text = mine_passenger.text.toString()+passengerNickname
@@ -223,6 +227,9 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
                     mine_destination.text = mine_destination.text.toString()+viewModel.postInfo.value?.destination
                     mine_departure_time.text = mine_departure_time.text.toString()+viewModel.postInfo.value?.departureTime
 
+                }else{
+                    //요청 확인 레이아웃 구성
+                    confirm_mine.visibility = View.VISIBLE
                 }
 
                 my_time.text = item.time
@@ -234,13 +241,16 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
                         visibility = View.VISIBLE
                         text = item.message
                     }
-                }else{
+                }else if(item.type.equals("request")){
                     opponent_request_layout.visibility = View.VISIBLE
                     opponent_driver.text = opponent_driver.text.toString()+driverNickname
                     opponent_passenger.text = opponent_passenger.text.toString()+passengerNickname
                     opponent_departure.text = opponent_departure.text.toString()+viewModel.postInfo.value?.departure
                     opponent_destination.text = opponent_destination.text.toString()+viewModel.postInfo.value?.destination
                     opponent_departure_time.text = opponent_departure_time.text.toString()+viewModel.postInfo.value?.departureTime
+                }else{
+                    //요청 수락에 대한 레이아웃 구성
+                    confirm_opponent.visibility = View.VISIBLE
                 }
 
                 opponent_time.text = item.time
@@ -253,8 +263,8 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
         init{
             btn_confirm_opponent.setOnClickListener {
-                //check
                 viewModel.registerReservedPost(postId = postId!!, driver = driver, passenger = passenger, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
+                viewModel.sendMessage("confirm of request", opponentFcmToken, "confirm")
             }
         } //init()
     }
