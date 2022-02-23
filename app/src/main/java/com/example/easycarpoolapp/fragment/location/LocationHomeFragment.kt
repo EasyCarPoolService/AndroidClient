@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentLocationHomeBinding
-import com.example.easycarpoolapp.fragment.post.PostHomeFragment
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 
 
 class LocationHomeFragment : Fragment() {
@@ -19,16 +20,27 @@ class LocationHomeFragment : Fragment() {
         }//getInstance()
     }
 
+
     private lateinit var binding : FragmentLocationHomeBinding
+    private lateinit var mapContainer : ViewGroup
+    private lateinit var mapView : MapView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_location_home, container, false)
 
+        mapContainer = binding.mapView
+        mapView = MapView(requireActivity())
+        mapContainer.addView(mapView)
+
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.53737528, 127.00557633), true);
 
 
         return binding.root
     }//onCreateView()
+
+
 
 }

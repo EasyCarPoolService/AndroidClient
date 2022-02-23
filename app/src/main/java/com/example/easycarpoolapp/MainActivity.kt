@@ -18,10 +18,17 @@ import com.example.easycarpoolapp.fragment.home.HomeFragment
 import com.example.easycarpoolapp.fragment.location.LocationHomeFragment
 import com.example.easycarpoolapp.fragment.post.*
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.navigation.NavigationViewManager
 import com.example.easycarpoolapp.navigation.car.RegisterCarFragment
 import com.example.easycarpoolapp.navigation.car.RegisterCarImageFragment
+import android.content.pm.PackageManager
+
+import android.content.pm.PackageInfo
+import android.util.Base64
+import android.util.Log
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
@@ -48,11 +55,33 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     override fun onResume() {
         super.onResume()
 
+        getHashKey()
+
         if (LocalUserData.getNickname()!=null){
             Toast.makeText(applicationContext, "안녕하세요. "+LocalUserData.getNickname()+"님", Toast.LENGTH_SHORT).show()
         }
 
     }//onResume
+
+
+    private fun getHashKey() {
+        var packageInfo: PackageInfo? = null
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        if (packageInfo == null) Log.e("KeyHash", "KeyHash:null")
+        for (signature in packageInfo!!.signatures) {
+            try {
+                val md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            } catch (e: NoSuchAlgorithmException) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=$signature", e)
+            }
+        }
+    }
 
 
     private fun setBottomNav(){
