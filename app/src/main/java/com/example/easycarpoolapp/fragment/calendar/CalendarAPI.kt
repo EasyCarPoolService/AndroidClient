@@ -14,4 +14,7 @@ interface CalendarAPI {
     @POST("/api/calendar/post")
     public fun getPostDataCall(@Body localUserDto: LocalUserDto) : Call<ArrayList<ReservedPostDto>>
 
+    @POST("/api/calendar/detail")
+    public fun getItemDetailCall(@Body reservedPostDto: ReservedPostDto): Call<PostDto>
+
 }

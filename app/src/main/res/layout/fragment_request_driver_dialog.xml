@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/shape_radius"
+    android:background="@color/white"
     >
 
     <TextView
@@ -263,6 +263,7 @@
                 android:textSize="16dp"
                 android:layout_margin="16dp"
                 android:text="요청 보내기"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

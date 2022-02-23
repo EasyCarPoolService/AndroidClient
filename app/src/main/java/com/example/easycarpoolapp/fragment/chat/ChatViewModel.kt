@@ -42,9 +42,10 @@ class ChatViewModel : ViewModel(){
         repository?.getPostInfo(ChatRoomDto(postType = postType, postId = postId), postInfo)
     }
 
-    fun registerReservedPost(postId : Long, driver : String, passenger : String, date : String, time : String){
+    fun registerReservedPost(postId : Long, postType : String, driver : String, passenger : String, date : String, time : String){
         repository?.registerReservedPost(ReservedPostDto(
             postId = postId,
+            postType = postType,
             driver = driver,
             passenger = passenger,
             date = date,

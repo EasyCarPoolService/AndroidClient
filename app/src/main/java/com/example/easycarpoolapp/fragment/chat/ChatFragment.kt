@@ -125,9 +125,9 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
 
             if(postType.equals("passenger")){
-                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this, buttonAvailable = true).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
             }else{
-                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1, this).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1, this, buttonAvailable = true).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
             }
 
 
@@ -263,7 +263,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
         init{
             btn_confirm_opponent.setOnClickListener {
-                viewModel.registerReservedPost(postId = postId!!, driver = driver, passenger = passenger, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
+                viewModel.registerReservedPost(postId = postId!!, postType = postType, driver = driver, passenger = passenger, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
                 viewModel.sendMessage("confirm of request", opponentFcmToken, "confirm")
             }
         } //init()

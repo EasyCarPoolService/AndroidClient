@@ -72,5 +72,32 @@ class CalendarRepository private constructor(val context : Context){
     }//getPostData()
 
 
+    //calendar recylcerview클릭시 해당 아이템의 디테일 서버로 요청
+    fun getItemDetail(reservedPostDto: ReservedPostDto, itemDetail : MutableLiveData<PostDto>) {
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(CalendarAPI::class.java)
+        val call = api.getItemDetailCall(reservedPostDto)
+
+        call.enqueue(object : Callback<PostDto>{
+            override fun onResponse(call: Call<PostDto>, response: Response<PostDto>) {
+                val body = response.body()
+                if(body!=null){
+                    itemDetail.value = body
+                }else{
+                    Log.e(TAG, "response body should not be null!")
+                }
+            }
+
+            override fun onFailure(call: Call<PostDto>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+        })
+    }//getItemdetail()
+
 
 }

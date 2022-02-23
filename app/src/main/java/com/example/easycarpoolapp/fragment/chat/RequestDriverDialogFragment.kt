@@ -13,12 +13,11 @@ import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.databinding.FragmentRequestDriverDialogBinding
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 
-class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Fragment) : DialogFragment(){
+class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonAvailable : Boolean) : DialogFragment(){
 
     interface Callbacks{
         public fun onDriverRequestButtonClicked()
     }
-
 
 
     private lateinit var binding : FragmentRequestDriverDialogBinding
@@ -59,6 +58,10 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
 
 
     private fun setUI(){
+        if(buttonAvailable){    // chatting중 요청 보낼경우 버튼 활성화
+            binding.btnSendRequest.visibility = View.VISIBLE
+        }
+
         binding.textNickname.text = postDto.nickname
         binding.textGender.text = postDto.gender
         binding.textDeparture.text = postDto.departure

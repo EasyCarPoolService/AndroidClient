@@ -17,7 +17,7 @@ import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import javax.security.auth.callback.Callback
 
 
-class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : Fragment) : DialogFragment(){
+class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonAvailable : Boolean) : DialogFragment(){
 
 
     interface  Callbacks{
@@ -71,6 +71,9 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
 
 
     private fun setUI(){
+        if(buttonAvailable){    //채팅중 요청 보낼 경우 버튼 활성화
+            binding.btnSendRequest.visibility = View.VISIBLE
+        }
 
         binding.textNickname.text = postDto.nickname
         binding.textGender.text = postDto.gender

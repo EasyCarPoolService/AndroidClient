@@ -27,12 +27,14 @@ import android.graphics.drawable.Drawable
 import android.widget.LinearLayout
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentCalendarHomeBinding
+import com.example.easycarpoolapp.fragment.chat.RequestDriverDialogFragment
+import com.example.easycarpoolapp.fragment.chat.RequestPassengerDialogFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import com.prolificinteractive.materialcalendarview.CalendarDay
 
 
-class CalendarHomeFragment : Fragment() {
+class CalendarHomeFragment : Fragment() ,RequestPassengerDialogFragment.Callbacks, RequestDriverDialogFragment.Callbacks{
 
 
     private lateinit var binding : FragmentCalendarHomeBinding
@@ -77,6 +79,18 @@ class CalendarHomeFragment : Fragment() {
             binding.calendarView.addDecorator(CalendarUtil.getTodayDecorator(requireActivity()))
             binding.calendarView.addDecorator(CalendarUtil.getEventDecorator(requireActivity(), it))
             //reservedPost기반 recyclerview set하기
+        })
+
+
+        viewModel.itemDetail.observe(viewLifecycleOwner, Observer {
+
+            //reservedPostDto 에 type필요
+
+            if(it.type.equals("driver")){   //타세요 게시글
+                RequestDriverDialogFragment(it, this, buttonAvailable = false).show(requireActivity().supportFragmentManager, "RequestDriverDialogFragment")
+            }else{  //태워주세요 게시글
+                RequestPassengerDialogFragment(it, this, buttonAvailable = false).show(requireActivity().supportFragmentManager, "RequestPassengerDialogFragment")
+            }
         })
 
         //날짜 선택시 이벤트 발생
@@ -125,6 +139,7 @@ class CalendarHomeFragment : Fragment() {
 
     inner class CalendarHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
+        var reservedPostDto : ReservedPostDto? = null
         val itemLayout : LinearLayout = itemView.findViewById(R.id.item_calendar_layout)
         val driver : TextView = itemView.findViewById(R.id.item_calendar_driver)
         val passenger : TextView = itemView.findViewById(R.id.item_calendar_passenger)
@@ -134,6 +149,7 @@ class CalendarHomeFragment : Fragment() {
 
 
         public fun bind(item : ReservedPostDto){
+            reservedPostDto = item
             driver.text = driver.text.toString()+item.driver
             passenger.text = passenger.text.toString()+item.passenger
             date.text = date.text.toString()+item.date
@@ -142,7 +158,7 @@ class CalendarHomeFragment : Fragment() {
 
         init{
             itemLayout.setOnClickListener {
-                Toast.makeText(requireContext(), "item layout clicked", Toast.LENGTH_SHORT).show()
+                viewModel.getItemDetail(reservedPostDto!!)
             }
 
         }//init
@@ -168,6 +184,8 @@ class CalendarHomeFragment : Fragment() {
     }//calendarAdapter()
 
 
+    override fun onDriverRequestButtonClicked() {}
+    override fun onPassengerRequestButtonClicked() {}
     //=============================================================================
 
 }

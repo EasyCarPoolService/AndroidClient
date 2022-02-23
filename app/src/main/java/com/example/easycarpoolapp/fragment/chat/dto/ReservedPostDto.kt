@@ -7,6 +7,9 @@ data class ReservedPostDto(
     @SerializedName("postId")
     var postId : Long,
 
+    @SerializedName("postType")
+    var postType : String,
+
     @SerializedName("driver")
     val driver : String,
 
