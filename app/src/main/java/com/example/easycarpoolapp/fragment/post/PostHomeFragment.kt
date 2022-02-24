@@ -22,10 +22,7 @@ import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostHomeBinding
-import com.example.easycarpoolapp.fragment.LoginDialogFragment
-import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout

@@ -9,6 +9,21 @@
         android:orientation="vertical"
         tools:context=".fragment.location.LocationHomeFragment">
 
+        <Button
+            android:id="@+id/btn_search_user"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="예약 조회"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_radius_main"
+            />
+
         <RelativeLayout
             android:id="@+id/map_view"
             android:layout_width="match_parent"
