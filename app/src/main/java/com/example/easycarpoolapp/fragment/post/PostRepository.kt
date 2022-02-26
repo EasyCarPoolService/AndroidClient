@@ -136,21 +136,26 @@ class PostRepository private constructor(val context : Context){
 
     } // requestSavePassengerPost
 
-    fun getPassengerPost(postItems: MutableLiveData<ArrayList<PostDto>>) {
+    fun getPassengerPost(currentPage : Int, postItems: MutableLiveData<ArrayList<PostDto>>) {
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
-        val call = api.getPassengerPostCall()
+        val call = api.getPassengerPostCall(currentPage = currentPage)
 
         call.enqueue(object : Callback<ArrayList<PostDto>>{
             override fun onResponse(
                 call: Call<ArrayList<PostDto>>,
                 response: Response<ArrayList<PostDto>>
             ) {
-                postItems.value = response.body()
+
+                val body = response.body()
+                if(body != null){
+                    postItems.value = response.body()
+                }
+
             }
 
             override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
@@ -162,21 +167,25 @@ class PostRepository private constructor(val context : Context){
     }//getPassengerPost
 
 
-    fun getDriverPost(postItems: MutableLiveData<ArrayList<PostDto>>) {
+    fun getDriverPost(currentPage : Int, postItems: MutableLiveData<ArrayList<PostDto>>) {
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
-        val call = api.getDriverPostCall()
+        val call = api.getDriverPostCall(currentPage = currentPage)
 
         call.enqueue(object : Callback<ArrayList<PostDto>>{
             override fun onResponse(
                 call: Call<ArrayList<PostDto>>,
                 response: Response<ArrayList<PostDto>>
             ) {
-                postItems.value = response.body()
+                val body = response.body()
+                if(body != null){
+                    postItems.value = response.body()
+                }
+
             }
 
             override fun onFailure(call: Call<ArrayList<PostDto>>, t: Throwable) {
@@ -298,5 +307,7 @@ class PostRepository private constructor(val context : Context){
 
 
     }// 지역명으로 게시글 찾기
+
+
 
 }

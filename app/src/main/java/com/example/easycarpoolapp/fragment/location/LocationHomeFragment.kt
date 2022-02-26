@@ -115,7 +115,7 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
         if(roomId != null){
             viewModel.sendLocation(roomId!!, location)
         }
-        mapUtils?.moveToCenter(location)
+       // mapUtils?.moveToCenter(location)
 
         Log.e(TAG, location.longitude.toString())
 

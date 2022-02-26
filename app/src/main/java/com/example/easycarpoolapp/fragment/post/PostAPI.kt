@@ -4,6 +4,7 @@ import com.example.easycarpoolapp.auth.domain.User
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.*
+import com.google.gson.annotations.SerializedName
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,14 +21,13 @@ interface PostAPI {
     @POST("/api/post/driver/register")
     public fun getDriverSaveCall(@Body postDriverDto: PostDriverDto) : Call<ResponseBody>
 
-
     //태워주세요 게시글 조회
-    @GET("/api/post/passenger/getPost")
-    public fun getPassengerPostCall() : Call<ArrayList<PostDto>>
+    @POST("/api/post/passenger/getPost")
+    public fun getPassengerPostCall(@Body currentPage : Int) : Call<ArrayList<PostDto>>
 
     //타세요 게시글 조회
-    @GET("/api/post/driver/getPost")
-    public fun getDriverPostCall() : Call<ArrayList<PostDto>>
+    @POST("/api/post/driver/getPost")
+    public fun getDriverPostCall(@Body currentPage : Int) : Call<ArrayList<PostDto>>
 
     //User가 작성한 게시글 조회
     @POST("/api/post/user/getPost")

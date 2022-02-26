@@ -40,7 +40,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/main_color"
                 android:textStyle="bold"
-                android:text="출발지 : 서울"
+                android:text="출발지 : "
                 />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/main_color"
                 android:textStyle="bold"
-                android:text="도착지 : 부산"
+                android:text="도착지 : "
                 />
 
         </LinearLayout>

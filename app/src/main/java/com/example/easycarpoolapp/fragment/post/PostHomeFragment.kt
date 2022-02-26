@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -45,7 +46,6 @@ class PostHomeFragment : Fragment() {
 
     private var callbacks : PostHomeFragment.CallBacks? = null
     private lateinit var binding : FragmentPostHomeBinding
-    private var currentPostType : String? = null
     private val viewModel : PostHomeViewModel by lazy {
         ViewModelProvider(this).get(PostHomeViewModel::class.java)
     }
@@ -70,9 +70,8 @@ class PostHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_post_home, container, false)
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        setUpRecyclerView()
 
 
         return binding.root
@@ -122,21 +121,24 @@ class PostHomeFragment : Fragment() {
         //passenger 게시글 불러오기
         binding.btnPassengerPost.setOnClickListener {
             setButtonEffect(it as Button)
-            currentPostType = "passenger"
+            viewModel.currentPostType = "passenger"
             viewModel.getPassengerPost()
+            refreshAdapter(viewModel.currentItems)
         }//btnPassengerPost
 
         binding.btnDriverPost.setOnClickListener {
             setButtonEffect(it as Button)
-            currentPostType = "driver"
+            viewModel.currentPostType = "driver"
             viewModel.getDriverPost()
+            refreshAdapter(viewModel.currentItems)
         }//btnDriverPost
 
 
         binding.btnUserPost.setOnClickListener {
             setButtonEffect(it as Button)
-            currentPostType = "user"
+            viewModel.currentPostType = "user"
             viewModel.getUserPost()
+            refreshAdapter(viewModel.currentItems)
         }
 
         binding.btnAddPassenger.setOnClickListener {
@@ -145,18 +147,25 @@ class PostHomeFragment : Fragment() {
 
 
         binding.btnFindbydistrict.setOnClickListener {
-            if(currentPostType==null){
+            if(viewModel.currentPostType==null){
                 Toast.makeText(requireContext(), "게시글 종류를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
             }else{
                 val district : String = binding.editDistrict.text.toString()
-                viewModel.getPostByDistrict(currentPostType!!, district)
+                viewModel.getPostByDistrict(district)
             }
 
         }// 지역명기반 게시글 검색
 
         // 태워주세요 혹은 타세요 게시글 갱신
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
-            updatePost(it)
+            if(it.size!=0){
+                viewModel.currentItems.addAll(it)
+                updatePost(viewModel.currentItems)
+            }else{
+                binding.textLastPage.visibility = View.VISIBLE
+            }
+            binding.progressBar.visibility = View.GONE
+
         })
 
         //user가 작성한 게시글 혹은 진행중 정보 갱신
@@ -180,9 +189,31 @@ class PostHomeFragment : Fragment() {
             .load("http://"+NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
             .into(binding.imageBtnProfile)
 
-
     }//setImageBtnProfile()
 
+    //==========================================================================================
+    private fun setUpRecyclerView(){
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.nestedScrollView.setOnScrollChangeListener(object :
+            NestedScrollView.OnScrollChangeListener {
+            override fun onScrollChange(
+                v: NestedScrollView?,
+                scrollX: Int,
+                scrollY: Int,
+                oldScrollX: Int,
+                oldScrollY: Int
+            ) {
+                if ((scrollY >= (v!!.getChildAt(v.getChildCount() - 1)!!.getMeasuredHeight() - v!!.getMeasuredHeight())) &&
+                    scrollY > oldScrollY) {
+                        if (viewModel.currentPostType.equals("user")) return
+                        binding.progressBar.visibility = View.VISIBLE
+                        viewModel.getNextPage()
+                }
+            }
+
+        })
+
+    }
 
     //==========================================================================================
     //현재 User가 작성한 혹은 진행중 게시글 갱신
@@ -198,19 +229,23 @@ class PostHomeFragment : Fragment() {
         binding.btnPassengerPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_color))
         binding.btnUserPost.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_color))
         selectedButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_color))
-    }
+    }//setButtonEffect
 
+    //==========================================================================================
+    private fun refreshAdapter(items : ArrayList<PostDto>){
+        binding.recyclerView.adapter = PostAdapter(items)
+    }
 
 
     //==========================================================================================
     // 타세요 혹은 태워주세요 게시글 갱신
     private fun updatePost(items : ArrayList<PostDto>){
-        binding.recyclerView.adapter = PostAdapter(items = items)
-    }
+        Log.e("UPDATEPOSE", "CALLED")
+        //binding.recyclerView.adapter?.notifyItemRangeInserted(viewModel.currentPage, 10)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }   //recycler scroll -> 새로운 게시글 20개씩 조회하여 추가
 
     //==========================================================================================
-    // 임시로 PassengerPost로 item 구성
-
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         lateinit var item : PostDto
@@ -229,7 +264,6 @@ class PostHomeFragment : Fragment() {
                 }else{  //태워주세요 게시글의 경우
                     callbacks!!.onPassengerPostSelected(item)
                 }
-
 
             }
         }//init

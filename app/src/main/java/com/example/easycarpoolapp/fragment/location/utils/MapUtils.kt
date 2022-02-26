@@ -25,19 +25,13 @@ class MapUtils private constructor(val mapView : MapView, val context : Context)
     public fun moveToCenter(location: Location){
         val mapPoint = MapPoint.mapPointWithGeoCoord(location.latitude, location.longitude)
         mapView.setMapCenterPoint(mapPoint,true)
-        //지도에서 내 위치를 가운데로 지정
-        /*val marker = MapPOIItem()
-        marker.itemName = "내위치"
-        marker.mapPoint = mapPoint
-        marker.markerType = MapPOIItem.MarkerType.BluePin
-        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
-        mapView.addPOIItem(marker)*/
+
     }//moveToCenter
 
     fun markMyLocation(locationDto : LocationDto?){
         if (locationDto==null) return
         val mapPoint = MapPoint.mapPointWithGeoCoord(locationDto.lat, locationDto.lon)
-        mapView.setMapCenterPoint(mapPoint,true)
+        //mapView.setMapCenterPoint(mapPoint,true)
         //지도에서 내 위치를 가운데로 지정
 
         if(currentMyLocation!=null){    //현재 mapView에 marker가 추가 되어있는 경우 제거
@@ -55,7 +49,7 @@ class MapUtils private constructor(val mapView : MapView, val context : Context)
     fun markOpponentLocation(locationDto : LocationDto?) {
         if (locationDto==null) return
         val mapPoint = MapPoint.mapPointWithGeoCoord(locationDto.lat, locationDto.lon)
-        mapView.setMapCenterPoint(mapPoint,true)
+        //mapView.setMapCenterPoint(mapPoint,true)
         //지도에서 내 위치를 가운데로 지정
 
         if(currentOpponentLocation != null){    //현재 mapView에 marker가 추가 되어있는 경우 제거
