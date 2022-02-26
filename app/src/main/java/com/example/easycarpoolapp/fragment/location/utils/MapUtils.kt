@@ -22,8 +22,8 @@ class MapUtils private constructor(val mapView : MapView, val context : Context)
     private var currentOpponentLocation : MapPOIItem? = null
 
 
-    public fun moveToCenter(location: Location){
-        val mapPoint = MapPoint.mapPointWithGeoCoord(location.latitude, location.longitude)
+    public fun moveToCenter(lat : Double, lon : Double){
+        val mapPoint = MapPoint.mapPointWithGeoCoord(lat, lon)
         mapView.setMapCenterPoint(mapPoint,true)
 
     }//moveToCenter
@@ -62,6 +62,7 @@ class MapUtils private constructor(val mapView : MapView, val context : Context)
         marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
         currentOpponentLocation = marker
         mapView.addPOIItem(currentOpponentLocation)
+
 
     }//상대방의 위치 표기 하기
 

@@ -79,6 +79,18 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
             })
         }//예약된 정보 불러오기
 
+        binding.btnLocationMine.setOnClickListener {
+            if(viewModel.myLocation!=null) mapUtils?.moveToCenter(viewModel.myLocation!!.latitude!!, viewModel.myLocation!!.longitude!!)
+
+        } // 내위치로 이동하기
+
+        binding.btnLocationOpponent.setOnClickListener {
+
+            if(viewModel.opponentLocation.value!=null) mapUtils?.moveToCenter(viewModel.opponentLocation.value?.lat!!, viewModel.opponentLocation.value?.lon!!)
+
+        }// 상대위치로 이동하기
+
+
     }// onViewCreated()
 
     override fun onResume() {
@@ -112,10 +124,11 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
 
     override fun setMapByLocation(location: Location) { //locationDto 전송 <- locationDto는 roomId를 포함
         // 만약 타겟 정해진 경우 send if target is not null
+       viewModel.myLocation = location
+
         if(roomId != null){
             viewModel.sendLocation(roomId!!, location)
         }
-       // mapUtils?.moveToCenter(location)
 
         Log.e(TAG, location.longitude.toString())
 

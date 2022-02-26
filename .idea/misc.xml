@@ -26,7 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_join_form.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_join_phone.xml" value="0.2864583333333333" />
         <entry key="app/src/main/res/layout/fragment_join_phone_verify.xml" value="0.11367753623188406" />
-        <entry key="app/src/main/res/layout/fragment_location_home.xml" value="0.24427083333333333" />
+        <entry key="app/src/main/res/layout/fragment_location_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_login_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_post_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_post_driver_detail.xml" value="0.25" />

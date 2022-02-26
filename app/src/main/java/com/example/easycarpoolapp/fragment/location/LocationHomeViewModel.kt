@@ -12,6 +12,8 @@ class LocationHomeViewModel : ViewModel() {
     val repository : LocationRepository? = LocationRepository.getInstance()
     val items : MutableLiveData<ArrayList<ReservedPostDto>> = MutableLiveData()
     val opponentLocation : MutableLiveData<LocationDto> = MutableLiveData()
+    public var myLocation : Location? = null
+
 
     public fun getReservedPost(){
         repository?.getReservedPost(items, LocalUserData.getEmail())
