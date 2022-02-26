@@ -10,6 +10,18 @@
         android:orientation="vertical"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_color"
+            android:gravity="center"
+            android:text="예약 목록"
+            android:background="@color/white"
+            android:elevation="8dp"
+            />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -36,7 +48,8 @@
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:layout_margin="16dp"
-                android:text="취소 하기"
+                android:text="취소"
+                android:padding="8dp"
                 />
 
             <Button
@@ -44,12 +57,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/btn_radius_main"
+                android:background="@drawable/btn_radius_gray"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:layout_margin="16dp"
-                android:text="위치 요청하기"
+                android:padding="8dp"
+                android:text="위치 요청"
                 />
 
         </LinearLayout>

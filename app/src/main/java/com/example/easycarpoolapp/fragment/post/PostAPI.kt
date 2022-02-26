@@ -3,10 +3,7 @@ package com.example.easycarpoolapp.fragment.post
 import com.example.easycarpoolapp.auth.domain.User
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
-import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
-import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
-import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
+import com.example.easycarpoolapp.fragment.post.dto.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -36,6 +33,10 @@ interface PostAPI {
     @POST("/api/post/user/getPost")
     fun getUserPostCall(@Body localUserDto: LocalUserDto): Call<ArrayList<PostDto>>
 
+    // 지역명 기반 게시글 조회
+    @POST("/api/post/getPostByDistrict")
+    fun getPostByDistrictCall(@Body postDistrictDto: PostDistrictDto): Call<ArrayList<PostDto>>
+
     @POST("/api/chat/createroom")
     public fun getCreateRoomCall(@Body chatRoomDto: ChatRoomDto) : Call<ChatRoomDto>
 
@@ -45,6 +46,8 @@ interface PostAPI {
 
     @POST("/api/post/getUserPostData")
     public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
+
+
 
 
 }

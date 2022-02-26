@@ -47,7 +47,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
             return ChatFragment().apply { arguments = bundle }
         }
-    }
+    }//companion object
 
     // 각 사용자의 닉네임 사용 여부 판단
     private lateinit var binding : FragmentChatBinding
@@ -263,7 +263,8 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
         init{
             btn_confirm_opponent.setOnClickListener {
-                viewModel.registerReservedPost(postId = postId!!, postType = postType, driver = driver, passenger = passenger, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
+
+                viewModel.registerReservedPost(postId = postId!!, postType = postType, driver = driver, driverFcmToken = driverFcmToken, passenger = passenger, passengerFcmToken = passengerFcmToken, date = viewModel.postInfo.value!!.departureDate, time = viewModel.postInfo.value!!.departureTime)
                 viewModel.sendMessage("confirm of request", opponentFcmToken, "confirm")
             }
         } //init()

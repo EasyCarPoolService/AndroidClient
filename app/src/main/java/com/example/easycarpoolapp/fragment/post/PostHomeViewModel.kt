@@ -2,8 +2,8 @@ package com.example.easycarpoolapp.fragment.post
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.easycarpoolapp.fragment.post.dto.PostDistrictDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 
 class PostHomeViewModel : ViewModel(){
@@ -38,7 +38,9 @@ class PostHomeViewModel : ViewModel(){
         repository!!.getUserPostData(userPostDto)
     }
 
-
+    fun getPostByDistrict(currentPostType: String, district: String) {
+        repository?.getPostByDistrict(PostDistrictDto(postType = currentPostType, district = district), postItems)
+    }// 지역명 기반 게시글 조회하기
 
 
 }

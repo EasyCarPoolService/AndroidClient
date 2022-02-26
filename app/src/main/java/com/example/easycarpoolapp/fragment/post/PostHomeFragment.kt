@@ -45,6 +45,7 @@ class PostHomeFragment : Fragment() {
 
     private var callbacks : PostHomeFragment.CallBacks? = null
     private lateinit var binding : FragmentPostHomeBinding
+    private var currentPostType : String? = null
     private val viewModel : PostHomeViewModel by lazy {
         ViewModelProvider(this).get(PostHomeViewModel::class.java)
     }
@@ -84,8 +85,6 @@ class PostHomeFragment : Fragment() {
         setImageBtnProfile()
         viewModel.getUserPostData() //User가 작성한 게시글 혹은 진행중 게시글 정보 조회 -> 레이아웃 상단에 띄우기
 
-
-
         binding.imageBtnProfile.setOnClickListener{
             Toast.makeText(requireContext(), "imageView clicked", Toast.LENGTH_SHORT).show()
         }
@@ -123,24 +122,37 @@ class PostHomeFragment : Fragment() {
         //passenger 게시글 불러오기
         binding.btnPassengerPost.setOnClickListener {
             setButtonEffect(it as Button)
+            currentPostType = "passenger"
             viewModel.getPassengerPost()
         }//btnPassengerPost
 
         binding.btnDriverPost.setOnClickListener {
             setButtonEffect(it as Button)
+            currentPostType = "driver"
             viewModel.getDriverPost()
         }//btnDriverPost
 
 
         binding.btnUserPost.setOnClickListener {
             setButtonEffect(it as Button)
+            currentPostType = "user"
             viewModel.getUserPost()
         }
-
 
         binding.btnAddPassenger.setOnClickListener {
             callbacks?.onAddPassengerSelected()
         }
+
+
+        binding.btnFindbydistrict.setOnClickListener {
+            if(currentPostType==null){
+                Toast.makeText(requireContext(), "게시글 종류를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }else{
+                val district : String = binding.editDistrict.text.toString()
+                viewModel.getPostByDistrict(currentPostType!!, district)
+            }
+
+        }// 지역명기반 게시글 검색
 
         // 태워주세요 혹은 타세요 게시글 갱신
         viewModel.postItems.observe(viewLifecycleOwner, Observer {
@@ -151,8 +163,6 @@ class PostHomeFragment : Fragment() {
         viewModel.userPostDto.observe(viewLifecycleOwner, Observer {
             updateUserPostData(it)
         })
-
-
 
     }// onViewCreated
 

@@ -12,4 +12,7 @@ interface LocationAPI {
     @POST("/api/location/getReservedPost")
     public fun getReservedPostCall(@Body localUserDto : LocalUserDto) : Call<ArrayList<ReservedPostDto>>
 
+    @POST("/api/location/sendFCM")
+    public fun getSendFCMCall(@Body reservedPostDto : ReservedPostDto) : Call<String>
+
 }

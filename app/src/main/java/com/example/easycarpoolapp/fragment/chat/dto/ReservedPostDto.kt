@@ -10,11 +10,20 @@ data class ReservedPostDto(
     @SerializedName("postType")
     var postType : String,
 
+    @SerializedName("locationRoomId")
+    var locationRoomId : String? = null,
+
     @SerializedName("driver")
     val driver : String,
 
+    @SerializedName("driverFcmToken")
+    val driverFcmToken : String,
+
     @SerializedName("passenger")
     val passenger : String,
+
+    @SerializedName("passengerFcmToken")
+    val passengerFcmToken : String,
 
     @SerializedName("date")
     val date : String,
