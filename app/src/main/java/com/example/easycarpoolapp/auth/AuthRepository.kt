@@ -59,7 +59,9 @@ class AuthRepository private constructor(val context : Context){
             INSTANCE = null
         }
     }
+
     //=============================================================================================
+
     val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
         override fun onVerificationCompleted(p0: PhoneAuthCredential) {
             Log.e("ONVERIFICATION SUCCESS", p0.toString())
@@ -80,9 +82,8 @@ class AuthRepository private constructor(val context : Context){
     private lateinit var verificationId : String
     private val BASEURL :String = "http://"+NetworkConfig.getIP()+":8080"
 
-
-
     //=============================================================================================
+
     public fun sendCode(phoneNum : String){
 
         //robots 검사 생략
@@ -100,6 +101,7 @@ class AuthRepository private constructor(val context : Context){
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
+
     //=============================================================================================
 
     public fun verifyPhone(
@@ -127,13 +129,20 @@ class AuthRepository private constructor(val context : Context){
     //=============================================================================================
 
     //회원가입의 경우 driverAuthentication은 항상 false
-    public fun signUp(profile_image : Bitmap?, name : String, email : String, nickname : String, password : String, birth : String, gender : String, fcmToken : String){
+    public fun signUp(profile_image : Bitmap?,
+                      name : String,
+                      email : String,
+                      nickname : String,
+                      password : String,
+                      birth : String,
+                      gender : String,
+                      fcmToken : String){
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         var profile_image_body : MultipartBody.Part? = null
-
 
         Log.e("REPOSITORY", fcmToken)
 
@@ -183,7 +192,9 @@ class AuthRepository private constructor(val context : Context){
             }
         })
     }
+
     //=============================================================================================
+
     public fun login(loginDto :LoginDto, loginFlag : MutableLiveData<Boolean>){
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())

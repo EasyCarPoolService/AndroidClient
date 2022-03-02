@@ -106,8 +106,6 @@ class JoinFormFragment private constructor(): Fragment() {
         //회원가입 버튼 클릭
         binding.btnJoin.setOnClickListener {
 
-            Log.e("TEST!!", fcmToken)
-
             if(binding.editPassword1.text.toString() != binding.editPassword2.text.toString() ||
                 binding.editPassword1.text.length < 6){
                 Toast.makeText(requireContext(), "비밀번호를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()

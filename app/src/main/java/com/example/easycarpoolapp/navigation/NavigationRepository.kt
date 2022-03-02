@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
+import com.example.easycarpoolapp.auth.AuthRepository
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.PostAPI
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
@@ -134,9 +135,57 @@ class NavigationRepository private constructor(val context : Context){
 
     }//getUserPostData
 
+    fun editProfile(
+        profile_image: Bitmap,
+        nickname: String,
+        gender: String,
+        introduce_message: String
+    ) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
 
+        var profile_image_body : MultipartBody.Part? = null
+        if(profile_image!=null){
+            val profileImageFile : File = imageFileManager!!.createImageFile(profile_image)
+            val fileName : String = LocalUserData.getEmail()+"_profile.jpg" //서버에 저장되는 파일명
+            //val fileName : String = "testImage.jpg" //서버에 저장되는 파일명
 
+            //fileManager.getFile() -> 미리 지정해둔 특정 파일 하나에 해당
+            var requestBody_image : RequestBody = RequestBody.create(MediaType.parse("image/*"), profileImageFile)
 
+            //createFoemData에 지정한 name -> (Spring Boot) files.getName() 메서드로 얻는 이름
+            //fileName 변수에 저장되어있는 문자열 -> Server에 저장되는 파일명(확장자포함)
+            //requestBody -> imageFile에 해당
+            profile_image_body = MultipartBody.Part.createFormData("profile_image", fileName, requestBody_image)
+        }
+
+        val email_body = RequestBody.create(MediaType.parse("text/plain"), LocalUserData.getEmail())
+        val nickname_body = RequestBody.create(MediaType.parse("text/plain"), nickname)
+        val gender_body = RequestBody.create(MediaType.parse("text/plain"), gender)
+        val introduce_message = RequestBody.create(MediaType.parse("text/plain"), introduce_message)
+
+        val api = retrofit.create(NavigationAPI::class.java)
+        val call = api.getEditProfileCall(
+            email_body,
+            profile_image_body,
+            nickname_body,
+            gender_body,
+            introduce_message
+        )
+        call.enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.e(TAG, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+    }// editProfile()
 
 
 }

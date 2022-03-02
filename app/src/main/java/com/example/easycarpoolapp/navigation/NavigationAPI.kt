@@ -29,4 +29,15 @@ interface NavigationAPI {
     @POST("/api/post/getUserPostData")
     public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
 
+
+    @Multipart
+    @POST("/api/user/editProfile")
+    public fun getEditProfileCall(
+        @Part("email") email: RequestBody?,
+        @Part profile_image : MultipartBody.Part?,
+        @Part("nickname") nickname: RequestBody?,
+        @Part("gender") gender: RequestBody?,
+        @Part("introduce_message") introduce_message: RequestBody?
+    ) : Call<ResponseBody>
+
 }

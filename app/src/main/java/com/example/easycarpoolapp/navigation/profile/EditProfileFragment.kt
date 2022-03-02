@@ -2,7 +2,9 @@ package com.example.easycarpoolapp.navigation.profile
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,9 +17,12 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
@@ -89,11 +94,21 @@ class EditProfileFragment : Fragment() {
         setUIWithLocalData()
         setUIWithServerData()
 
+        binding.btnEdit.setOnClickListener {
+            viewModel.nickname = binding.editNickname.text.toString()
+            viewModel.editProfile() //서버로 수정 내용 전송
+        }
+
         return binding.root
     }//onCreateView
 
+
     private fun setUIWithLocalData(){
+
+        viewModel.nickname = LocalUserData.getNickname().toString()
         binding.editNickname.setText(LocalUserData.getNickname().toString())
+
+
         if(LocalUserData.getGender().equals("male")){   //성별 남자일경우
             binding.radioMale.setChecked(true)
             binding.radioFemale.setChecked(false)
@@ -110,13 +125,30 @@ class EditProfileFragment : Fragment() {
     private fun setUIWithServerData(){
         setImageBtnProfile() //프로필 이미지 설정
 
-
     }   //서버에 저장되어 있는 정보 조회하여 UI에 띄우기
 
     private fun setImageBtnProfile() {
+
         Glide.with(this)
+            .asBitmap()
             .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
-            .into(binding.btnProfile)
+            .into(object : SimpleTarget<Bitmap?>(){
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: Transition<in Bitmap?>?
+                ) {
+                    binding.btnProfile.setImageBitmap(resource)
+                    viewModel.profile_image = resource
+                }
+
+            })
+
+
+
+        //.into(binding.btnProfile)
+
+
+
 
         binding.btnProfile.setOnClickListener {
             getImageFromGallery()
@@ -131,6 +163,7 @@ class EditProfileFragment : Fragment() {
             "image/*"
         )
         filterActivityLauncher.launch(intent)
+
     }//getImageFromGallery()
 
 
