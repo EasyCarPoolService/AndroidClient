@@ -26,9 +26,6 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
 
     }
 
-
-
-
     override fun onDestroy() {
         super.onDestroy()
         AuthRepository.onDestroy()

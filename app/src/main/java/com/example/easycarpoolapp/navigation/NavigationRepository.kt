@@ -3,9 +3,13 @@ package com.example.easycarpoolapp.navigation
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
+import com.example.easycarpoolapp.auth.dto.LocalUserDto
+import com.example.easycarpoolapp.fragment.post.PostAPI
+import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -98,5 +102,41 @@ class NavigationRepository private constructor(val context : Context){
             }
         })
     }//authenticateDriver
+
+
+
+    //이하 profile Fragment 관련 메서드
+    fun getUserPostData(userPostDto: MutableLiveData<UserPostDto>) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(PostAPI::class.java)
+        val call = api.getUserPostDataCall(LocalUserDto(email = LocalUserData.getEmail()))
+
+        call.enqueue(object : Callback<UserPostDto> {
+            override fun onResponse(call: Call<UserPostDto>, response: Response<UserPostDto>) {
+                val body = response.body()
+
+                if(body != null){
+                    Log.e(TAG, body.driver.toString())
+                    userPostDto.value = body
+                }
+            }
+            override fun onFailure(call: Call<UserPostDto>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+
+
+    }//getUserPostData
+
+
+
+
+
 
 }

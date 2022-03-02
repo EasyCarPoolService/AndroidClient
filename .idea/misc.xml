@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_calendar_home.xml" value="0.14166666666666666" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_chat_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_join.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_join_form.xml" value="0.25" />
@@ -33,9 +34,11 @@
         <entry key="app/src/main/res/layout/fragment_post_driver_form.xml" value="0.1286727456940223" />
         <entry key="app/src/main/res/layout/fragment_post_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_post_passenger_form.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_register_car.xml" value="0.2716318723490029" />
         <entry key="app/src/main/res/layout/fragment_register_car_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registercar_dialog.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_report_user.xml" value="0.3177083333333333" />
         <entry key="app/src/main/res/layout/fragment_request_driver_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_request_passenger_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_reserved_post_dialog.xml" value="0.1" />
@@ -47,7 +50,7 @@
         <entry key="app/src/main/res/layout/join_athenticate_phone.xml" value="0.22" />
         <entry key="app/src/main/res/layout/login_dialog.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/layout/main_content_layout.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/post_item_layout.xml" value="0.25825825825825827" />
         <entry key="app/src/main/res/menu/activity_main_bottom_nav.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.31614583333333335" />

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
+import com.example.easycarpoolapp.databinding.FragmentLocationHomeBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.location.dto.LocationDto
 import com.example.easycarpoolapp.fragment.location.utils.FusedLocationManager
@@ -29,11 +30,11 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
     }
 
     private val TAG : String = "LocationHomeFragment"
-    private lateinit var binding : com.example.easycarpoolapp.databinding.FragmentLocationHomeBinding
+    private lateinit var binding : FragmentLocationHomeBinding
     //private lateinit var mapContainer : ViewGroup
     private var mapView : MapView? =  null
     private var mapUtils : MapUtils? = null
-    private lateinit var fusedLocationManager: FusedLocationManager
+    private var fusedLocationManager: FusedLocationManager? = null
     private var roomId : String? = null
 
     private val viewModel : LocationHomeViewModel by lazy {
@@ -48,9 +49,7 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getReservedPost() //User Email에 해당하는 예약된 정보 조회
-
         fusedLocationManager = FusedLocationManager(this, requireContext())
-        fusedLocationManager.setLocationClient()
 
     }//onCreate()
 
@@ -96,6 +95,7 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
     override fun onResume() {
         super.onResume()
 
+        fusedLocationManager?.setLocationClient()
         if(mapView==null) {
             mapView = MapView(requireContext()).also {
                 mapUtils = MapUtils.getInstance(it, requireContext())
@@ -108,12 +108,14 @@ class LocationHomeFragment : Fragment(), ReservedPostDialogFragment.Callbacks, F
     override fun onPause() {
         super.onPause()
         roomId = null
-    }// 정지시 위치 정보 전송 중단을 위해 roomId = null
+        fusedLocationManager?.onDestroy()
+    }// 정지시 위치 정보 전송 중단을 위해 roomId = null / GSP서비스 종료
 
 
     override fun onDetach() {
         super.onDetach()
         LocationRepository.onDestroy()  //repository destroy
+        fusedLocationManager = null
     }// onDetach()
 
     override fun onSendRequestClicked(selectedDto: ReservedPostDto?) {  //subscribe수행

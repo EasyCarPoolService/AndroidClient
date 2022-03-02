@@ -26,13 +26,16 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
+import com.example.easycarpoolapp.navigation.profile.EditProfileFragment
+import com.example.easycarpoolapp.navigation.profile.ProfileHomeFragment
+import com.example.easycarpoolapp.navigation.profile.ReportUserFragment
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
-    PostDriverDetailFragment.Callbacks {
+    PostDriverDetailFragment.Callbacks , ProfileHomeFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -44,7 +47,6 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         setContentView(binding.root)
         setActionBar()
         navigationViewManager = NavigationViewManager(this, binding)
-        navigationViewManager.setNavView()
         setBottomNav()
 
         if(supportFragmentManager.findFragmentById(R.id.fragment_container)==null){
@@ -55,6 +57,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     override fun onResume() {
         super.onResume()
 
+        navigationViewManager.setNavView()  //navigation 뷰 setup
         getHashKey()
 
         if (LocalUserData.getNickname()!=null){
@@ -161,7 +164,26 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onLogoutSelected() {}
+    override fun onLogoutSelected() {
+        LocalUserData.logout()
+    }   //NavigationViewManager 에서 로그아웃 시도시 로그아웃 수행
+
+    override fun onLoginSelected() {
+        startActivity(Intent(this, AuthActivity::class.java))
+    }//NavigationViewManager 에서 로그인 시도
+
+
+    override fun onProfileSelected() {
+
+        if(LocalUserData.getEmail()!=null){
+            val fragment = ProfileHomeFragment.getInstance()
+            supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        }else{
+            LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+        }
+
+    }//NavigationViewManager 에서 프로필 보기 시도   -> ProfileHomeFragment()
+
 
     override fun onAddPassengerSelected() {
         val fragment = PostPassengerFormFragment.getInstance()
@@ -218,6 +240,16 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         val fragment = ChatFragment.getInstance(dto)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
+
+    override fun onEditProfileSelected() {
+        val fragment = EditProfileFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }   //ProfileHomeFragment Callback method -> 프로필 편집창으로 이동
+
+    override fun onReportUserSelected() {
+        val fragment = ReportUserFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }   //ProfileHomeFragment Callback method -> 신고창으로 이동
 
 }
 

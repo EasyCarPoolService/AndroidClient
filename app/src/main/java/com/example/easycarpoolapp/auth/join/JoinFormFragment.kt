@@ -33,9 +33,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 class JoinFormFragment private constructor(): Fragment() {
 
     companion object{
-
-
-
         public fun getInstance(phoneNumber : String) : JoinFormFragment{
             val args = Bundle().apply{
                 putSerializable("phoneNumber", phoneNumber)
@@ -44,7 +41,7 @@ class JoinFormFragment private constructor(): Fragment() {
                 arguments = args
             }
         }
-    }
+    }// companion object
 
     private lateinit var fcmToken :String
     private lateinit var binding : FragmentJoinFormBinding

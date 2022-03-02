@@ -40,6 +40,10 @@ class FusedLocationManager (val hostFragment : Fragment, val context : Context){
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
     }
 
+    public fun onDestroy(){
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
 
     init{
         callback = hostFragment as Callback
