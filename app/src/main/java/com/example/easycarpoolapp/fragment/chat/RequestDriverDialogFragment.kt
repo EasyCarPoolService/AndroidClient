@@ -13,10 +13,10 @@ import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.databinding.FragmentRequestDriverDialogBinding
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
 
-class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonAvailable : Boolean) : DialogFragment(){
+class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonLayout : String) : DialogFragment(){
 
     interface Callbacks{
-        public fun onDriverRequestButtonClicked()
+        public fun onDriverRequestButtonClicked()   // ChatHomeFragment에서 완료 버튼 클릭
     }
 
 
@@ -46,17 +46,19 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
         super.onViewCreated(view, savedInstanceState)
         setImage()
 
-        binding.btnSendRequest.setOnClickListener {
+        binding.btnSendRequestChat.setOnClickListener {
             callbacks?.onDriverRequestButtonClicked()
             dismiss()
-        }
-        binding.btnCancel.setOnClickListener {
+        }   //ChatFragment에서 -> 요청 전송
+        binding.btnCancelChat.setOnClickListener {
             dismiss()
-        }
+        }   //chatFragment에서 취소클릭 -> Dialog 종료
 
-        binding.btnConfirm.setOnClickListener {
+        binding.btnConfirmCalendar.setOnClickListener {
             dismiss()
-        }
+        }   //CalarHomeFragment에서 Dialog 종료
+
+
 
     }// onViewCreated()
 
@@ -68,11 +70,14 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
 
 
     private fun setUI(){
-        if(buttonAvailable){    // chatting중 요청 보낼경우 버튼 활성화
-            binding.layoutBtn.visibility = View.VISIBLE
-        }else{
-            binding.btnConfirm.visibility = View.VISIBLE
+        if(buttonLayout.equals("chat")){    //chatFragment에서 호스팅중
+            binding.layoutBtnChat.visibility = View.VISIBLE
+        }else{  //CalendarHomeFragment에서 호스팅중
+            binding.btnConfirmCalendar.visibility = View.VISIBLE
         }
+
+
+
 
         binding.textNickname.text = postDto.nickname
         binding.textGender.text = postDto.gender

@@ -17,7 +17,7 @@ import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import javax.security.auth.callback.Callback
 
 
-class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonAvailable : Boolean) : DialogFragment(){
+class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : Fragment, val buttonLayout : String) : DialogFragment(){
 
 
     interface  Callbacks{
@@ -54,20 +54,21 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSendRequest.setOnClickListener {
+
+        binding.btnSendRequestChat.setOnClickListener {
             callbacks?.onPassengerRequestButtonClicked()
             dismiss()
-        }
+        }   //ChatFragment -> 상대방에게 요청 전송
 
-        binding.btnCancel.setOnClickListener {
+        binding.btnCancelChat.setOnClickListener {
             dismiss()
-        }
+        }   //ChatFragment -> Dialog종료
 
-
-        //check
-        binding.btnConfirm.setOnClickListener {
+        binding.btnConfirmCalendar.setOnClickListener {
             dismiss()
-        }
+        }   //CalendarHomeFragmnet -> Dialog종료
+
+
 
     }//onViewCreated()
 
@@ -82,11 +83,13 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
 
 
     private fun setUI(){
-        if(buttonAvailable){    //채팅중 요청 보낼 경우 버튼 활성화
-            binding.layoutBtn.visibility = View.VISIBLE
-        }else{
-            binding.btnConfirm.visibility = View.VISIBLE
+
+        if(buttonLayout.equals("chat")){    //chatFragment에서 호스팅중
+            binding.layoutBtnChat.visibility = View.VISIBLE
+        }else{  //CalendarHomeFragment에서 호스팅중
+            binding.btnConfirmCalendar.visibility = View.VISIBLE
         }
+
 
         binding.textNickname.text = postDto.nickname
         binding.textGender.text = postDto.gender

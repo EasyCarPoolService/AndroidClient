@@ -36,7 +36,6 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class CalendarHomeFragment : Fragment() ,RequestPassengerDialogFragment.Callbacks, RequestDriverDialogFragment.Callbacks{
 
-
     private lateinit var binding : FragmentCalendarHomeBinding
     private val viewModel : CalendarHomeViewModel by lazy {
         ViewModelProvider(this).get(CalendarHomeViewModel::class.java)
@@ -87,9 +86,9 @@ class CalendarHomeFragment : Fragment() ,RequestPassengerDialogFragment.Callback
             //reservedPostDto 에 type필요
 
             if(it.type.equals("driver")){   //타세요 게시글
-                RequestDriverDialogFragment(it, this, buttonAvailable = false).show(requireActivity().supportFragmentManager, "RequestDriverDialogFragment")
+                RequestDriverDialogFragment(it, this, buttonLayout = "calendar").show(requireActivity().supportFragmentManager, "RequestDriverDialogFragment")
             }else{  //태워주세요 게시글
-                RequestPassengerDialogFragment(it, this, buttonAvailable = false).show(requireActivity().supportFragmentManager, "RequestPassengerDialogFragment")
+                RequestPassengerDialogFragment(it, this, buttonLayout = "calendar").show(requireActivity().supportFragmentManager, "RequestPassengerDialogFragment")
             }
         })
 
@@ -125,11 +124,13 @@ class CalendarHomeFragment : Fragment() ,RequestPassengerDialogFragment.Callback
         Log.e("selectedDate", selectedDate)
 
         val datePosts = ArrayList<ReservedPostDto>()
-        val AllPosts = viewModel.postItems.value!!
+        val AllPosts = viewModel.postItems.value
 
-        for(i in AllPosts){
-            if(i.date.equals(selectedDate)){
-                datePosts.add(i)
+        if (AllPosts != null) {
+            for(i in AllPosts){
+                if(i.date.equals(selectedDate)){
+                    datePosts.add(i)
+                }
             }
         }
         return datePosts
@@ -184,6 +185,7 @@ class CalendarHomeFragment : Fragment() ,RequestPassengerDialogFragment.Callback
     }//calendarAdapter()
 
 
+    //ChatFragment & ProgressHomeFragment에서 콜백 수행
     override fun onDriverRequestButtonClicked() {}
     override fun onPassengerRequestButtonClicked() {}
     //=============================================================================

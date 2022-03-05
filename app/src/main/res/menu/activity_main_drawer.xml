@@ -13,8 +13,8 @@
 
         <item
             android:id="@+id/nav_test2"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="prototype2" />
+            android:icon="@drawable/icon_car_maincolor"
+            android:title="진행현황 보기" />
 
     </group>
 </menu>

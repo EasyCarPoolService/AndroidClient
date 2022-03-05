@@ -29,6 +29,7 @@ import android.util.Log
 import com.example.easycarpoolapp.navigation.profile.EditProfileFragment
 import com.example.easycarpoolapp.navigation.profile.ProfileHomeFragment
 import com.example.easycarpoolapp.navigation.profile.ReportUserFragment
+import com.example.easycarpoolapp.navigation.progress.ProgressHomeFragment
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -183,6 +184,11 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         }
 
     }//NavigationViewManager 에서 프로필 보기 시도   -> ProfileHomeFragment()
+
+    override fun onProgressSelected() {
+        val fragment = ProgressHomeFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    } // NavigationViewManager Callback   -> 진행현황 보이기
 
 
     override fun onAddPassengerSelected() {

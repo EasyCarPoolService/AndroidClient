@@ -16,9 +16,12 @@ import com.google.android.material.navigation.NavigationView
 class NavigationViewManager (val context : Context, val binding : ActivityMainBinding) : NavigationView.OnNavigationItemSelectedListener{
 
     interface Callback{
+
+        // MainActivity Callback
         fun onLogoutSelected()
         fun onLoginSelected()
         fun onProfileSelected()
+        fun onProgressSelected()
     }
 
 
@@ -71,7 +74,7 @@ class NavigationViewManager (val context : Context, val binding : ActivityMainBi
                 return true
             }
             R.id.nav_test2->{
-                Toast.makeText(context, "prototype1", Toast.LENGTH_SHORT).show()
+                callback?.onProgressSelected()
                 return true
             }
 

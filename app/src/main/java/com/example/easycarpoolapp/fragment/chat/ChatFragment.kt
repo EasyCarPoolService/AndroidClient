@@ -125,9 +125,9 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
 
             if(postType.equals("passenger")){
-                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this, buttonAvailable = true).show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this, buttonLayout = "chat").show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
             }else{
-                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1, this, buttonAvailable = true).show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
+                viewModel.postInfo.value?.let { it1 -> RequestDriverDialogFragment(it1, this, buttonLayout = "chat").show(requireActivity().supportFragmentManager, "RequestDriverDialog") }
             }
 
 
@@ -170,9 +170,12 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
         viewModel.sendMessage("request reservation", opponentFcmToken, "request")
     }// RequestPassengerDialogFragment.Callbacks 구현
 
+
+
     override fun onDriverRequestButtonClicked() {
         viewModel.sendMessage("request reservation", opponentFcmToken, "request")
     }// RequestPassengerDialogFragment.Callbacks 구현
+
 
 
     //==========================================================================================================
