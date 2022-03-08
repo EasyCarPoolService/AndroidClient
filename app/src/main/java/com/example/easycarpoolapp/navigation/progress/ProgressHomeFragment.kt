@@ -21,13 +21,14 @@ import com.example.easycarpoolapp.fragment.calendar.CalendarRepository
 import com.example.easycarpoolapp.fragment.chat.RequestDriverDialogFragment
 import com.example.easycarpoolapp.fragment.chat.RequestPassengerDialogFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
+import com.example.easycarpoolapp.fragment.post.dto.PostDto
 import javax.security.auth.callback.Callback
 
 class ProgressHomeFragment : Fragment(){
 
 
     interface Callbacks{
-        public fun onProgressItemSelected()
+        public fun onProgressItemSelected(posDto : PostDto)
     }
 
     companion object{
@@ -73,7 +74,7 @@ class ProgressHomeFragment : Fragment(){
         viewModel.itemDetail.observe(viewLifecycleOwner, Observer {
 
             //reservedPostDto 에 type필요
-            callbacks?.onProgressItemSelected()
+            callbacks?.onProgressItemSelected(it)
 
             /*if(it.type.equals("driver")){   //타세요 게시글
             }else{  //태워주세요 게시글

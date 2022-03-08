@@ -9,6 +9,7 @@ class LocalUserData private constructor(){
         private var nickname : String? = null
         private var token : String? = null
         private var gender : String? = null
+        private var rate : Float? = null
         private var instance: LocalUserData? = null
         private var driverAuthentication : Boolean? = null
         private var fcmToken : String? = null
@@ -20,11 +21,12 @@ class LocalUserData private constructor(){
             }
         }
 
-        public fun login(_token : String?, _email:String?, _nickname : String?, _gender : String?, _driverAuthentication : Boolean?, _fcmToken : String?){
+        public fun login(_token : String?, _email:String?, _nickname : String?, _gender : String?, _rate : Float? ,_driverAuthentication : Boolean?, _fcmToken : String?){
             token = _token
             email = _email
             nickname = _nickname
             gender = _gender
+            rate = _rate
             driverAuthentication = _driverAuthentication
             fcmToken = _fcmToken
         }
@@ -34,6 +36,7 @@ class LocalUserData private constructor(){
             email = null
             nickname = null
             gender = null
+            rate = null
             driverAuthentication = null
             fcmToken = null
         }
@@ -50,6 +53,7 @@ class LocalUserData private constructor(){
         public fun getGender() : String? = gender
         public fun getDriverAuthentication() : Boolean? = driverAuthentication
         public fun getFcmToken() : String? = fcmToken
+        public fun getRate() : Float? = rate
 
     }
 }

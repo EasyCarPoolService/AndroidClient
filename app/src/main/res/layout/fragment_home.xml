@@ -8,49 +8,18 @@
         android:orientation="vertical"
         tools:context=".fragment.home.HomeFragment">
 
-        <TextView
-            android:id="@+id/text_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <TextView
-            android:id="@+id/text_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
 
         <TextView
-            android:id="@+id/text_gender"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-
-        <TextView
-            android:id="@+id/text_token"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-        <TextView
-            android:id="@+id/text_driverAuth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_show_userdata"
-            android:text="user data"
             />
 
         <Button
+            android:id="@+id/btn_getRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_logout"
-            android:text="logout"
+            android:text="get rate data"
             />
 
 

@@ -16,6 +16,9 @@ data class PostDriverDto(
     @SerializedName("gender")
     val gender : String,
 
+    @SerializedName("rate")
+    val rate : Float,
+
     @SerializedName("departure")
     val departure : String,
 

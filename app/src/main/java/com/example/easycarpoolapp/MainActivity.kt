@@ -259,8 +259,8 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     }   //ProfileHomeFragment Callback method -> 신고창으로 이동
 
 
-    override fun onProgressItemSelected() {
-        val fragment = ProgressDetailFragment.getInstance()
+    override fun onProgressItemSelected(postDto : PostDto) {
+        val fragment = ProgressDetailFragment.getInstance(postDto)
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProgressHomeFragment Callback method -> ProgressDetailFragment()
 

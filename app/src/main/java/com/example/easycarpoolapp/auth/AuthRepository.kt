@@ -237,8 +237,8 @@ class AuthRepository private constructor(val context : Context){
             .client(OKHttpHelper.createHttpClient(context))     //내부에 저장되어있는 코튼을 꺼내 client생성
             .build()
         val api = retrofit.create(AuthAPI::class.java)
-
         val call = api.getUserDataCall()
+
         call.enqueue(object : Callback<LocalUserDto>{
             override fun onResponse(call: Call<LocalUserDto>, response: Response<LocalUserDto>) {
                 val body = response.body()
@@ -266,6 +266,7 @@ class AuthRepository private constructor(val context : Context){
         _email = body.email,
         _nickname = body.nickname,
         _gender = body.gender,
+        _rate = body.rate,
         _driverAuthentication = body.driverAuthentication,
         _fcmToken = body.fcmToken
         )//setLocalUserData

@@ -11,6 +11,7 @@ import com.example.easycarpoolapp.auth.AuthRepository
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.PostAPI
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
+import com.example.easycarpoolapp.navigation.progress.dto.PostReviewDto
 import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -186,6 +187,33 @@ class NavigationRepository private constructor(val context : Context){
         })
 
     }// editProfile()
+
+    fun progressToComplete(dto : PostReviewDto, completeFlag : MutableLiveData<Boolean>) {
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+
+        val api = retrofit.create(NavigationAPI::class.java)
+        val call = api.progressToComplete(dto)
+        call.enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val body = response.body()
+                if (body != null && body.equals("success")) {
+                    completeFlag.value = true   //ProgressDetailFragment에서 처리
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+
+    } //progressToComplete
 
 
 }

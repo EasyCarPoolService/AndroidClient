@@ -33,20 +33,10 @@ class HomeFragment() : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        binding.btnShowUserdata.setOnClickListener {
-            binding.textEmail.text = LocalUserData.getEmail()
-            binding.textNickname.text = LocalUserData.getNickname()
-            binding.textGender.text = LocalUserData.getGender()
-            binding.textToken.text = LocalUserData.getToken()
-            binding.textDriverAuth.text = LocalUserData.getDriverAuthentication().toString()
+        binding.btnGetRate.setOnClickListener {
+            Toast.makeText(requireContext(), LocalUserData.getRate().toString(), Toast.LENGTH_SHORT).show()
 
         }
-
-
-        binding.btnLogout.setOnClickListener {
-            LocalUserData.logout()
-        }
-
 
 
         return binding.root

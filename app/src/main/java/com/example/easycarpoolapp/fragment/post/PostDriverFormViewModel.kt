@@ -25,6 +25,7 @@ class PostDriverFormViewModel : ViewModel(){
             email = LocalUserData.getEmail()!!,
             nickname = LocalUserData.getNickname()!!,
             gender = LocalUserData.getGender()!!,
+            rate = LocalUserData.getRate()!!,
             departure = departure!!,
             destination = destination!!,
             departureDate = departureDate!!,

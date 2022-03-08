@@ -21,6 +21,9 @@ data class LocalUserDto(
     @SerializedName("gender")
     val gender : String? = null,
 
+    @SerializedName("rate")
+    val rate : Float? = null,
+
     @SerializedName("driverAuthentication")
     val driverAuthentication : Boolean? = null,
 

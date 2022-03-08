@@ -9,7 +9,6 @@
         <entry key="app/src/main/res/drawable/btn_radius_gray.xml" value="0.31927083333333334" />
         <entry key="app/src/main/res/drawable/edit_memo.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/drawable/icon_location.xml" value="0.2564102564102564" />
-        <entry key="app/src/main/res/drawable/ratingbar_maincolor.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/drawable/shape_circle_gray.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_circle_maincolor.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/shape_radius.xml" value="0.31927083333333334" />
@@ -36,13 +35,12 @@
         <entry key="app/src/main/res/layout/fragment_post_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_post_passenger_form.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile_home.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_progress_detail.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_progress_home.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/fragment_progress_detail.xml" value="0.33177083333333335" />
         <entry key="app/src/main/res/layout/fragment_register_car.xml" value="0.2716318723490029" />
         <entry key="app/src/main/res/layout/fragment_register_car_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registercar_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_report_user.xml" value="0.3177083333333333" />
-        <entry key="app/src/main/res/layout/fragment_request_driver_dialog.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_request_driver_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_request_passenger_dialog.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_reserved_post_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/info_page_layout.xml" value="0.16822916666666668" />

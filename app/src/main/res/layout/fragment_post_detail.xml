@@ -109,17 +109,28 @@
                             android:id="@+id/rating_bar"
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:progressTint="@color/main_color"/>
 
                         <TextView
                             android:id="@+id/text_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(0)"
+                            android:text="0"
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:textColor="@color/gray_color"
                             />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/5.0"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/gray_color"
+                            />
+
 
 
                     </LinearLayout>

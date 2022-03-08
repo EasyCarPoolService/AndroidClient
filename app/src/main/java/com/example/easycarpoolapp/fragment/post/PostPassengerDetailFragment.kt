@@ -38,7 +38,7 @@ class PostPassengerDetailFragment : Fragment() {
                 putSerializable("email", item.email)    //UI에 띄우지 않지만 Message전송을 위해 데이터 저장
                 putSerializable("nickname", item.nickname)
                 putSerializable("gender", item.gender)
-                //putSerializable("rate", item.rate)  추후 기능 추가
+                putFloat("rate", item.rate)
                 putSerializable("departure", item.departure)
                 putSerializable("destination", item.destination)
                 putSerializable("date", item.departureDate)
@@ -64,6 +64,7 @@ class PostPassengerDetailFragment : Fragment() {
     var email : String? = null
     var nickname : String? = null
     var gender : String? = null
+    var rate : Float? = null
     var departure : String? =null
     var destination : String? = null
     var date : String? = null
@@ -82,6 +83,7 @@ class PostPassengerDetailFragment : Fragment() {
         email = arguments?.getString("email")
         nickname = arguments?.getString("nickname")
         gender = arguments?.getString("gender")
+        rate = arguments?.getFloat("rate")
         departure = arguments?.getString("departure")
         destination = arguments?.getString("destination")
         date = arguments?.getString("date")
@@ -138,6 +140,8 @@ class PostPassengerDetailFragment : Fragment() {
         binding.textDestination.text = destination
         binding.textDate.text = "날짜 : "+date+"  시간 : "+time
         binding.textMessage.text = message
+        binding.ratingBar.rating = rate!!
+        binding.textRate.text = rate!!.toString()
 
     }//setUI
 
