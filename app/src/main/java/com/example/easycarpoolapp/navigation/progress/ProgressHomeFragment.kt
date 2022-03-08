@@ -1,5 +1,6 @@
 package com.example.easycarpoolapp.navigation.progress
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,25 +15,35 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easycarpoolapp.R
-import com.example.easycarpoolapp.databinding.FragmentProgressHomeBinding
 import com.example.easycarpoolapp.fragment.calendar.CalendarHomeFragment
 import com.example.easycarpoolapp.fragment.calendar.CalendarHomeFragment.CalendarAdapter
 import com.example.easycarpoolapp.fragment.calendar.CalendarRepository
 import com.example.easycarpoolapp.fragment.chat.RequestDriverDialogFragment
 import com.example.easycarpoolapp.fragment.chat.RequestPassengerDialogFragment
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
+import javax.security.auth.callback.Callback
 
 class ProgressHomeFragment : Fragment(){
+
+
+    interface Callbacks{
+        public fun onProgressItemSelected()
+    }
 
     companion object{
         fun getInstance() : ProgressHomeFragment = ProgressHomeFragment()
     }
 
-    private lateinit var binding : FragmentProgressHomeBinding
+    private lateinit var binding : com.example.easycarpoolapp.databinding.FragmentProgressHomeBinding
+    private var callbacks : Callbacks? = null
     private val viewModel : ProgressHomeViewModel by lazy {
         ViewModelProvider(this).get(ProgressHomeViewModel::class.java)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }   //onAttach()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,14 +73,20 @@ class ProgressHomeFragment : Fragment(){
         viewModel.itemDetail.observe(viewLifecycleOwner, Observer {
 
             //reservedPostDto 에 type필요
+            callbacks?.onProgressItemSelected()
 
-            if(it.type.equals("driver")){   //타세요 게시글
+            /*if(it.type.equals("driver")){   //타세요 게시글
             }else{  //태워주세요 게시글
-            }
+            }*/
         })
 
 
     }// onViewCreated()
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }//onDetach()
 
 
 

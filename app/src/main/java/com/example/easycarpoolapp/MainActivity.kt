@@ -29,6 +29,7 @@ import android.util.Log
 import com.example.easycarpoolapp.navigation.profile.EditProfileFragment
 import com.example.easycarpoolapp.navigation.profile.ProfileHomeFragment
 import com.example.easycarpoolapp.navigation.profile.ReportUserFragment
+import com.example.easycarpoolapp.navigation.progress.ProgressDetailFragment
 import com.example.easycarpoolapp.navigation.progress.ProgressHomeFragment
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -36,7 +37,7 @@ import java.security.NoSuchAlgorithmException
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
-    PostDriverDetailFragment.Callbacks , ProfileHomeFragment.Callbacks{
+    PostDriverDetailFragment.Callbacks , ProfileHomeFragment.Callbacks, ProgressHomeFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -256,6 +257,12 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         val fragment = ReportUserFragment.getInstance()
         supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProfileHomeFragment Callback method -> 신고창으로 이동
+
+
+    override fun onProgressItemSelected() {
+        val fragment = ProgressDetailFragment.getInstance()
+        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }   //ProgressHomeFragment Callback method -> ProgressDetailFragment()
 
 }
 

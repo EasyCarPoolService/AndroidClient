@@ -10,6 +10,4 @@ class NetworkConfig private constructor(){
         public fun getSocketURL() = socketURL
 
     }//companion object
-
-
 }
