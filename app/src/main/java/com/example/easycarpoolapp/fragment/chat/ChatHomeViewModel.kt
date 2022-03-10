@@ -17,4 +17,9 @@ class ChatHomeViewModel : ViewModel(){
         repository?.getChatRoom(LocalUserDto(email = LocalUserData.getEmail()), roomList)
     }
 
+
+    fun leaveChatRoom(chatRoomDto: ChatRoomDto) {
+        repository?.leaveChatRoom(chatRoomDto)
+    }   //채팅방 나가기   -> 채팅방 나간후 RecyclerView에 채팅방 목록 업데이트할것인지 체크하기
+
 }

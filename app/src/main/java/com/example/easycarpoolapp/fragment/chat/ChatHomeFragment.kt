@@ -2,6 +2,7 @@ package com.example.easycarpoolapp.fragment.chat
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentChatHomeBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 
-class ChatHomeFragment : Fragment(){
+class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
 
     interface Callbacks{
         fun onChatRoomSelected(dto : ChatRoomDto)
@@ -30,6 +31,7 @@ class ChatHomeFragment : Fragment(){
         public fun getInstance() : ChatHomeFragment = ChatHomeFragment()
     }
 
+    private var currentFragment : ChatHomeFragment? = null
     private lateinit var binding : FragmentChatHomeBinding
     private var callbacks : Callbacks? = null
     private val viewModel :ChatHomeViewModel by lazy {
@@ -39,6 +41,7 @@ class ChatHomeFragment : Fragment(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        currentFragment = this
         callbacks = context as Callbacks?
     } // onAttach
 
@@ -92,9 +95,15 @@ class ChatHomeFragment : Fragment(){
         var opponentEmail : String? = null
         init{
             itemView.setOnClickListener {
-                callbacks?.onChatRoomSelected(dto = dto)
+                callbacks?.onChatRoomSelected(dto = dto)    //채팅방 클릭 -> 해당 채팅방 Fragment 시작 -> 채팅 대화내용 불러오기
             }
-        }
+            itemView.setOnLongClickListener {
+                LeaveRoomDialogFragment(hostFragment = currentFragment!!, chatRoomDto = dto).show(requireActivity().supportFragmentManager, "LeaveRoomDialogRragment")
+                true
+            }   //Long Click시 -> 채팅방 나가기 DialogFragment띄우기 ->  DialogFragment에서 확인 클릭 -> Callbacks 수행
+
+
+        }   //init()
 
         fun bind(item : ChatRoomDto){
             dto = item
@@ -129,6 +138,12 @@ class ChatHomeFragment : Fragment(){
         }
 
     }    //ChatAdapter
+
+
+    //check 채팅방 나간후 채팅방 조회하여 다시 RecyclerView update여부 체크하기
+    override fun onConfirmSelectedFromLeaveRoomDialog(chatRoomDto : ChatRoomDto) {
+        viewModel.leaveChatRoom(chatRoomDto)
+    }   //LeaveRoomDialogFragment() -> 확인 버튼 클릭 -> Callback수행
 
 
 

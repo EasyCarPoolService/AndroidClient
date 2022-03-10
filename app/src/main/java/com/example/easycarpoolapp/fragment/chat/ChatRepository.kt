@@ -10,6 +10,7 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -185,5 +186,31 @@ class ChatRepository private constructor(val context : Context){
 
 
     }//registerReservedPost()
+
+
+
+    fun leaveChatRoom(chatRoomDto: ChatRoomDto) {
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(ChatAPI::class.java)
+        val call = api.getLeaveChatRoomCall(chatRoomDto)
+        call.enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val body = response.body()
+                if(body != null){   // 결과가 null이 아닐경우 Transaction 정상적으로 동작
+                    Log.e(TAG, body.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+    } // 채팅방 나가기 -> chat방 나간후 recyclerview update 고려 <- observer pattern 적용여부 고려
 
 }

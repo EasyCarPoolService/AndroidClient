@@ -49,7 +49,7 @@ class LoginDialogFragment: DialogFragment(){
         binding.btnConfirm.setOnClickListener {
             callbacks!!.onConfirmSelectedFromLoginDialog()
             this.dismiss()
-        }
+        }   // 확인 클릭시 로그인 Fragment로 이동
 
 
         return binding.root

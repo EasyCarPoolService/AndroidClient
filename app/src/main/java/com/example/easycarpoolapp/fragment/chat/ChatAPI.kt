@@ -16,6 +16,8 @@ import retrofit2.http.Query
 
 interface ChatAPI {
 
+
+
     @POST("/api/chat/getAllRoom")
     public fun getRoomCall(@Body localUserDto: LocalUserDto) : Call<ArrayList<ChatRoomDto>>
 
@@ -27,6 +29,9 @@ interface ChatAPI {
 
     @POST("api/chat/registerReservedPost")
     public fun getRegisterReservedPostCall(@Body reservedPostDto: ReservedPostDto): Call<String>
+
+    @POST("api/chat/leaveChatRoom")
+    fun getLeaveChatRoomCall(@Body chatRoomDto: ChatRoomDto): Call<ResponseBody>
 
 
 }

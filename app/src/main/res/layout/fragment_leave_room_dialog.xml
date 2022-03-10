@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragment.chat.LeaveRoomDialogFragment"
+        android:background="@drawable/shape_radius">
+
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="채팅방에서 나가시겠습니까? \n 나가기를 하면 대화내용이 모두 삭제되고 \n 채팅목록에서도 삭제됩니다."
+            />
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_radius"
+                android:layout_margin="24dp"
+                android:backgroundTint="@color/gray_color"
+                android:text="취소"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_radius"
+                android:layout_margin="24dp"
+                android:backgroundTint="@color/main_color"
+                android:textStyle="bold"
+                android:text="확인"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
