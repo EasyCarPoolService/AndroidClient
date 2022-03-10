@@ -9,8 +9,8 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 class ChatHomeViewModel : ViewModel(){
 
     val repository : ChatRepository? = ChatRepository.getInstance()
-
     val roomList : MutableLiveData<ArrayList<ChatRoomDto>> = MutableLiveData()
+    val leaveRoomFlag : MutableLiveData<Boolean> = MutableLiveData()
 
     //현재 사용자가 참여한 모든 채팅방 불러오기
     public fun getChatRoom(){
@@ -19,7 +19,7 @@ class ChatHomeViewModel : ViewModel(){
 
 
     fun leaveChatRoom(chatRoomDto: ChatRoomDto) {
-        repository?.leaveChatRoom(chatRoomDto)
+        repository?.leaveChatRoom(chatRoomDto, leaveRoomFlag)
     }   //채팅방 나가기   -> 채팅방 나간후 RecyclerView에 채팅방 목록 업데이트할것인지 체크하기
 
 }

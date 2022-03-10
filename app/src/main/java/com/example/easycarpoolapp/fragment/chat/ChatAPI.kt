@@ -31,7 +31,7 @@ interface ChatAPI {
     public fun getRegisterReservedPostCall(@Body reservedPostDto: ReservedPostDto): Call<String>
 
     @POST("api/chat/leaveChatRoom")
-    fun getLeaveChatRoomCall(@Body chatRoomDto: ChatRoomDto): Call<ResponseBody>
+    fun getLeaveChatRoomCall(@Body chatRoomDto: ChatRoomDto): Call<String>
 
 
 }

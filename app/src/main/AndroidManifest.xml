@@ -42,7 +42,7 @@
 
         </activity>
         <meta-data android:name="com.kakao.sdk.AppKey"
-            android:value=""/>
+            android:value="d9083ab5187a9463d0acc2c15efdf3a4"/>
 
         <service
             android:name=".FCMService"

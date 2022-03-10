@@ -73,6 +73,13 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
             updateUI(it)
         })
 
+        viewModel.leaveRoomFlag.observe(viewLifecycleOwner, Observer {
+            if(it!!){   //true transaction 정상처리 -> recyclerview 재 갱신
+                viewModel.getChatRoom() // chatroom 다시 조회하기
+            }
+        })
+
+
     }// onViewCreated
 
     override fun onDetach() {

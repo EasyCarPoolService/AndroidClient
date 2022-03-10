@@ -10,6 +10,8 @@ import com.example.easycarpoolapp.fragment.chat.dto.ChatDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.chat.dto.ReservedPostDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -189,23 +191,36 @@ class ChatRepository private constructor(val context : Context){
 
 
 
-    fun leaveChatRoom(chatRoomDto: ChatRoomDto) {
+    fun leaveChatRoom(chatRoomDto: ChatRoomDto, leaveRoomFlag: MutableLiveData<Boolean>) {
+
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
+
+
         val api = retrofit.create(ChatAPI::class.java)
         val call = api.getLeaveChatRoomCall(chatRoomDto)
-        call.enqueue(object : Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
                 val body = response.body()
-                if(body != null){   // 결과가 null이 아닐경우 Transaction 정상적으로 동작
-                    Log.e(TAG, body.toString())
+                if(body != null){
+                    if(body.toString().equals("success")){
+                        leaveRoomFlag.value = true
+                    }
                 }
+
+
+
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 
