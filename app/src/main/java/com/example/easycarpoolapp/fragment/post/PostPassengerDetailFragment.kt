@@ -31,6 +31,7 @@ class PostPassengerDetailFragment : Fragment() {
     }
 
 
+
     companion object{
         public fun getInstance(item: PostDto): PostPassengerDetailFragment{
             val bundle = Bundle().apply {
@@ -143,7 +144,7 @@ class PostPassengerDetailFragment : Fragment() {
         binding.textDate.text = "날짜 : "+date+"  시간 : "+time
         binding.textMessage.text = message
         binding.ratingBar.rating = rate!!
-        binding.textRate.text = rate!!.toString()
+        binding.textRate.text = String.format("%.1f", rate!!)
 
     }//setUI
 

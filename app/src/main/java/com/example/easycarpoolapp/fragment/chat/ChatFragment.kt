@@ -107,11 +107,12 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
         setRecycler()
         opponentFcmToken = findOpponentFcmToken()
-
         binding.btnSend.setOnClickListener {
             val message : String = binding.editMessage.text.toString()
             viewModel.sendMessage(message, opponentFcmToken, "message")
         }
+
+
 
         binding.btnPlus.setOnClickListener {
             val state = binding.slideLayout.panelState
@@ -123,6 +124,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
         binding.btnRequest.setOnClickListener {
 
+            binding.slideLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
 
             if(postType.equals("passenger")){
                 viewModel.postInfo.value?.let { it1 -> RequestPassengerDialogFragment(it1, this, buttonLayout = "chat").show(requireActivity().supportFragmentManager, "RequestPasengerDialog") }
@@ -176,6 +178,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
         viewModel.sendMessage("request reservation", opponentFcmToken, "request")
     }// RequestPassengerDialogFragment.Callbacks 구현
 
+    
 
 
     //==========================================================================================================
@@ -257,7 +260,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
                 }
 
                 opponent_time.text = item.time
-                //check
+
                 Glide.with(this@ChatFragment)
                     .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+item.writer)
                     .into(opponent_profile)

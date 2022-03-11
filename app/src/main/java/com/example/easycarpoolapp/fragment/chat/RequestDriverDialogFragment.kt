@@ -83,7 +83,7 @@ class RequestDriverDialogFragment(val postDto : PostDto, val hostFragment : Frag
         binding.textDate.text = "날짜 : "+postDto.departureDate+"  시간 : "+postDto.departureTime
         binding.textMessage.text = postDto.message
         binding.ratingBar.rating = postDto.rate
-        binding.textRate.text = postDto.rate.toString()
+        binding.textRate.text = String.format("%.1f", postDto.rate)
 
     }//setUI
 

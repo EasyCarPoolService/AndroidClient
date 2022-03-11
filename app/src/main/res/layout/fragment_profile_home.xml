@@ -86,6 +86,7 @@
                         <RatingBar
                             android:id="@+id/rating_bar"
                             style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:progressTint="@color/main_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 

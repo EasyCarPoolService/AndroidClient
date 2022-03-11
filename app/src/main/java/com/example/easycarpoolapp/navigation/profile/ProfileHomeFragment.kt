@@ -59,6 +59,10 @@ class ProfileHomeFragment : Fragment() {
             callbacks?.onEditProfileSelected()  //HostingActivity = MainActivity
         }   //프로필 편집 버튼 클릭 -> 편집창 프래그먼트로 이동
 
+        binding.layoutReportUser.setOnClickListener {
+            callbacks?.onReportUserSelected()
+        }
+
 
 
         return binding.root
@@ -71,6 +75,8 @@ class ProfileHomeFragment : Fragment() {
             binding.userPostPassenger.text = it?.passenger
             binding.userPostOngoing.text = it?.ongoing
         })
+
+
     }//onViewCreated
 
     override fun onDetach() {
@@ -81,6 +87,9 @@ class ProfileHomeFragment : Fragment() {
 
     private fun setUIWithLocalData(){
         binding.textProfileNickName.text = LocalUserData.getNickname()
+        binding.ratingBar.rating = LocalUserData.getRate()!!
+        //binding.textRate.text = LocalUserData.getRate().toString()
+        binding.textRate.text = String.format("%.1f", LocalUserData.getRate())
 
     }// 기기에 저장되어 있는 정보 로드하여 UI에 띄우기
 

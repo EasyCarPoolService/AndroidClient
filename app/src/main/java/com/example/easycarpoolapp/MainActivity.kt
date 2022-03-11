@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.GravityCompat
 import com.example.easycarpoolapp.auth.AuthActivity
-import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 import com.example.easycarpoolapp.fragment.calendar.CalendarHomeFragment
 import com.example.easycarpoolapp.fragment.chat.ChatFragment
@@ -26,6 +25,7 @@ import android.content.pm.PackageManager
 import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
+import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.navigation.profile.EditProfileFragment
 import com.example.easycarpoolapp.navigation.profile.ProfileHomeFragment
 import com.example.easycarpoolapp.navigation.profile.ReportUserFragment
@@ -180,6 +180,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         if(LocalUserData.getEmail()!=null){
             val fragment = ProfileHomeFragment.getInstance()
             supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+            binding.drawerLayout.close()    //navigation drawer 닫기
         }else{
             LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
         }
@@ -190,6 +191,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         if(LocalUserData.getEmail() !=null){
             val fragment = ProgressHomeFragment.getInstance()
             supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+            binding.drawerLayout.close()    //navigation drawer 닫기
         }else{
             LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
         }
@@ -274,15 +276,20 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
             .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProfileHomeFragment Callback method -> 프로필 편집창으로 이동
 
+    //신고창으로 이동
     override fun onReportUserSelected() {
         val fragment = ReportUserFragment.getInstance()
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProfileHomeFragment Callback method -> 신고창으로 이동
 
 
     override fun onProgressItemSelected(postDto : PostDto) {
         val fragment = ProgressDetailFragment.getInstance(postDto)
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProgressHomeFragment Callback method -> ProgressDetailFragment()
 
 }

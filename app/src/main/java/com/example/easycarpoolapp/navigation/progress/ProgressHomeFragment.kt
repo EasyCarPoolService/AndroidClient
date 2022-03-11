@@ -10,6 +10,7 @@ import android.widget.Adapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,6 +76,7 @@ class ProgressHomeFragment : Fragment(){
 
             //reservedPostDto 에 type필요
             callbacks?.onProgressItemSelected(it)
+            viewModel.itemDetail = MutableLiveData()
 
             /*if(it.type.equals("driver")){   //타세요 게시글
             }else{  //태워주세요 게시글

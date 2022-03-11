@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentReportUserBinding
 
+
 class ReportUserFragment : Fragment() {
 
     companion object{
