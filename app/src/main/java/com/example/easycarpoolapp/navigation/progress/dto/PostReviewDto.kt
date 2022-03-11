@@ -7,6 +7,10 @@ data class PostReviewDto(
     @SerializedName("postId")
     val postId : Long,
 
+    @SerializedName("postType")
+    val postType : String,
+
+
     @SerializedName("host_email")
     val host_email : String,
 

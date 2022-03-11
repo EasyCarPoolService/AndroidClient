@@ -187,8 +187,13 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     }//NavigationViewManager 에서 프로필 보기 시도   -> ProfileHomeFragment()
 
     override fun onProgressSelected() {
-        val fragment = ProgressHomeFragment.getInstance()
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        if(LocalUserData.getEmail() !=null){
+            val fragment = ProgressHomeFragment.getInstance()
+            supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        }else{
+            LoginDialogFragment().show(supportFragmentManager, "LoginDialog")
+        }
+
     } // NavigationViewManager Callback   -> 진행현황 보이기
 
 

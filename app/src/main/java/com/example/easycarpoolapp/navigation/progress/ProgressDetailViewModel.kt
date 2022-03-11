@@ -12,6 +12,7 @@ class ProgressDetailViewModel : ViewModel() {
     private val repository = NavigationRepository.getInstance()
     public var completeFlag : MutableLiveData<Boolean> = MutableLiveData()
     fun progressToComplete(postId: Long?,
+                           postType : String?,
                            host_email : String?,
                            host_nickname : String?,
                            rate: Float,
@@ -20,6 +21,7 @@ class ProgressDetailViewModel : ViewModel() {
 
         val dto = PostReviewDto(
             postId = postId!!,
+            postType = postType!!,
             host_email = host_email!!,
             host_nickname = host_nickname!!,
             writer_email = LocalUserData.getEmail().toString(),

@@ -190,23 +190,27 @@ class NavigationRepository private constructor(val context : Context){
 
     fun progressToComplete(dto : PostReviewDto, completeFlag : MutableLiveData<Boolean>) {
 
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
 
         val api = retrofit.create(NavigationAPI::class.java)
         val call = api.progressToComplete(dto)
-        call.enqueue(object : Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
                 val body = response.body()
                 if (body != null && body.equals("success")) {
                     completeFlag.value = true   //ProgressDetailFragment에서 처리
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 

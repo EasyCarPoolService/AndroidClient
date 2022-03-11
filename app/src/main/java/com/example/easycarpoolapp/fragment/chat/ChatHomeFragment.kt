@@ -98,6 +98,7 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
         lateinit var dto : ChatRoomDto
         val nickname : TextView = itemView.findViewById(R.id.text_nickname)
         val content : TextView = itemView.findViewById(R.id.text_content)
+        val time : TextView = itemView.findViewById(R.id.text_time)
         val imageView : ImageView = itemView.findViewById(R.id.item_chat_home_profile)
         var opponentEmail : String? = null
         init{
@@ -122,6 +123,10 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
                 nickname.text = item.driverNickname
                 opponentEmail = item.driver
             }
+
+            content.text = item.lastMessage
+            time.text = item.lastChatTime
+
             //대화상대 프로필 띄우기
             Glide.with(requireContext())
                 .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+opponentEmail)

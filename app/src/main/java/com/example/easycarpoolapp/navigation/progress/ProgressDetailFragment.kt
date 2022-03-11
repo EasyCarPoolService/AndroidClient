@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -87,7 +88,9 @@ class ProgressDetailFragment : Fragment() {
         setRatingBar()  //ratingbar listener 추가
 
         binding.btnProgressComplete.setOnClickListener {
-            viewModel.progressToComplete(postId = postId,
+            viewModel.progressToComplete(
+                postId = postId,
+                postType = postType,
                 host_email = email,
                 host_nickname = nickname,
                 rate = binding.ratingBarRate.rating,
@@ -103,7 +106,10 @@ class ProgressDetailFragment : Fragment() {
         setUI()
         setImage()
         viewModel.completeFlag.observe(viewLifecycleOwner, Observer {
-            if(it) terminateFragment()
+            if(it){
+                terminateFragment()
+                Toast.makeText(requireContext(), "완료처리 되었습니다.", Toast.LENGTH_SHORT).show() //check
+            }
         })
     } // onViewCreated
 

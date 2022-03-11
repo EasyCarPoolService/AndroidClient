@@ -14,6 +14,9 @@ data class ChatRoomDto(
     @SerializedName("driverFcmToken") var driverFcmToken: String = "",
     @SerializedName("passenger") var passenger: String = "",
     @SerializedName("passengerNickname") var passengerNickname: String = "",
-    @SerializedName("passengerFcmToken") var passengerFcmToken: String = ""
+    @SerializedName("passengerFcmToken") var passengerFcmToken: String = "",
+    @SerializedName("lastChatTime") var lastChatTime : String = "",
+    @SerializedName("lastMessage") var lastMessage : String = ""
+
 )
 

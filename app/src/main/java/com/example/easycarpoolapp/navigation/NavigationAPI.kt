@@ -32,7 +32,7 @@ interface NavigationAPI {
     public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
 
     @POST("api/post/progressToComplete")
-    public fun progressToComplete(@Body postReviewDto: PostReviewDto): Call<ResponseBody>
+    public fun progressToComplete(@Body postReviewDto: PostReviewDto): Call<String>
     //Navigation 진행현황 -> detail -> 후기작성후 완료 버튼 클릭 -> 후기 테이블로 전송
 
 
