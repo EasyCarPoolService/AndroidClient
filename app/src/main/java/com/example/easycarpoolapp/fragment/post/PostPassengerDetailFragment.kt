@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -124,6 +125,7 @@ class PostPassengerDetailFragment : Fragment() {
 
         viewModel.roomInfo.observe(viewLifecycleOwner, Observer {
             callbacks!!.onSendMesageSelected(dto = it)
+            viewModel.roomInfo = MutableLiveData()
         })
 
         Glide.with(this)

@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
-import com.example.easycarpoolapp.databinding.FragmentPostDetailBinding
 import com.example.easycarpoolapp.databinding.FragmentPostDriverDetailBinding
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.PostDto
@@ -126,6 +126,7 @@ class PostDriverDetailFragment : Fragment() {
 
         viewModel.roomInfo.observe(viewLifecycleOwner, Observer {
             callbacks!!.onSendMesageSelected(dto = it)
+            viewModel.roomInfo = MutableLiveData()
         })
 
     }//onViewCreated

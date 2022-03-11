@@ -211,13 +211,21 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     // 태워주세요 클릭시 이동
     override fun onPassengerPostSelected(item: PostDto) {
         val fragment = PostPassengerDetailFragment.getInstance(item)
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null)
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     // 타세요 클릭시 이동 -> PostDriverDetailFragment생성
     override fun onDriverPostSelected(item: PostDto) {
         val fragment = PostDriverDetailFragment.getInstance(item)
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null)
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
 
@@ -245,17 +253,25 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
     //채팅방 생성 -> 채팅방으로 이동
     override fun onSendMesageSelected(dto : ChatRoomDto) {
         val fragment = ChatFragment.getInstance(dto)
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null)
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     override fun onChatRoomSelected(dto: ChatRoomDto) {
         val fragment = ChatFragment.getInstance(dto)
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
     override fun onEditProfileSelected() {
         val fragment = EditProfileFragment.getInstance()
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProfileHomeFragment Callback method -> 프로필 편집창으로 이동
 
     override fun onReportUserSelected() {
