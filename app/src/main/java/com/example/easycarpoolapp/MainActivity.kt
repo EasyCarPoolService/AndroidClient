@@ -28,7 +28,9 @@ import android.util.Log
 import com.example.easycarpoolapp.databinding.ActivityMainBinding
 import com.example.easycarpoolapp.navigation.profile.EditProfileFragment
 import com.example.easycarpoolapp.navigation.profile.ProfileHomeFragment
-import com.example.easycarpoolapp.navigation.profile.ReportUserFragment
+import com.example.easycarpoolapp.navigation.profile.report.AccuseUserFragment
+import com.example.easycarpoolapp.navigation.profile.report.ReportAdminFragment
+import com.example.easycarpoolapp.navigation.profile.report.ReportHomeFragment
 import com.example.easycarpoolapp.navigation.progress.ProgressDetailFragment
 import com.example.easycarpoolapp.navigation.progress.ProgressHomeFragment
 import java.security.MessageDigest
@@ -37,7 +39,7 @@ import java.security.NoSuchAlgorithmException
 
 class MainActivity : AppCompatActivity(), NavigationViewManager.Callback, LoginDialogFragment.Callbacks, PostHomeFragment.CallBacks,
 RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassengerDetailFragment.Callbacks, ChatHomeFragment.Callbacks,
-    PostDriverDetailFragment.Callbacks , ProfileHomeFragment.Callbacks, ProgressHomeFragment.Callbacks{
+    PostDriverDetailFragment.Callbacks , ProfileHomeFragment.Callbacks, ProgressHomeFragment.Callbacks, ReportHomeFragment.Callbacks{
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var actionBar : ActionBar
@@ -278,7 +280,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
     //신고창으로 이동
     override fun onReportUserSelected() {
-        val fragment = ReportUserFragment.getInstance()
+        val fragment = ReportHomeFragment.getInstance()
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
             .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
@@ -291,6 +293,20 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
             .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
             .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }   //ProgressHomeFragment Callback method -> ProgressDetailFragment()
+
+    override fun onReportSelected() {
+        val fragment = ReportAdminFragment.getInstance()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }   //ReportHomeFragment Callback method
+
+    override fun onAccuseSelected() {
+        val fragment = AccuseUserFragment.getInstance()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+    }   //ReportHomeFragment Callback method
 
 }
 

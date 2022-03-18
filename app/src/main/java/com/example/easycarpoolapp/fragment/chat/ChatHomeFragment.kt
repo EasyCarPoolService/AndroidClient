@@ -124,7 +124,12 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
                 opponentEmail = item.driver
             }
 
-            content.text = item.lastMessage
+            if(item.lastMessage.equals("request reservation")){
+                content.text = "예약 요청!"
+            }else{
+                content.text = item.lastMessage
+            }
+
             time.text = item.lastChatTime
 
             //대화상대 프로필 띄우기

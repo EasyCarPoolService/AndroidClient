@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".navigation.profile.report.AccuseUserFragment">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_color"
+            android:gravity="center"
+            android:text="사용자 신고하기"
+            android:background="@color/white"
+            android:elevation="16dp"
+            />
+
+
+        <Spinner
+            android:layout_margin="16dp"
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_radius"
+            android:elevation="8dp"
+            android:padding="8dp"
+            />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/shape_radius"
+        android:elevation="8dp"
+        >
+        <EditText
+            android:id="@+id/edit_accuse_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:hint="신고할 사용자 닉네임을 입력해 주세요."
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/main_color"
+            />
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:background="@drawable/shape_radius"
+            android:elevation="8dp"
+            >
+
+
+            <EditText
+                android:id="@+id/edit_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/main_color"
+                android:layout_margin="8sp"
+                android:hint="신고 내용을 입력해 주세요"
+                android:lines="15"
+                android:maxLines="15"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_accuse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16sp"
+            android:background="@drawable/btn_radius_main"
+            android:text="신고하기"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</layout>

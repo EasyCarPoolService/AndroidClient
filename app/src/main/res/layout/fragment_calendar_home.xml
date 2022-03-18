@@ -29,6 +29,7 @@
                     android:layout_centerVertical="true"
                     app:mcv_selectionColor="@color/main_color"
                     app:mcv_showOtherDates="all"
+                    android:elevation="8sp"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView

@@ -3,6 +3,7 @@ package com.example.easycarpoolapp.navigation
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
+import com.example.easycarpoolapp.navigation.profile.report.dto.AccuseDto
 import com.example.easycarpoolapp.navigation.progress.dto.PostReviewDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,6 +37,11 @@ interface NavigationAPI {
     //Navigation 진행현황 -> detail -> 후기작성후 완료 버튼 클릭 -> 후기 테이블로 전송
 
 
+    @POST("api/report/accuse")
+    fun getAccuseCall(@Body accuseDto: AccuseDto): Call<String>
+    //AccuseUserFragment -> NavigationRepository
+
+
     @Multipart
     @POST("/api/user/editProfile")
     public fun getEditProfileCall(
@@ -45,6 +51,7 @@ interface NavigationAPI {
         @Part("gender") gender: RequestBody?,
         @Part("introduce_message") introduce_message: RequestBody?
     ): Call<ResponseBody>
+
 
 
 

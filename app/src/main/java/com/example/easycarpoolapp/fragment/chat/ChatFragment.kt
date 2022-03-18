@@ -109,6 +109,7 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
         opponentFcmToken = findOpponentFcmToken()
         binding.btnSend.setOnClickListener {
             val message : String = binding.editMessage.text.toString()
+            binding.editMessage.setText("")
             viewModel.sendMessage(message, opponentFcmToken, "message")
         }
 
