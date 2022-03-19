@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
-import com.example.easycarpoolapp.auth.AuthRepository
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.PostAPI
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
@@ -221,7 +220,7 @@ class NavigationRepository private constructor(val context : Context){
 
     } //progressToComplete
 
-    fun accuseUser(accuseDto: AccuseDto) {
+    fun accuseUser(accuseDto: AccuseDto, transaction_flag: MutableLiveData<String>) {
         val gson : Gson = GsonBuilder()
             .setLenient()
             .create()
@@ -235,7 +234,11 @@ class NavigationRepository private constructor(val context : Context){
         val call = api.getAccuseCall(accuseDto)
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.e(TAG, response.body().toString())
+                val body = response.body()
+                if(body != null){
+                    transaction_flag.value = body
+                }
+
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
@@ -247,7 +250,7 @@ class NavigationRepository private constructor(val context : Context){
 
     }// accuseUser()
 
-    fun reportAdmin(reportDto: ReportDto) {
+    fun reportAdmin(reportDto: ReportDto, transaction_flag: MutableLiveData<String>) {
         val gson : Gson = GsonBuilder()
             .setLenient()
             .create()
@@ -262,7 +265,11 @@ class NavigationRepository private constructor(val context : Context){
 
         call.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.e(TAG, response.body().toString())
+                val body = response.body()
+                if(body != null){
+                    transaction_flag.value = body
+                }
+
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {

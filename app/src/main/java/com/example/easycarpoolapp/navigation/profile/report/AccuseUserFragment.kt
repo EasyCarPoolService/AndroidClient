@@ -9,6 +9,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentAccuseUserBinding
@@ -68,6 +70,10 @@ class AccuseUserFragment : Fragment() {
             }
         }// onItemSelectedListener
 
+        viewModel.transaction_flag.observe(viewLifecycleOwner, Observer {
+            if(it.equals("success")) terminateFragment()
+            Toast.makeText(requireContext(), "관리자에게 사용자 신고문의를 전달하였습니다.", Toast.LENGTH_SHORT).show()
+        })
 
         binding.btnAccuse.setOnClickListener {
             viewModel.accuseUser(binding.editAccuseNickname.text.toString(), binding.editContent.text.toString())
@@ -76,14 +82,15 @@ class AccuseUserFragment : Fragment() {
 
     }//onViewCreated()
 
+    private fun terminateFragment(){
+        val fragmentManager : FragmentManager = activity?.supportFragmentManager!!
+        fragmentManager.beginTransaction().remove(this).commit()
+        fragmentManager.popBackStack()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         NavigationRepository.onDestroy()
     }
-
-
-
-
 
 }
