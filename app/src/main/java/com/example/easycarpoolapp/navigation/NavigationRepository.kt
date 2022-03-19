@@ -141,10 +141,16 @@ class NavigationRepository private constructor(val context : Context){
         profile_image: Bitmap,
         nickname: String,
         gender: String,
-        introduce_message: String
+        introduce_message: String,
+        transaction_flag: MutableLiveData<String>
     ) {
+
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
@@ -176,12 +182,16 @@ class NavigationRepository private constructor(val context : Context){
             gender_body,
             introduce_message
         )
-        call.enqueue(object : Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.e(TAG, response.body().toString())
-            }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val body = response.body()
+                if(body != null){
+                    transaction_flag.value = body
+                }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 

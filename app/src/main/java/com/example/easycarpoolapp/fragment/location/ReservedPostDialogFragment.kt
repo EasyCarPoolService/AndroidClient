@@ -132,7 +132,7 @@ class ReservedPostDialogFragment(val reservedPostDtos : ArrayList<ReservedPostDt
 
                 }
                 selectedItem.value = it
-                selectedItem.value?.setBackgroundResource(R.drawable.btn_radius_main)
+                selectedItem.value?.setBackgroundResource(R.drawable.btn_radius_gray)
                 selectedDto = targetDto
             }
 

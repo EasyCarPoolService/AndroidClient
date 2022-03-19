@@ -19,6 +19,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
@@ -101,6 +103,25 @@ class EditProfileFragment : Fragment() {
 
         return binding.root
     }//onCreateView
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.transaction_flag.observe(viewLifecycleOwner, Observer {
+            
+            if(it.equals("success")) {
+                terminateFragment()
+                Toast.makeText(requireContext(), "완료.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }// onViewCreated()
+
+
+    private fun terminateFragment(){
+        val fragmentManager : FragmentManager = activity?.supportFragmentManager!!
+        fragmentManager.beginTransaction().remove(this).commit()
+        fragmentManager.popBackStack()
+    }
 
 
     private fun setUIWithLocalData(){

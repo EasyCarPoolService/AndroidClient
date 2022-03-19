@@ -54,7 +54,7 @@ interface NavigationAPI {
         @Part("nickname") nickname: RequestBody?,
         @Part("gender") gender: RequestBody?,
         @Part("introduce_message") introduce_message: RequestBody?
-    ): Call<ResponseBody>
+    ): Call<String>
 
 
 
