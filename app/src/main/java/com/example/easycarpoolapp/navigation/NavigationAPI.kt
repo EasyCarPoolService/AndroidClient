@@ -4,6 +4,7 @@ import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 import com.example.easycarpoolapp.navigation.profile.report.dto.AccuseDto
+import com.example.easycarpoolapp.navigation.profile.report.dto.ReportDto
 import com.example.easycarpoolapp.navigation.progress.dto.PostReviewDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -41,6 +42,9 @@ interface NavigationAPI {
     fun getAccuseCall(@Body accuseDto: AccuseDto): Call<String>
     //AccuseUserFragment -> NavigationRepository
 
+    @POST("api/report/reportAdmin")
+    fun getReportCall(@Body reportDto: ReportDto): Call<String>
+
 
     @Multipart
     @POST("/api/user/editProfile")
@@ -51,8 +55,6 @@ interface NavigationAPI {
         @Part("gender") gender: RequestBody?,
         @Part("introduce_message") introduce_message: RequestBody?
     ): Call<ResponseBody>
-
-
 
 
 

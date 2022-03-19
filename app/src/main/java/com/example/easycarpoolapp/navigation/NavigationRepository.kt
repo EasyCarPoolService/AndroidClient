@@ -12,6 +12,7 @@ import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.post.PostAPI
 import com.example.easycarpoolapp.fragment.post.dto.UserPostDto
 import com.example.easycarpoolapp.navigation.profile.report.dto.AccuseDto
+import com.example.easycarpoolapp.navigation.profile.report.dto.ReportDto
 import com.example.easycarpoolapp.navigation.progress.dto.PostReviewDto
 import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.gson.Gson
@@ -245,6 +246,32 @@ class NavigationRepository private constructor(val context : Context){
 
 
     }// accuseUser()
+
+    fun reportAdmin(reportDto: ReportDto) {
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
+        val retrofit = Retrofit.Builder().baseUrl(BASEURL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(OKHttpHelper.createHttpClient(context))
+            .build()
+
+        val api = retrofit.create(NavigationAPI::class.java)
+        val call = api.getReportCall(reportDto)
+
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.e(TAG, response.body().toString())
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e(TAG, t.message.toString())
+            }
+
+        })
+
+    }// reportAdmin()
 
 
 }

@@ -26,8 +26,8 @@ class ReportAdminFragment : Fragment() {
         super.onCreate(savedInstanceState)
         NavigationRepository.init(requireContext())
 
+        
     }//onCreate()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +35,9 @@ class ReportAdminFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_report_admin, container, false)
 
+        binding.btnReport.setOnClickListener {
+            viewModel.reportAdmin(report_title = binding.editTitle.text.toString(), report_content = binding.editContent.text.toString())
+        }
 
         return binding.root
     }//onCreateView()
