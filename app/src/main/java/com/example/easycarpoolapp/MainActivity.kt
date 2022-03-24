@@ -54,7 +54,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         setBottomNav()
 
         if(supportFragmentManager.findFragmentById(R.id.fragment_container)==null){
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.getInstance()).commit()
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, PostHomeFragment.getInstance()).commit()
         }
     }//onCreate
 
@@ -96,12 +96,6 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         binding.appBarMain.mainContentLayout.bottomNavigationView.setOnItemSelectedListener{
 
             when(it.itemId){
-                R.id.activity_main_bottom_nav_home->{
-                    val fragment = HomeFragment.getInstance()
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-
-                    true
-                }
                 R.id.activity_main_bottom_nav_calendar->{
                     if(LocalUserData.getEmail()!=null){
                         val fragment = CalendarHomeFragment.getInstance()
@@ -168,9 +162,19 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         return super.onOptionsItemSelected(item)
     }
 
+    private fun deleteTokenSharedPreference(){
+        val sharedPreference = this.getSharedPreferences("UserInfo", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putString("token", "")
+        //commit 의 경우 동기적으로 수행 되기에 write를 수행하는 크기가 크다면 UI coroutine 등을 통해 비 동기적으로 수행할것을 권장
+        editor.commit()
+    }   //logout 수행시 sharedPreference에 저장되어있는 토큰값 지우기
+
     override fun onLogoutSelected() {
         LocalUserData.logout()
+        deleteTokenSharedPreference()
     }   //NavigationViewManager 에서 로그아웃 시도시 로그아웃 수행
+
 
     override fun onLoginSelected() {
         startActivity(Intent(this, AuthActivity::class.java))

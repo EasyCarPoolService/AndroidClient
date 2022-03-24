@@ -51,6 +51,7 @@ class NavigationViewManager (val context : Context, val binding : ActivityMainBi
 
         textLogout.setOnClickListener {
             LocalUserData.logout()
+            callback?.onLogoutSelected()
             refreshView()
         }//로그아웃 시도 Hosting중 Activity에서 수행
 

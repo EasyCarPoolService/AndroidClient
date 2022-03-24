@@ -1,15 +1,18 @@
 package com.example.easycarpoolapp.auth
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.easycarpoolapp.LocalUserData
+import com.example.easycarpoolapp.MainActivity
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.auth.join.JoinFormFragment
 import com.example.easycarpoolapp.auth.join.JoinPhoneFragment
 import com.example.easycarpoolapp.auth.join.JoinPhoneVerifyFragment
 import com.example.easycarpoolapp.databinding.ActivityAuthBinding
+import com.example.easycarpoolapp.intro.InfoActivity
 
 class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneFragment.Callbacks, JoinPhoneVerifyFragment.CallBacks, JoinFormFragment.Callbacks{
 
@@ -38,6 +41,7 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
     }
 
     override fun onLoginSuccessed() {
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

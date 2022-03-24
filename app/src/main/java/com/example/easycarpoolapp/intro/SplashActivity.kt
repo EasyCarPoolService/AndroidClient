@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.MainActivity
 import com.example.easycarpoolapp.R
+import com.example.easycarpoolapp.auth.AuthActivity
 import com.example.easycarpoolapp.auth.AuthRepository
 
 /*
@@ -61,7 +62,8 @@ class SplashActivity : AppCompatActivity() {
             if(it == true){
                 moveToMain()
             }else{
-                moveToInfo()
+                //moveToInfo()
+                moveToLogin()
             }
         })
 
@@ -83,12 +85,20 @@ class SplashActivity : AppCompatActivity() {
         }, timeout)
     }
 
+    private fun moveToLogin(){
+        Handler().postDelayed({
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }, timeout)
+    }
+
+
     private fun moveToInfo(){
         Handler().postDelayed({
             startActivity(Intent(this, InfoActivity::class.java))
             finish()
         }, timeout)
-    }
+    }   //info창 UI필요
 
     private fun requestPermission() {
         if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
