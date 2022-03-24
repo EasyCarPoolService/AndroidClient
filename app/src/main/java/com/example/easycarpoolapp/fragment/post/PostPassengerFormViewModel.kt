@@ -18,6 +18,7 @@ class PostPassengerFormViewModel :ViewModel(){
     public var gift : ArrayList<String> = ArrayList() //transform to arrayList or hashMap
     public var hashTag : String = ""    //추후 개발 예정
     public var message : String = ""
+    public val transactionFlag : MutableLiveData<String> = MutableLiveData()
 
 
     public fun register(){
@@ -36,7 +37,7 @@ class PostPassengerFormViewModel :ViewModel(){
             message = message!!,
             fcmToken = LocalUserData.getFcmToken()!!
             )
-        repository!!.requestSavePassengerPost(dto)
+        repository!!.requestSavePassengerPost(dto, transactionFlag)
     }//register
 
     private fun giftToString() : String{

@@ -9,6 +9,8 @@ import com.example.easycarpoolapp.OKHttpHelper
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.fragment.chat.dto.ChatRoomDto
 import com.example.easycarpoolapp.fragment.post.dto.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -88,22 +90,29 @@ class PostRepository private constructor(val context : Context){
 
     //=============================================================================================
 
-    public fun requestSaveDriverPost(dto: PostDriverDto) {
+    public fun requestSaveDriverPost(dto: PostDriverDto, transactionFlag: MutableLiveData<String>) {
         Log.e(TAG, dto.toString())
 
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
         val call = api.getDriverSaveCall(postDriverDto = dto)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.e(TAG, response.body().toString())
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val body = response.body()
+                if(body !=null){
+                    transactionFlag.value = body
+                }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 
@@ -113,22 +122,32 @@ class PostRepository private constructor(val context : Context){
 
     //=============================================================================================
 
-    public fun requestSavePassengerPost(dto: PostPassengerDto) {
+    public fun requestSavePassengerPost(
+        dto: PostPassengerDto,
+        transactionFlag: MutableLiveData<String>
+    ) {
         Log.e(TAG, dto.toString())
 
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(OKHttpHelper.createHttpClient(context))
             .build()
 
         val api = retrofit.create(PostAPI::class.java)
         val call = api.getPassengerSaveCall(postPassengerDto = dto)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.e(TAG, response.body().toString())
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val body = response.body()
+                if(body != null){
+                    transactionFlag.value = body
+                }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
 

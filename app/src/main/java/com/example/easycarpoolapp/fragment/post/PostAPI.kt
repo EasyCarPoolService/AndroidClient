@@ -15,11 +15,11 @@ interface PostAPI {
 
     //태워주세요 게시글 등록
     @POST("/api/post/passenger/register")
-    public fun getPassengerSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<ResponseBody>
+    public fun getPassengerSaveCall(@Body postPassengerDto: PostPassengerDto) : Call<String>
 
     //타세요 게시글 등록
     @POST("/api/post/driver/register")
-    public fun getDriverSaveCall(@Body postDriverDto: PostDriverDto) : Call<ResponseBody>
+    public fun getDriverSaveCall(@Body postDriverDto: PostDriverDto) : Call<String>
 
     //태워주세요 게시글 조회
     @POST("/api/post/passenger/getPost")

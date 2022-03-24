@@ -1,9 +1,9 @@
 package com.example.easycarpoolapp.fragment.post
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.post.dto.PostDriverDto
-import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 class PostDriverFormViewModel : ViewModel(){
 
@@ -16,6 +16,7 @@ class PostDriverFormViewModel : ViewModel(){
     public var gift : ArrayList<String> = ArrayList() //transform to arrayList or hashMap
     public var hashTag : String = ""    //추후 개발 예정
     public var message : String = ""
+    public val transactionFlag : MutableLiveData<String> = MutableLiveData()
 
 
     public fun register(){
@@ -34,7 +35,7 @@ class PostDriverFormViewModel : ViewModel(){
             message = message!!,
             fcmToken = LocalUserData.getFcmToken()!!
         )
-        repository!!.requestSaveDriverPost(dto)
+        repository!!.requestSaveDriverPost(dto, transactionFlag)
     }//register
 
 

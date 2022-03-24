@@ -11,7 +11,7 @@ import com.example.easycarpoolapp.auth.join.JoinPhoneFragment
 import com.example.easycarpoolapp.auth.join.JoinPhoneVerifyFragment
 import com.example.easycarpoolapp.databinding.ActivityAuthBinding
 
-class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneFragment.Callbacks, JoinPhoneVerifyFragment.CallBacks{
+class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneFragment.Callbacks, JoinPhoneVerifyFragment.CallBacks, JoinFormFragment.Callbacks{
 
     private lateinit var binding : ActivityAuthBinding
 
@@ -23,7 +23,6 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
         if(supportFragmentManager.findFragmentById(binding.fragmentContainer.id)==null){
             supportFragmentManager.beginTransaction().add(binding.fragmentContainer.id, AuthMainFragment.getInstance()).commit()
         }
-
     }
 
     override fun onDestroy() {
@@ -33,23 +32,35 @@ class AuthActivity : AppCompatActivity(), AuthMainFragment.Callbacks, JoinPhoneF
 
     override fun onJoinSelected() {
         val fragment = JoinPhoneFragment.getInstance()
-        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
     override fun onLoginSuccessed() {
-        //check
         finish()
     }
 
     override fun onNextSelected(phoneNumber : String) {
         val fragment = JoinPhoneVerifyFragment.getInstance(phoneNumber)
-        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
 
     override fun afterVerified(phoneNumber: String) {
         val fragment = JoinFormFragment.getInstance(phoneNumber)
-        supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
     }
+
+    override fun onJoinTransactionSuccess() {
+        val fragment = AuthMainFragment.getInstance()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .replace(binding.fragmentContainer.id, fragment).addToBackStack(null).commit()
+    }   // 회원가입 성공시 로그인 창으로 이동
 
 
 }

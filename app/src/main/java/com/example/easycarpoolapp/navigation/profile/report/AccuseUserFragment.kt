@@ -16,7 +16,7 @@ import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentAccuseUserBinding
 import com.example.easycarpoolapp.navigation.NavigationRepository
 
-class AccuseUserFragment : Fragment() {
+class AccuseUserFragment : Fragment(), AccuseDialogFragment.Callbacks {
 
     companion object{
         public fun getInstance() : AccuseUserFragment = AccuseUserFragment()
@@ -70,13 +70,16 @@ class AccuseUserFragment : Fragment() {
             }
         }// onItemSelectedListener
 
+
+
         viewModel.transaction_flag.observe(viewLifecycleOwner, Observer {
             if(it.equals("success")) terminateFragment()
             Toast.makeText(requireContext(), "관리자에게 사용자 신고문의를 전달하였습니다.", Toast.LENGTH_SHORT).show()
         })
 
+        //신고 버튼 클릭
         binding.btnAccuse.setOnClickListener {
-            viewModel.accuseUser(binding.editAccuseNickname.text.toString(), binding.editContent.text.toString())
+            AccuseDialogFragment(this).show(requireActivity().supportFragmentManager, "AccuseDialogFragment")
         }
 
 
@@ -92,5 +95,9 @@ class AccuseUserFragment : Fragment() {
         super.onDestroy()
         NavigationRepository.onDestroy()
     }
+
+    override fun onAccuseConfirmSelected() {
+        viewModel.accuseUser(binding.editAccuseNickname.text.toString(), binding.editContent.text.toString())   //callbacks method에서 수행하도록 변경
+    }   //dialog Fragment에서 확인 클릭 -> 신고 메시지 서버로 전송
 
 }

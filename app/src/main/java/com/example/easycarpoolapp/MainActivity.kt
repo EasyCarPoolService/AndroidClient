@@ -203,12 +203,16 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
 
     override fun onAddPassengerSelected() {
         val fragment = PostPassengerFormFragment.getInstance()
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
     override fun onAddDriverSelected() {
         val fragment = PostDriverFormFragment.getInstance()
-        supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
+            .addToBackStack(null).replace(R.id.fragment_container, fragment).commit()
     }
 
 

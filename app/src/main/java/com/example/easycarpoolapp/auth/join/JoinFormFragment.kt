@@ -1,6 +1,7 @@
 package com.example.easycarpoolapp.auth.join
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -22,6 +23,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.auth.dto.JoinDto
@@ -31,6 +33,11 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 @RequiresApi(Build.VERSION_CODES.N)
 class JoinFormFragment private constructor(): Fragment() {
+
+    interface Callbacks {
+        public fun onJoinTransactionSuccess()
+    }
+
 
     companion object{
         public fun getInstance(phoneNumber : String) : JoinFormFragment{
@@ -43,6 +50,7 @@ class JoinFormFragment private constructor(): Fragment() {
         }
     }// companion object
 
+    private var callbacks : Callbacks? = null
     private lateinit var fcmToken :String
     private lateinit var binding : FragmentJoinFormBinding
     private val viewModel : JoinFormViewModel by lazy {
@@ -80,6 +88,12 @@ class JoinFormFragment private constructor(): Fragment() {
 
     private var bitmap_profile : Bitmap? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //이전 프래그먼트에서 인증 완료한 사용자의 휴대전화 번호 -> ViewModel에 저장
@@ -89,7 +103,7 @@ class JoinFormFragment private constructor(): Fragment() {
 
         getToken()  //FCM Device Token 얻기
 
-    }
+    } // onCreate()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -124,7 +138,7 @@ class JoinFormFragment private constructor(): Fragment() {
             }
         }
         return binding.root
-    }
+    }//onCreateView()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -135,7 +149,21 @@ class JoinFormFragment private constructor(): Fragment() {
         binding.editNickname.addTextChangedListener(textWathcer("nickname"))
         binding.editPassword1.addTextChangedListener(textWathcer("password1"))
         binding.editPassword2.addTextChangedListener(textWathcer("password2"))
-    }
+
+
+        viewModel.transactionFlag.observe(viewLifecycleOwner, Observer {
+            if(it.equals(binding.editEmail.text.toString())){
+                Toast.makeText(requireContext(), "가입 완료.", Toast.LENGTH_SHORT).show()
+                callbacks?.onJoinTransactionSuccess()
+            }
+        })
+
+    }   //onViewCreated()
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }// onDetach()
 
     private fun checkFlags(){
         var values = flags.values
@@ -157,7 +185,8 @@ class JoinFormFragment private constructor(): Fragment() {
         binding.btnJoin.setEnabled(true)
         binding.btnJoin.setClickable(true)
         binding.btnJoin.setBackgroundResource(R.drawable.btn_radius_main)
-    }
+    }// checkFlags()
+
 
     private fun getImageFromGallery(){
         val intent = Intent(Intent.ACTION_PICK)

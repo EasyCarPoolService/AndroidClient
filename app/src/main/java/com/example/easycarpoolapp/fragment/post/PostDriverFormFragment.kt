@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostDriverFormBinding
@@ -122,7 +123,26 @@ class PostDriverFormFragment : Fragment() , TimePickerManager.Callbacks, DatePic
             }
         }
 
+        binding.btnTerminateFragment.setOnClickListener {
+            terminateFragment()
+        }   //오른쪽 상단의 x버튼 클릭시 현재 프래그먼트 종료
+
+        viewModel.transactionFlag.observe(viewLifecycleOwner, Observer {
+            if(it.equals("success")){
+                Toast.makeText(requireContext(), "작성 완료.", Toast.LENGTH_SHORT).show()
+                terminateFragment() //현재 프래그먼트 종료
+            }
+
+        })
+
     }//onViewCreated()
+
+    private fun terminateFragment(){
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.remove(this)
+            ?.commit()
+    }   //terminateFragment()
 
     private fun setToggleButton(){
 

@@ -40,6 +40,13 @@
             android:visibility="gone"
             >
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_calendar_reserved"
+                android:layout_gravity="center_vertical"
+                />
+
             <TextView
                 android:id="@+id/request_driver_mine"
                 android:layout_width="wrap_content"
@@ -122,6 +129,13 @@
             android:visibility="gone"
             >
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_calendar_reserved"
+                android:layout_gravity="center_vertical"
+                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -197,6 +211,13 @@
             android:layout_margin="8dp"
             android:padding="8dp"
             android:visibility="gone">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_calendar_reserved"
+                android:layout_gravity="center_vertical"
+                />
 
             <TextView
                 android:id="@+id/request_driver_opponent"
@@ -280,6 +301,13 @@
             android:layout_margin="8dp"
             android:padding="8dp"
             android:visibility="gone">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_calendar_reserved"
+                android:layout_gravity="center_vertical"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

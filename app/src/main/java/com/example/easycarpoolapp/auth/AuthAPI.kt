@@ -32,6 +32,6 @@ interface AuthAPI {
         @Part("birth") birth: RequestBody?,
         @Part("gender") gender: RequestBody?,
         @Part("fcmToken") fcmToken: RequestBody?
-        ) : Call<ResponseBody>
+        ) : Call<String>
 
 }

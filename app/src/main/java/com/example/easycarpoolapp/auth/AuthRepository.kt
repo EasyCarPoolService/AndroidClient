@@ -3,24 +3,21 @@ package com.example.easycarpoolapp.auth
 import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.OKHttpHelper
-import com.example.easycarpoolapp.auth.domain.User
-import com.example.easycarpoolapp.auth.dto.JoinDto
 import com.example.easycarpoolapp.auth.dto.LocalUserDto
 import com.example.easycarpoolapp.auth.dto.LoginDto
-import com.example.easycarpoolapp.auth.dto.TokenDto
 import com.example.easycarpoolapp.utils.ImageFileManager
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,9 +28,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.lang.RuntimeException
 import java.util.concurrent.TimeUnit
-import kotlin.reflect.KParameter
 
 class AuthRepository private constructor(val context : Context){
 
@@ -129,17 +124,24 @@ class AuthRepository private constructor(val context : Context){
     //=============================================================================================
 
     //회원가입의 경우 driverAuthentication은 항상 false
-    public fun signUp(profile_image : Bitmap?,
-                      name : String,
-                      email : String,
-                      nickname : String,
-                      password : String,
-                      birth : String,
-                      gender : String,
-                      fcmToken : String){
+    public fun signUp(
+        profile_image: Bitmap?,
+        name: String,
+        email: String,
+        nickname: String,
+        password: String,
+        birth: String,
+        gender: String,
+        fcmToken: String,
+        transactionFlag: MutableLiveData<String>
+    ){
+
+        val gson : Gson = GsonBuilder()
+            .setLenient()
+            .create()
 
         val retrofit = Retrofit.Builder().baseUrl(BASEURL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         var profile_image_body : MultipartBody.Part? = null
@@ -182,12 +184,15 @@ class AuthRepository private constructor(val context : Context){
             fcmToken = fcmToken_body
             )
 
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.e("RESPONSE", response.body().toString())
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val body = response.body()
+                if(body!= null){
+                    transactionFlag.value = body
+                }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("RESPONSE FAIL", t.message.toString())
             }
         })
