@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
@@ -264,6 +265,8 @@ class ChatFragment : Fragment() , RequestPassengerDialogFragment.Callbacks, Requ
 
                 Glide.with(this@ChatFragment)
                     .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+item.writer)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
                     .into(opponent_profile)
             }
         }//bind

@@ -14,6 +14,7 @@ class EditProfileViewModel : ViewModel() {
     public lateinit var gender : String
     public var introduce_message : String = ""
     public val transaction_flag : MutableLiveData<String> = MutableLiveData()
+
     public fun editProfile(){
         navigationRepository?.editProfile(profile_image = profile_image,
             nickname = nickname,

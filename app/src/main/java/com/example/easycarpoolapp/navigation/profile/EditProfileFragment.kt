@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.easycarpoolapp.LocalUserData
@@ -153,6 +154,8 @@ class EditProfileFragment : Fragment() {
         Glide.with(this)
             .asBitmap()
             .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
             .into(object : SimpleTarget<Bitmap?>(){
                 override fun onResourceReady(
                     resource: Bitmap,

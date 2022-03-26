@@ -126,6 +126,7 @@
                 />
             <ImageView
                 android:id="@+id/page_indicator03"
+                android:layout_marginLeft="8dp"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_gravity="bottom"

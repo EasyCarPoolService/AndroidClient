@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
@@ -126,7 +127,9 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
 
             if(item.lastMessage.equals("request reservation")){
                 content.text = "예약 요청!"
-            }else{
+            }else if(item.lastMessage.equals("confirm of request")){
+                content.text = "요청 수락!"
+            } else{
                 content.text = item.lastMessage
             }
 
@@ -135,6 +138,8 @@ class ChatHomeFragment : Fragment(), LeaveRoomDialogFragment.Callbacks{
             //대화상대 프로필 띄우기
             Glide.with(requireContext())
                 .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+opponentEmail)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
                 .into(imageView)
         }
 

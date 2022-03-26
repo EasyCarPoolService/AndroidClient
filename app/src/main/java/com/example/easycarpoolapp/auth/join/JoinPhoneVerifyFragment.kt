@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
@@ -70,6 +71,7 @@ class JoinPhoneVerifyFragment(): Fragment() {
         viewModel.verificationResult.observe(viewLifecycleOwner, Observer {
             if(it==true){   //인증 성공
                 callbacks?.afterVerified(viewModel.phoneNumber.toString())
+                viewModel.verificationResult = MutableLiveData()
             }else{  //인증 실패
                 Toast.makeText(requireContext(),"잘못된 인증번호입니다.", Toast.LENGTH_SHORT).show()
             }

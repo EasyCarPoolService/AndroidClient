@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
@@ -53,7 +54,7 @@ class ProfileHomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_home, container, false)
         setUIWithLocalData()
-        setUIWithServerData()
+        //setUIWithServerData()
 
         binding.btnEditProfile.setOnClickListener {
             callbacks?.onEditProfileSelected()  //HostingActivity = MainActivity
@@ -79,6 +80,11 @@ class ProfileHomeFragment : Fragment() {
 
     }//onViewCreated
 
+    override fun onResume() {
+        super.onResume()
+        setUIWithServerData()
+    }
+
     override fun onDetach() {
         super.onDetach()
         callbacks = null
@@ -101,6 +107,8 @@ class ProfileHomeFragment : Fragment() {
     private fun setImageBtnProfile() {
         Glide.with(this)
             .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
             .into(binding.btnProfile)
 
     }//프로필 이미지 설정

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.R
@@ -81,7 +82,7 @@ class PostHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.textNickname.text = LocalUserData.getNickname().toString()
 
-        setImageBtnProfile()
+        //setImageBtnProfile()
         viewModel.getUserPostData() //User가 작성한 게시글 혹은 진행중 게시글 정보 조회 -> 레이아웃 상단에 띄우기
 
         binding.imageBtnProfile.setOnClickListener{
@@ -175,6 +176,11 @@ class PostHomeFragment : Fragment() {
 
     }// onViewCreated
 
+    override fun onResume() {
+        super.onResume()
+        setImageBtnProfile()
+    }
+
     //==========================================================================================
     override fun onDetach() {
         super.onDetach()
@@ -187,6 +193,8 @@ class PostHomeFragment : Fragment() {
     private fun setImageBtnProfile() {
         Glide.with(this)
             .load("http://"+NetworkConfig.getIP()+":8080/api/image/profile?email="+LocalUserData.getEmail())
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
             .into(binding.imageBtnProfile)
 
     }//setImageBtnProfile()
@@ -285,6 +293,8 @@ class PostHomeFragment : Fragment() {
             }
             Glide.with(this@PostHomeFragment)
                 .load("http://"+NetworkConfig.getIP()+":8080/api/image/profile?email="+item.email)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
                 .into(imageView)
 
         }//bind

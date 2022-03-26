@@ -10,6 +10,7 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.easycarpoolapp.NetworkConfig
 import com.example.easycarpoolapp.databinding.FragmentRequestPassengerDialogBinding
 import com.example.easycarpoolapp.fragment.post.PostHomeFragment
@@ -46,6 +47,8 @@ class RequestPassengerDialogFragment(val postDto : PostDto, val hostFragment : F
 
         Glide.with(this)
             .load("http://"+ NetworkConfig.getIP()+":8080/api/image/profile?email="+postDto.email)
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)  // 선언하지 않을 경우 -> 서버의 변경사항 반영 x
             .into(binding.imageViewProfile)
 
         return binding.root
