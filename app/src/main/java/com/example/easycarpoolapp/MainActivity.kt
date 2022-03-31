@@ -65,7 +65,7 @@ RegisterCarDialogFragment.Callbacks, RegisterCarFragment.CallBacks, PostPassenge
         getHashKey()
 
         if (LocalUserData.getNickname()!=null){
-            Toast.makeText(applicationContext, "안녕하세요. "+LocalUserData.getNickname()+"님", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "안녕하세요. "+LocalUserData.getNickname()+"님", Toast.LENGTH_SHORT).show()
         }
 
     }//onResume

@@ -2,8 +2,8 @@ package com.example.easycarpoolapp
 
 class NetworkConfig private constructor(){
     companion object{
-        private val ip = "172.30.1.25"
-        private val socketURL = "http://172.30.1.25:8080/mobileServer/websocket"
+        private val ip = "192.168.0.8"
+        private val socketURL = "http://192.168.0.8:8080/mobileServer/websocket"
 
         public fun getIP() = ip
         public fun getSocketURL() = socketURL

@@ -57,7 +57,14 @@ class NavigationRepository private constructor(val context : Context){
 
 
 
-    public fun authenticateDriver(bitmapId : Bitmap, bitmapCar : Bitmap, carNumber : String, manufacturer : String, model : String){
+    public fun authenticateDriver(
+        bitmapId: Bitmap,
+        bitmapCar: Bitmap,
+        carNumber: String,
+        manufacturer: String,
+        model: String,
+        transactionFlag: MutableLiveData<String>
+    ){
 
         //retrofit갤러리로 부터 선택한 비트맵을 파일형태로 특정 경로에 저장 -> retrofit을 통해 이미지를 업로드할때 사용
         val idImageFile : File =imageFileManager!!.createImageFile(bitmapId)
@@ -96,11 +103,14 @@ class NavigationRepository private constructor(val context : Context){
         val api = retrofit.create(NavigationAPI::class.java)
         val call = api.getDriverAuthCall(body_id, body_car, email_body ,carNumber_body, manufacturer_body, model_body)
 
-        call.enqueue(object : Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.e(TAG, response.body().toString())
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val body = response.body()
+                if(body != null){
+                    transactionFlag.value = body
+                }
             }
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, t.message.toString())
             }
         })

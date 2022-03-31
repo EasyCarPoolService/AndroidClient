@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentRegisterCarImageBinding
@@ -134,13 +135,27 @@ class RegisterCarImageFragment : Fragment() {
 
         }
 
-
-
-
         return binding.root
     }//onCreateView
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.transactionFlag.observe(viewLifecycleOwner, Observer {
+            if(it.equals("success")){
+                Toast.makeText(requireContext(), "요청 완료!", Toast.LENGTH_SHORT).show()
+                terminateFragment()
+            }
+        })
+    }
+
     private val REQUEST_CODE = 100
+
+    private fun terminateFragment(){
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.remove(this)
+            ?.commit()
+    }   //terminateFragment()
 
     private fun getImageFromGallery(){
         val intent = Intent(Intent.ACTION_PICK)

@@ -28,7 +28,7 @@ interface NavigationAPI {
         @Part("carNumber") carNumber: RequestBody?,
         @Part("manufacturer") manufacturer: RequestBody?,
         @Part("model") model: RequestBody?
-    ): Call<ResponseBody>
+    ): Call<String>
 
     @POST("/api/post/getUserPostData")
     public fun getUserPostDataCall(@Body localUserDto: LocalUserDto): Call<UserPostDto>
