@@ -13,14 +13,13 @@ import com.example.easycarpoolapp.databinding.FragmentLoginDialogBinding
 
 class LoginDialogFragment: DialogFragment(){
 
-
     interface Callbacks{
-        fun onConfirmSelected() //login activity로 이동
+        fun onConfirmSelectedFromLoginDialog() //login activity로 이동
     }
 
     private var callbacks : Callbacks? = null
 
-    private lateinit var binding : FragmentLoginDialogBinding
+    private lateinit var binding : com.example.easycarpoolapp.databinding.FragmentLoginDialogBinding
 
 
     override fun onAttach(context: Context) {
@@ -48,9 +47,9 @@ class LoginDialogFragment: DialogFragment(){
         }
 
         binding.btnConfirm.setOnClickListener {
-            callbacks!!.onConfirmSelected()
+            callbacks!!.onConfirmSelectedFromLoginDialog()
             this.dismiss()
-        }
+        }   // 확인 클릭시 로그인 Fragment로 이동
 
 
         return binding.root

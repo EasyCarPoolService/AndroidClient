@@ -7,12 +7,14 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_test1"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="prototype1" />
+            android:icon="@drawable/icon_profile_empty"
+            android:title="프로필 보기"
+            />
+
         <item
             android:id="@+id/nav_test2"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="prototype2" />
+            android:icon="@drawable/icon_car_maincolor"
+            android:title="진행현황 보기" />
 
     </group>
 </menu>

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 // LocalUserDto를 기반으로 LocalUserData 객체를 생성
 // AuthRepository에서 사용
 data class LocalUserDto(
+
     @SerializedName("nickname")
     val nickname : String? = null,
 
@@ -15,7 +16,19 @@ data class LocalUserDto(
     val email : String? = null,
 
     @SerializedName("token")
-    val token : String? = null
+    val token : String? = null,
+
+    @SerializedName("gender")
+    val gender : String? = null,
+
+    @SerializedName("rate")
+    val rate : Float? = null,
+
+    @SerializedName("driverAuthentication")
+    val driverAuthentication : Boolean? = null,
+
+    @SerializedName("fcmToken")
+    val fcmToken : String? = null
 
 )
 

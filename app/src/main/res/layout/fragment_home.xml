@@ -10,11 +10,18 @@
 
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test"
-            android:elevation="10dp"
             />
+
+        <Button
+            android:id="@+id/btn_getRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="get rate data"
+            />
+
 
     </LinearLayout>
 </layout>

@@ -11,13 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentHomeBinding
 import com.example.easycarpoolapp.fragment.LoginDialogFragment
 
 
-class HomeFragment(): Fragment() {
-
+class HomeFragment() : Fragment() {
 
     companion object{
         fun getInstance() : HomeFragment{
@@ -27,22 +27,24 @@ class HomeFragment(): Fragment() {
 
     private lateinit var binding : FragmentHomeBinding
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        binding.btnGetRate.setOnClickListener {
+            Toast.makeText(requireContext(), LocalUserData.getRate().toString(), Toast.LENGTH_SHORT).show()
+
+        }
+
+
         return binding.root
-    }
+    }//onCreateView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
-
 
 
 }

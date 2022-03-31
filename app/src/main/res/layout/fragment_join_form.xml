@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -28,14 +28,21 @@
                     android:layout_height="wrap_content"
 
                     >
-                    <ImageButton
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_margin="8dp"
+                        android:id="@+id/btn_profile"
                         android:layout_marginTop="16dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/image_profile"
-                        android:background="@color/white"
-                        />
+                        android:background="@android:color/transparent"
+                        app:civ_border_overlay="true"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="#ffffff"
+                        android:src="@drawable/image_profile" />
+
+
                     <TextView
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
@@ -128,6 +135,7 @@
                         android:textColor="@color/gray_color"
                         android:textSize="16sp"
                         />
+
                     <EditText
                         android:id="@+id/edit_password1"
                         android:layout_marginTop="8dp"
@@ -138,6 +146,7 @@
                         android:backgroundTint="@color/main_color"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:inputType="textPassword"
                         android:hint="비밀번호 입력"
                         />
 
@@ -162,6 +171,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:hint="비밀번호 입력"
+                        android:inputType="textPassword"
                         />
 
                     <TextView

@@ -1,277 +1,433 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.post.PostDriverFormFragment">
-
+        tools:context=".fragment.post.PostPassengerFormFragment">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             >
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:elevation="16dp"
-                android:background="@drawable/shape_radius"
-                android:layout_marginTop="56dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="100dp"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-
-                >
-                <ImageButton
-                    android:layout_marginTop="16dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/image_profile"
-                    android:background="@color/white"
-                    />
-                <TextView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="16sp"
+                <LinearLayout
+                    android:elevation="16dp"
+                    android:background="@drawable/shape_radius"
+                    android:layout_marginTop="64dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:textStyle="bold"
-                    android:text="프로필사진"
-                    android:textColor="@color/gray_color"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="이름 (실명)"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_name"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="80dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="실명 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="닉네임 (한글, 영문, 숫자)"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_nickname"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="닉네임 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="아이디 (이메일)"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_email"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="이메일 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="비밀번호 (6자 이상 영문, 숫자 조합)"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_password1"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="비밀번호 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="비밀번호 확인"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_password2"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="비밀번호 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="생년월일 (예 : 19950101)"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-                <EditText
-                    android:id="@+id/edit_birth"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:backgroundTint="@color/main_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:hint="생년월일 입력"
-                    />
-
-                <TextView
-                    android:layout_marginTop="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="성별"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_color"
-                    android:textSize="16sp"
-                    />
-
-                <RadioGroup
-                    android:id="@+id/radio_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical"
                     >
-                    <RadioButton
-                        android:id="@+id/radio_male"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/main_color"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_margin="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray_color"
+                            android:text="출발지 "
+                            />
+
+                        <TextView
+                            android:id="@+id/text_departure"
+                            android:layout_margin="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/main_color"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        >
+                        <Spinner
+                            android:id="@+id/departure_si"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:textStyle = "bold"
+                            android:textColor = "@color/main_color"
+                            android:dropDownSelector="@color/main_color"
+                            style="@style/removeSpinnerSelector"
+                            />
+
+                        <Spinner
+                            android:id="@+id/departure_gu"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:textStyle = "bold"
+                            android:textColor = "@color/main_color"
+                            android:dropDownSelector="@color/main_color"
+                            style="@style/removeSpinnerSelector"
+                            />
+
+                        <Spinner
+                            android:id="@+id/departure_dong"
+                            style="@style/removeSpinnerSelector"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:dropDownSelector="@color/main_color"
+                            android:textColor="@color/main_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/gray_color"
 
                         />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_margin="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/gray_color"
+                            android:text="도착지 "
+                            />
+
+                        <TextView
+                            android:id="@+id/text_destination"
+                            android:layout_margin="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/main_color"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        >
+                        <Spinner
+                            android:id="@+id/destination_si"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:textStyle = "bold"
+                            android:textColor = "@color/main_color"
+                            android:dropDownSelector="@color/main_color"
+                            style="@style/removeSpinnerSelector"
+                            />
+
+                        <Spinner
+                            android:id="@+id/destination_gu"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:textStyle = "bold"
+                            android:textColor = "@color/main_color"
+                            android:dropDownSelector="@color/main_color"
+                            style="@style/removeSpinnerSelector"
+                            />
+
+                        <Spinner
+                            android:id="@+id/destination_dong"
+                            style="@style/removeSpinnerSelector"
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"
+                            android:dropDownSelector="@color/main_color"
+                            android:textColor="@color/main_color"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/gray_color"
+
+                        />
+
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="남자"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/gray_color"
-                        android:textSize="16sp"
+                        android:text="출발일시"
                         />
-                    <RadioButton
-                        android:id="@+id/radio_female"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical"
+                        >
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_calendar_maincolor"
+                            />
+                        <Button
+                            android:id="@+id/btn_calendar"
+                            android:layout_marginLeft="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:background="#00ff0000"
+                            android:textColor="@color/main_color"
+                            android:text="2021.12.27"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="56dp"
+                            android:src="@drawable/icon_clock_maincolor" />
+
+                        <Button
+                            android:id="@+id/btn_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:background="#00ff0000"
+                            android:textColor="@color/main_color"
+                            android:text="10:54"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/gray_color"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/main_color"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_color"
+                        android:textStyle="bold"
+                        android:text="탑승자에게 받고 싶은 선물(최소 1개, 최대 3개)"
+                        />
+
+                    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+                        android:id="@+id/toggle_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:toggle_requiredAmount="1"
+                        app:toggle_selectableAmount="3"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        app:flexWrap="wrap">
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/toggle_gift_beverage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="3dp"
+                            app:toggle_selectedBackgroundColor="@color/main_color"
+                            app:toggle_text="음료"
+                            />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/toggle_gift_snacks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="3dp"
+                            app:toggle_selectedBackgroundColor="@color/main_color"
+                            app:toggle_text="간식거리" />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/toggle_gift_giftcard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="3dp"
+                            app:toggle_selectedBackgroundColor="@color/main_color"
+                            app:toggle_text="기프티콘" />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/toggle_gift_etc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="3dp"
+                            app:toggle_selectedBackgroundColor="@color/main_color"
+                            app:toggle_text="기타" />
+
+                    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/gray_color"
                         />
                     <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16sp"
+                        android:layout_marginBottom="8sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="여자"
+                        android:text="해시태그"
+                        android:textStyle="bold"
+                        android:textColor="@color/gray_color"
+                        android:textSize="16sp"
+                        />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16sp"
+                        android:layout_marginRight="16sp"
+                        android:hint="#서울역 #강남역 #출퇴근"
+                        android:backgroundTint="@color/main_color"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+
+                        />
+
+
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16sp"
+                        android:layout_marginBottom="8sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="하고 싶은 말"
                         android:textStyle="bold"
                         android:textColor="@color/gray_color"
                         android:textSize="16sp"
                         />
 
-                </RadioGroup>
+                    <EditText
+                        android:id="@+id/edit_memo"
+                        android:background="@drawable/edit_memo"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:lines="10"
+                        />
+
+
+                </LinearLayout>
 
             </LinearLayout>
-            </LinearLayout>
+
+
         </ScrollView>
 
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/main_color"
-            android:gravity="center"
-            android:text="회원정보"
-            android:background="@color/white"
+            android:layout_height="48dp"
             android:elevation="16dp"
-            />
+            android:orientation="horizontal"
+            android:background="#ffffff"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="타세요"
+                android:textColor="@color/main_color"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                />
+
+            <ImageButton
+                android:id="@+id/btn_terminate_fragment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center|right"
+                android:src="@drawable/icon_cancel_maincolor"
+                android:background="@drawable/shape_radius"
+                android:layout_marginLeft="16dp"
+                />
+
+
+        </FrameLayout>
+
 
         <Button
-            android:id="@+id/btn_join"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_radius_gray"
-            android:layout_margin="16dp"
+            android:text="등록하기"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="회원가입"
-            android:textColor="@color/white"
             android:layout_gravity="bottom"
-            android:elevation="16dp"
+            android:layout_margin="16dp"
             />
 
     </FrameLayout>

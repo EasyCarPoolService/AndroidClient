@@ -31,14 +31,12 @@
             android:backgroundTint="@color/main_color"
             />
 
-
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 >
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,13 +58,29 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <ImageButton
+
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_margin="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/imageBtn_profile"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            app:civ_border_overlay="true"
+                            app:civ_border_width="3dp"
+                            app:civ_border_color="#ffffff"
+                            android:src="@drawable/image_profile" />
+
+
+                        <!--<ImageButton
+                            android:id="@+id/imageBtn_profile"
+                            android:layout_margin="8dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:src="@drawable/image_profile"
-                            android:background="@drawable/shape_radius"
-                            />
+                            android:scaleType="fitXY"
+                            android:background="@drawable/shape_circle_gray"
+                            />-->
 
                         <TextView
                             android:id="@+id/text_nickname"
@@ -100,13 +114,13 @@
                             />
 
                         <TextView
-                            android:id="@+id/post_driver"
+                            android:id="@+id/user_post_driver"
                             android:textColor="@color/main_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
-                            android:text="default"
+                            android:text="0"
                             />
 
                     </LinearLayout>
@@ -129,12 +143,12 @@
 
                         <TextView
                             android:textColor="@color/main_color"
-                            android:id="@+id/post_passenger"
+                            android:id="@+id/user_post_passenger"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
-                            android:text="default"
+                            android:text="0"
                             />
 
                     </LinearLayout>
@@ -156,13 +170,13 @@
                             />
 
                         <TextView
-                            android:id="@+id/post_process"
+                            android:id="@+id/user_post_ongoing"
                             android:textColor="@color/main_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
-                            android:text="default"
+                            android:text="0"
                             />
 
                     </LinearLayout>
@@ -178,7 +192,9 @@
                     android:layout_marginRight="16dp"
                     android:elevation="16dp"
                     >
+
                     <EditText
+                        android:id="@+id/edit_district"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -193,6 +209,7 @@
                         />
 
                     <Button
+                        android:id="@+id/btn_findbydistrict"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
@@ -210,18 +227,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     >
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:text="ALL"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/main_color"
-                        />
+
 
                     <Button
+                        android:id="@+id/btn_driver_post"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -233,6 +242,7 @@
                         />
 
                     <Button
+                        android:id="@+id/btn_passenger_post"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -244,6 +254,7 @@
                         />
 
                     <Button
+                        android:id="@+id/btn_user_post"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -260,9 +271,31 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/text_lastPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_color"
+                    android:textSize="16sp"
+                    android:text="마지막 페이지 입니다."
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    />
+
 
             </LinearLayout>
 

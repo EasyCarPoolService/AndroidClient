@@ -11,8 +11,6 @@ class SplashViewModel :ViewModel(){
 
     public fun verifyToken(){
         repository!!.getUserData(tokenVerified)
-
-
     }
 
 }

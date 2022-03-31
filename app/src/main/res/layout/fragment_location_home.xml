@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".fragment.location.LocationHomeFragment">
+
+        <Button
+            android:id="@+id/btn_search_user"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="예약 조회"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_radius_main"
+            />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_location_opponent"
+                    android:background="@drawable/icon_location_opponent"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="right|bottom"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    />
+
+
+                <ImageButton
+                    android:id="@+id/btn_location_mine"
+                    android:background="@drawable/icon_my_location"
+                    android:layout_margin="16dp"
+                    android:layout_gravity="right|bottom"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    />
+
+            </LinearLayout>
+
+
+
+
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+</layout>

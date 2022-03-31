@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
 import com.example.easycarpoolapp.databinding.FragmentPostPassengerFormBinding
@@ -44,10 +45,10 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable?) {
-            viewModel.memo = s.toString()
+            viewModel.message = s.toString()
         }
 
-    }
+    }//memoTextWathcer
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +87,8 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         return binding.root
     }//onCreateView
 
+    //======================================================================================================
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,20 +105,37 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         binding.editMemo.addTextChangedListener(memoTextWatcher)
         setToggleButton()
 
+        // 등록 버튼 클릭
         binding.btnRegister.setOnClickListener {
             if(isRegisterAvailable()){  //게시글이 등록 가능한 상태일 경우 viewModel에 등록 요청
                 viewModel.register()
             }
-
         }
 
+        binding.btnTerminateFragment.setOnClickListener {
+            terminateFragment()
+        }   //오른쪽 상단의 x버튼 클릭시 현재 프래그먼트 종료
+
+        viewModel.transactionFlag.observe(viewLifecycleOwner, Observer {
+            if(it.equals("success")){
+                Toast.makeText(requireContext(), "작성 완료.", Toast.LENGTH_SHORT).show()
+                terminateFragment()
+            }
+
+        })
 
 
     }//onViewCreated
 
     //======================================================================================================
+    private fun terminateFragment(){
+        activity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.remove(this)
+            ?.commit()
+    }   //terminateFragmet()
 
-    //check
+
     private fun setToggleButton(){
 
         binding.toggleGroup.setOnSelectListener {
@@ -149,7 +169,7 @@ class PostPassengerFormFragment : Fragment(), TimePickerManager.Callbacks, DateP
         }else{
             return true
         }
-    }
+    }//isRegisterAvailable()
 
 
 

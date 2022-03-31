@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.easycarpoolapp.R
+import com.example.easycarpoolapp.auth.AuthRepository
 import com.example.easycarpoolapp.databinding.FragmentJoinPhoneBinding
 
 
@@ -42,6 +43,7 @@ class JoinPhoneFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AuthRepository.init(requireContext())
     }
 
     override fun onCreateView(

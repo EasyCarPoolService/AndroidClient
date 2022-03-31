@@ -57,11 +57,26 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.github.karrel84:RellTimePicker:0.0.1'
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.0'
+    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6' //api - websocket
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'  //api - websocket
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'   //api - websocket
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0' //Circle ImageView
+    implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
+    //FCM
+    implementation platform('com.google.firebase:firebase-bom:29.0.4')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.0'
 
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/libDaumMapAndroid.jar')
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
 
 

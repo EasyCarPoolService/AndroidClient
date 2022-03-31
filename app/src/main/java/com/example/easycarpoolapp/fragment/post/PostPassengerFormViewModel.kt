@@ -1,6 +1,8 @@
 package com.example.easycarpoolapp.fragment.post
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.easycarpoolapp.LocalUserData
 import com.example.easycarpoolapp.fragment.post.dto.PostPassengerDto
 
 class PostPassengerFormViewModel :ViewModel(){
@@ -15,27 +17,36 @@ class PostPassengerFormViewModel :ViewModel(){
     public var departuretime : String? = null
     public var gift : ArrayList<String> = ArrayList() //transform to arrayList or hashMap
     public var hashTag : String = ""    //추후 개발 예정
-    public var memo : String = ""
+    public var message : String = ""
+    public val transactionFlag : MutableLiveData<String> = MutableLiveData()
 
 
     public fun register(){
 
         val dto = PostPassengerDto(
+            type = "passenger",
+            email = LocalUserData.getEmail()!!,
+            nickname = LocalUserData.getNickname()!!,
+            gender = LocalUserData.getGender()!!,
+            rate = LocalUserData.getRate()!!,
             departure = departure!!,
             destination = destination!!,
             departureDate = departureDate!!,
             departureTime = departuretime!!,
-            gift = gift,
-            memo = memo
+            gift = giftToString(),
+            message = message!!,
+            fcmToken = LocalUserData.getFcmToken()!!
             )
+        repository!!.requestSavePassengerPost(dto, transactionFlag)
+    }//register
 
-
-        repository!!.requestSavePost(dto)
-    }
-
-
-
-
+    private fun giftToString() : String{
+        var result : String=""
+        for(item in gift){
+            result+=item+","
+        }
+        return result
+    }//giftToString()
 
 
 }
